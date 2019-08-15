@@ -26,7 +26,7 @@ public class IndexController {
                 String token = cookie.getValue();
                 User user = userMapper.findByToken(token);
                 if(user != null){
-                    // 根据自己设置的cookie设置session
+                    // 根据自己设置的cookie设置session，如果数据库中有数据，则设置session，前端显示已登录
                     request.getSession().setAttribute("user",user);
                 }
                 break;

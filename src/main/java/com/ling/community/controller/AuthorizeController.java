@@ -44,6 +44,7 @@ public class AuthorizeController {
         accessTokenDTO.setState(state);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
+        // 登录成功后不写session、而是插入写入数据库
         if(githubUser != null){
             User user = new User();
             String token = UUID.randomUUID().toString();
@@ -52,10 +53,11 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
-            userMapper.insert(user);
-            response.addCookie(new Cookie("token",token));  // 登录的时候自己设置一个cookie，用这个cookie去和服务器交互
+            userMapper.insert(user);// 插入数据库，用数据库代替session
+            // 登录的时候自己设置一个cookie，用这个cookie去和服务器交互，根据这个cookie去数据库查询，进行判断是否登录
+            response.addCookie(new Cookie("token",token));
             // 登录成功，写cookie和session
-            request.getSession().setAttribute("user",githubUser);
+            //request.getSession().setAttribute("user",githubUser);
             return "redirect:/"; //重定向
         }else{
             // 登录失败，重新登录

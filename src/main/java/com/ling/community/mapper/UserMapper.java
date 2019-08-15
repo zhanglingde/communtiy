@@ -11,6 +11,6 @@ public interface UserMapper {
     @Insert("insert into user(name,account_id,token,gmt_create,gmt_modified) values(#{name},#{accountId},#{token},#{gmtCreate},#{gmtModified})")
     public void insert(User user);
 
-    @Select("select * form user where token = #{token}")  //#{}会把形参中的数据放入进去，如果是类会自动放，不是类需要加注解
+    @Select("select * from user where token = #{token}")  //#{}会把形参中的数据放入进去，如果是类会自动放，不是类需要加注解
     User findByToken(@Param("token") String token);
 }
