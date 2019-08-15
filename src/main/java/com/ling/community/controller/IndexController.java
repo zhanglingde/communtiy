@@ -26,6 +26,7 @@ public class IndexController {
                 String token = cookie.getValue();
                 User user = userMapper.findByToken(token);
                 if(user != null){
+                    // 根据自己设置的cookie设置session
                     request.getSession().setAttribute("user",user);
                 }
                 break;
