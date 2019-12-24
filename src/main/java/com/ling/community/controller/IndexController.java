@@ -20,19 +20,21 @@ public class IndexController {
     @GetMapping("/")
     public String index(HttpServletRequest request){
         Cookie[] cookies = request.getCookies();
-
-        for (Cookie cookie:cookies) {
-            if(cookie.getName().equals("token")){
-                String token = cookie.getValue();
-                User user = userMapper.findByToken(token);
-                if(user != null){
-                    // 根据自己设置的cookie设置session，如果数据库中有数据，则设置session，前端显示已登录
-                    request.getSession().setAttribute("user",user);
+        if (cookies != null && cookies.length != 0){
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) {
+                    String token = cookie.getValue();
+                    User user = userMapper.findByToken(token);
+                    if (user != null) {
+                        // 根据自己设置的cookie设置session，如果数据库中有数据，则设置session，前端显示已登录
+                        request.getSession().setAttribute("user", user);
+                    }
+                    break;
                 }
-                break;
-            }
 
+            }
         }
+
 
         return "index";
     }

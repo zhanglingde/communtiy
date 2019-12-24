@@ -53,6 +53,7 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
+            user.setAvatarUrl(githubUser.getAvatar_url());
             userMapper.insert(user);// 插入数据库，用数据库代替session
             // 登录的时候自己设置一个cookie，用这个cookie去和服务器交互，根据这个cookie去数据库查询，进行判断是否登录
             response.addCookie(new Cookie("token",token));
