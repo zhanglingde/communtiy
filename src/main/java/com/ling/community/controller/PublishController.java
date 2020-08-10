@@ -4,6 +4,8 @@ import com.ling.community.mapper.QuestionMapper;
 import com.ling.community.mapper.UserMapper;
 import com.ling.community.model.Question;
 import com.ling.community.model.User;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author ling
  */
 @Controller
+@Api("问题管理")
 public class PublishController {
 
     @Autowired
@@ -33,6 +36,7 @@ public class PublishController {
         return "publish";
     }
     //post方式是提交发布问题
+    @ApiOperation(value = "提交发布问题")
     @PostMapping("/publish")
     public String doPublish(@RequestParam(value = "title",required = false) String title,
                             @RequestParam(value = "description",required = false) String description,

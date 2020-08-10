@@ -1,0 +1,18 @@
+server:
+  port: 8081
+
+# 配置文件的分离  不同的项目环境读取不同的配置文件
+github:
+  client:
+    id: c196d0ba84d8d5a26586
+    secret: 6fe967e53965808a2d559ac770489bd07e0ed115
+    uri: http://localhost:8081/callback
+
+# 数据库连接池
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/supplier?serverTimezone=Asia/Shanghai&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
