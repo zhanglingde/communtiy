@@ -1,10 +1,15 @@
-package com.ling;
+package com.ling.other;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import tk.mybatis.spring.annotation.MapperScan;
 
-@ComponentScan(value = "com.ling.config")
+/**
+ * @author Administrator
+ */
+@MapperScan(value = "com.ling.other.mapper")
+//@ComponentScan(value = "com.ling.config")
 @SpringBootApplication
 public class CommunityApplication {
 

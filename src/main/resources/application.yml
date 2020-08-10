@@ -16,3 +16,13 @@ spring:
     password: root
     driver-class-name: com.mysql.jdbc.Driver
 
+mybatis:
+  # 指定全局配置文件的位置
+#  config-location: classpath:mybatis/mybatis-config.xml
+  # 指定sql映射文件的位置
+  mapper-locations: classpath:mapper/*.xml
+
+# 日志信息
+logging:
+  level:
+    com.ling.other.mapper: debug
