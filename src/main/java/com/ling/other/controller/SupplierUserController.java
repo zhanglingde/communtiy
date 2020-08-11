@@ -1,15 +1,14 @@
 package com.ling.other.controller;
 
 
-import com.ling.other.dto.SupplierUserDTO;
+import com.ling.other.common.exception.RrException;
+import com.ling.other.common.utils.CommonResult;
 import com.ling.other.entity.SupplierUser;
 import com.ling.other.service.SupplierUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 
 /**
  * 供应商用户表(AuSupplierUser)表控制层
@@ -35,8 +34,20 @@ public class SupplierUserController {
     }
 
     @GetMapping("/hello")
-    public String hello(){
-        System.out.println("hello");
-        return "hello";
+    public CommonResult hello(){
+
+        supplierUserService.test();
+
+        return CommonResult.success();
+    }
+
+    @GetMapping("/world")
+    public CommonResult world() throws RrException  {
+        int i = 1;
+        if(i == 1){
+            throw new RrException("自定义");
+        }
+        return CommonResult.success();
+
     }
 }

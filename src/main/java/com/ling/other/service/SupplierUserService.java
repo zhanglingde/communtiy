@@ -18,4 +18,6 @@ public interface SupplierUserService {
      * @param supplierUser
      */
     void create(SupplierUser supplierUser);
+
+    void test();
 }
