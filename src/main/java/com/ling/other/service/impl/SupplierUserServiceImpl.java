@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * 供应商用户表(SupplierUser)表服务实现类
  *
@@ -33,5 +35,12 @@ public class SupplierUserServiceImpl implements SupplierUserService {
         if(i == 1){
             throw new RrException("异常测试");
         }
+    }
+
+    @Override
+    public List<SupplierUser> list() {
+
+        List<SupplierUser> supplierUsers = supplierUserMapper.selectAll();
+        return supplierUsers;
     }
 }
