@@ -47,6 +47,7 @@ public class EasyExcelController {
         return "success";
     }
 
+    @ApiOperation(value = "导出Excel")
     @GetMapping("/download")
     public void download(HttpServletResponse response) throws IOException {
         easyExcelService.download(response);

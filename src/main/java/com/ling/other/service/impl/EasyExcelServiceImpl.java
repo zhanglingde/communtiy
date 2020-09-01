@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,15 @@ public class EasyExcelServiceImpl implements EasyExcelService {
         response.setCharacterEncoding("utf-8");
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
         String fileName = URLEncoder.encode("用户表", "UTF-8");
-        //String fileName = "用户表";
+
+        // 测试编码
+        System.out.println("编码一次：" + fileName);
+        fileName = URLEncoder.encode(fileName, "UTF-8");
+        System.out.println("编码两次：" + fileName);
+        fileName = URLDecoder.decode(fileName, "UTF-8");
+        System.out.println("解码一次：" + fileName);
+        System.out.println("解码两次：" + URLDecoder.decode(fileName, "UTF-8"));
+
 
         response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
         EasyExcel.write(response.getOutputStream(), User.class).sheet("用户表").doWrite(list);
