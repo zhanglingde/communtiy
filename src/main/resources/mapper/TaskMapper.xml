@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ling.other.mapper.TaskMapper">
+
+    <sql id="baseSql">
+       bean_name, method_name, method_params, cron_expression, remark, job_status
+    </sql>
+
+
+    <insert id="addSysJob">
+        insert into au_task(bean_name, method_name, method_params, cron_expression, remark, job_status)
+        values(
+            #{beanName},
+            #{methodName},
+            #{methodParams},
+            #{cronExpression},
+            #{remark},
+            #{jobStatus}
+        )
+    </insert>
+
+    <!--    编辑定时任务 -->
+    <update id="updateTask">
+        update au_task
+        <trim prefix="set" suffixOverrides=",">
+            <if test="beanName != null and beanName != ''">
+                bean_name = #{beanName},
+            </if>
+            <if test="methodName != null and methodName != ''">
+                method_name = #{methodName},
+            </if>
+            <if test="methodParams != null and methodParams != ''">
+                method_params = #{methodParams},
+            </if>
+            <if test="cronExpression != null and cronExpression != ''">
+                cron_expression = #{cronExpression},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="jobStatus != null and jobStatus != ''">
+                job_status = #{jobStatus},
+            </if>
+        </trim>
+        where job_id = #{jobId}
+    </update>
+
+    <select id="getSysJobListByStatus" resultType="com.ling.other.entity.SysJobPO">
+        select
+        job_id,
+        <include refid="baseSql"></include>
+        from au_task
+        where job_status = #{status}
+    </select>
+</mapper>

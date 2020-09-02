@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * 定时任务注册类：用来添加，删除定时任务
+ */
 @Component
 public class CronTaskRegistrar implements DisposableBean {
 
@@ -37,6 +40,10 @@ public class CronTaskRegistrar implements DisposableBean {
         }
     }
 
+    /**
+     * 移除程序中的定时任务
+     * @param task
+     */
     public void removeCronTask(Runnable task) {
         ScheduledTask scheduledTask = this.scheduledTasks.remove(task);
         if (scheduledTask != null)

@@ -12,4 +12,5 @@ public class DemoTask {
     public void taskNoParams() {
         System.out.println("执行无参示例任务");
     }
+
 }

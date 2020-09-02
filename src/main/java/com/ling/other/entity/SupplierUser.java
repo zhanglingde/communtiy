@@ -1,5 +1,7 @@
 package com.ling.other.entity;
 
+import lombok.Data;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,7 +14,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-08-10 14:04:26
  */
-
+@Data
 @Table(name = "au_supplier_user")
 public class SupplierUser implements Serializable {
     private static final long serialVersionUID = -80566553887229917L;
@@ -64,92 +66,5 @@ public class SupplierUser implements Serializable {
     private Integer enabledFlag;
 
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Integer getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getTokenTime() {
-        return tokenTime;
-    }
-
-    public void setTokenTime(String tokenTime) {
-        this.tokenTime = tokenTime;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
-
-    public Integer getEnabledFlag() {
-        return enabledFlag;
-    }
-
-    public void setEnabledFlag(Integer enabledFlag) {
-        this.enabledFlag = enabledFlag;
-    }
 
 }

@@ -1,7 +1,10 @@
 package com.ling.other.common.schedule.config;
 
 
-import com.ling.other.mapper.DemoTestDao;
+import com.fasterxml.jackson.databind.ser.Serializers;
+import com.ling.other.common.constants.BaseConstants;
+import com.ling.other.entity.SysJobPO;
+import com.ling.other.mapper.TaskMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +14,17 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
+/**
+ * CommandLineRunner接口实现类，
+ * 当Spring Boot项目启动完成后，加载数据库里状态为正常的定时任务
+ */
 @Service
 public class SysJobRunner implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(SysJobRunner.class);
 
     @Autowired
-    private DemoTestDao demoTestDao;
+    private TaskMapper demoTestDao;
 
     @Autowired
     private CronTaskRegistrar cronTaskRegistrar;
@@ -26,7 +33,7 @@ public class SysJobRunner implements CommandLineRunner {
     public void run(String... args) {
         // 初始加载数据库里状态为正常的定时任务
 
-        List<SysJobPO> jobList = demoTestDao.getSysJobListByStatus(1);
+        List<SysJobPO> jobList = demoTestDao.getSysJobListByStatus(BaseConstants.TaskStatus.NORMAL);
         if (!CollectionUtils.isEmpty(jobList)) {
             for (SysJobPO job : jobList) {
                 SchedulingRunnable task = new SchedulingRunnable(job.getBeanName(), job.getMethodName(), job.getMethodParams());

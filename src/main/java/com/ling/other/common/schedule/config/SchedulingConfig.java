@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
+/**
+ * 定时任务线程池
+ */
 @Configuration
 public class SchedulingConfig {
 

@@ -9,6 +9,9 @@ import org.springframework.util.StringUtils;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
+/**
+ * 定时任务执行器，被线程池调用，用来执行bean方法
+ */
 public class SchedulingRunnable implements Runnable {
 
     private static final Logger logger = LoggerFactory.getLogger(SchedulingRunnable.class);
