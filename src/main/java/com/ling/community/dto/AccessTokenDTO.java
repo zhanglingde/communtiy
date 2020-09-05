@@ -3,7 +3,7 @@ package com.ling.community.dto;
 import lombok.Data;
 
 /**
- * dto包表示是 数据传输的模型
+ * 获取GitHub登录code的参数
  * 实体表
  */
 @Data

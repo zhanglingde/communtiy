@@ -24,4 +24,9 @@ public class TestImpl implements EasyExcelService {
     public void download(HttpServletResponse response) throws IOException {
 
     }
+
+    @Override
+    public void importExcelByExcelUtil(MultipartFile file) {
+
+    }
 }

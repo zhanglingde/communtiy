@@ -1,11 +1,13 @@
 package com.ling.other.service.impl;
 
 import com.alibaba.excel.EasyExcel;
+import com.ling.other.common.utils.ExcelUtil;
 import com.ling.other.dto.ExcelExportLineDTO;
 import com.ling.other.dto.User;
 import com.ling.other.listener.UserDataListener;
 import com.ling.other.mapper.EasyExcelMapper;
 import com.ling.other.service.EasyExcelService;
+import com.ling.other.vo.PoLineVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Constructor;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -62,5 +65,19 @@ public class EasyExcelServiceImpl implements EasyExcelService {
         EasyExcel.write(response.getOutputStream(), User.class).sheet("用户表").doWrite(list);
 
 
+    }
+
+    @Override
+    public void importExcelByExcelUtil(MultipartFile file) {
+        // try {
+        //     Class cls = PoLineVO.class;
+        //     Class c = Class.forName("com.ling.other.vo.PoLineVO");
+        //     Constructor constructor = c.getConstructor();
+        //     Constructor con = cls.getConstructor();
+        // } catch (Exception e) {
+        //     e.printStackTrace();
+        // }
+        List<PoLineVO> lineVOList = ExcelUtil.readExcel("", PoLineVO.class, file);
+        lineVOList.forEach(System.out::println);
     }
 }

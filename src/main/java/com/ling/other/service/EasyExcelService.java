@@ -26,4 +26,11 @@ public interface EasyExcelService {
      * @param response
      */
     void download(HttpServletResponse response) throws IOException;
+
+
+    /**
+     * 使用ExcelUtil导入
+     * @param file
+     */
+    void importExcelByExcelUtil(MultipartFile file);
 }

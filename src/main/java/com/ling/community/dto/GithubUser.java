@@ -2,6 +2,9 @@ package com.ling.community.dto;
 
 import lombok.Data;
 
+/**
+ * 用户对象
+ */
 @Data
 public class GithubUser {
 

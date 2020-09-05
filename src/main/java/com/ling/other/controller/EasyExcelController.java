@@ -1,5 +1,6 @@
 package com.ling.other.controller;
 
+import com.ling.other.common.utils.CommonResult;
 import com.ling.other.service.EasyExcelService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
@@ -51,6 +52,28 @@ public class EasyExcelController {
     @GetMapping("/download")
     public void download(HttpServletResponse response) throws IOException {
         easyExcelService.download(response);
+    }
+
+
+    /**
+     * 使用ExcelUtil导入
+     * @param request
+     * @return
+     */
+    @ApiOperation(value = "采购单确认", notes = "采购单确认")
+    @PostMapping("/confirm/order")
+    public CommonResult confirmOrder(HttpServletRequest request) {
+
+        MultipartFile file = null;
+        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+        if (isMultipart) {
+            MultipartHttpServletRequest multipartRequest = WebUtils.getNativeRequest(request, MultipartHttpServletRequest.class);
+            file = multipartRequest.getFile("file");
+        }
+
+        easyExcelService.importExcelByExcelUtil(file);
+
+        return CommonResult.success(null, "操作成功");
     }
 
 
