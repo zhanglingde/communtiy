@@ -10,7 +10,7 @@ public interface BaseConstants {
     /**
      * 定时任务状态
      */
-    interface TaskStatus{
+    public interface TaskStatus{
         /**
          * 正常
          */
@@ -20,5 +20,10 @@ public interface BaseConstants {
          * 暂停
          */
         Integer PAUSE = 2;
+    }
+
+    public interface Flag {
+        Integer YES = 1;
+        Integer NO = 0;
     }
 }

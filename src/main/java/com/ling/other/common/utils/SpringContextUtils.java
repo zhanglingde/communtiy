@@ -5,6 +5,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
+/**
+ * Spring ioc容器工具
+ */
 @Component("contextUtils")
 public class SpringContextUtils implements ApplicationContextAware {
 
@@ -16,6 +21,11 @@ public class SpringContextUtils implements ApplicationContextAware {
         SpringContextUtils.applicationContext = applicationContext;
     }
 
+    /**
+     * 获取容器中bean
+     * @param name 注入时的beanId
+     * @return  实体Bean对象
+     */
     public static Object getBean(String name) {
         return applicationContext.getBean(name);
     }
@@ -39,4 +49,13 @@ public class SpringContextUtils implements ApplicationContextAware {
     public static Class<? extends Object> getType(String name) {
         return applicationContext.getType(name);
     }
+
+    /**
+     * 根据注解类型获取对应的bean名称和bean对象
+     * @param clazz 注解
+     * @return 注解标注的bean的Map
+     */
+    public static Map<String, Object> getBeansWithAnnotation(Class clazz){
+        return applicationContext.getBeansWithAnnotation(clazz);
+    };
 }

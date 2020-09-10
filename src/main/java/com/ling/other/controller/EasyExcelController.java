@@ -16,6 +16,7 @@ import org.springframework.web.util.WebUtils;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
@@ -74,6 +75,12 @@ public class EasyExcelController {
         easyExcelService.importExcelByExcelUtil(file);
 
         return CommonResult.success(null, "操作成功");
+    }
+
+    @GetMapping("/test")
+    public CommonResult test() throws ClassNotFoundException {
+        easyExcelService.test();
+        return CommonResult.success();
     }
 
 

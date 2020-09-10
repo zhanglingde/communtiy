@@ -29,4 +29,9 @@ public class TestImpl implements EasyExcelService {
     public void importExcelByExcelUtil(MultipartFile file) {
 
     }
+
+    @Override
+    public void test() throws ClassNotFoundException {
+
+    }
 }

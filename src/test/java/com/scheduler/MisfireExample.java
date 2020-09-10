@@ -28,9 +28,11 @@ public class MisfireExample {
                     .withIdentity("trigger1", "group1")
                     .startAt(startTime)
                     .withSchedule(simpleSchedule()
-                            .withIntervalInSeconds(3)
-                            .repeatForever())
+                            .withIntervalInSeconds(10)
+                            //.repeatForever()
+                    )
                     .build();
+
             scheduler.scheduleJob(job, trigger);
 
             job = newJob(StatefulDumbJob.class)
@@ -45,11 +47,11 @@ public class MisfireExample {
                             .repeatForever()
                             .withMisfireHandlingInstructionNowWithExistingCount()) // set misfire instruction
                     .build();
-            scheduler.scheduleJob(job, trigger);
+            //scheduler.scheduleJob(job, trigger);
 
             scheduler.start();
-            Thread.sleep(600L * 1000L);
-            scheduler.shutdown(true);
+            //Thread.sleep(600L * 1000L);
+            //scheduler.shutdown(true);
         } catch (Exception e) {
             e.printStackTrace();
         }

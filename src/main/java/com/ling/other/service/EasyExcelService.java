@@ -33,4 +33,6 @@ public interface EasyExcelService {
      * @param file
      */
     void importExcelByExcelUtil(MultipartFile file);
+
+    void test() throws ClassNotFoundException;
 }

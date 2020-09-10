@@ -69,15 +69,28 @@ public class EasyExcelServiceImpl implements EasyExcelService {
 
     @Override
     public void importExcelByExcelUtil(MultipartFile file) {
-        // try {
-        //     Class cls = PoLineVO.class;
-        //     Class c = Class.forName("com.ling.other.vo.PoLineVO");
-        //     Constructor constructor = c.getConstructor();
-        //     Constructor con = cls.getConstructor();
-        // } catch (Exception e) {
-        //     e.printStackTrace();
-        // }
-        List<PoLineVO> lineVOList = ExcelUtil.readExcel("", PoLineVO.class, file);
-        lineVOList.forEach(System.out::println);
+         try {
+             Class cls = PoLineVO.class;
+             Class c = Class.forName("com.ling.other.vo.PoLineVO");
+             Constructor constructor = c.getConstructor();
+             Constructor con = cls.getConstructor();
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+        //List<PoLineVO> lineVOList = ExcelUtil.readExcel("", PoLineVO.class, file);
+        //lineVOList.forEach(System.out::println);
+    }
+
+    @Override
+    public void test()  {
+        try {
+            Class c = Class.forName("com.ling.other.vo.PoLineVO");
+            Constructor constructor = c.getConstructor();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
     }
 }

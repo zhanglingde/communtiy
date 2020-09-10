@@ -57,7 +57,7 @@ public class ScheduleController {
     }
 
     @ApiOperation("启动/停止")
-    @GetMapping("/start/{jobId}")
+    @PostMapping("/start/{jobId}")
     public CommonResult startOrStop(@PathVariable Integer jobId){
         scheduleService.start(jobId);
         return CommonResult.success();
