@@ -96,6 +96,12 @@
             <version>2.2.6</version>
         </dependency>
 
+        <!--   quartz定时任务     -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
