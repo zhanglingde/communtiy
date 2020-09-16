@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ling.other.mapper.LovMapper">
+
+    <!-- 创建值集   -->
+    <insert id="createLov" keyProperty="lovId" useGeneratedKeys="true">
+        insert into au_lov(lov_code,
+                           lov_name,
+                           description)
+                    values(#{lovCode},
+                           #{lovName},
+                           #{description})
+    </insert>
+
+    <!-- 批量插入值集值   -->
+    <insert id="batchInsertLovValue">
+        insert into au_lov_value(lov_id,
+        lov_code,
+        value,
+        meaning,
+        description)
+        values
+        <foreach collection="list" item="item" open="" separator="," close="">
+            (#{item.lovId},#{item.lovCode},#{item.value},#{item.meaning},#{item.description})
+        </foreach>
+
+    </insert>
+
+
+    <!-- 根据值集代码查询值集头信息   -->
+    <select id="queryLovInfo" resultType="com.ling.other.modules.lov.dto.LovDTO">
+        select
+            lov_id,
+            lov_code,
+            lov_name
+        from au_lov
+        where lov_code = #{lovCode}
+    </select>
+
+    <!-- 根据值集代码查询值集值信息   -->
+    <select id="queryLovValue" resultType="com.ling.other.modules.lov.dto.LovValueDTO">
+        select
+            lov_value_id,
+            lov_id,
+            lov_code,
+            value,
+            meaning,
+            description,
+            remark
+        from au_lov_value
+        where lov_code = #{lovCode}
+    </select>
+
+    <select id="queryLovValueDTO" resultType="com.ling.other.modules.lov.dto.LovValueDTO">
+        select
+            lov_value_id,
+            lov_id,
+            lov_code,
+            `value`,
+            meaning,
+            description
+        from au_lov_value
+        where lov_code = #{lovCode} and `value` = #{value}
+    </select>
+
+    <update id="updateSelective" >
+        update au_lov_value
+        <set>
+            <if test="lovValueDTO.lovId != null">
+                lov_id = #{lovValueDTO.lovId,jdbcType=INTEGER},
+            </if>
+            <if test="lovValueDTO.lovCode != null">
+                lov_code = #{lovValueDTO.lovCode,jdbcType=VARCHAR},
+            </if>
+            <if test="lovValueDTO.value != null">
+                `value` = #{lovValueDTO.value,jdbcType=VARCHAR},
+            </if>
+            <if test="lovValueDTO.meaning != null">
+                meaning = #{lovValueDTO.meaning,jdbcType=VARCHAR},
+            </if>
+            <if test="lovValueDTO.description != null">
+                description = #{lovValueDTO.description,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where
+        lov_value_id = #{lovValueDTO.lovValueId,jdbcType=INTEGER}
+    </update>
+
+    <select id="queryLovValueById" resultType="com.ling.other.modules.lov.dto.LovValueDTO">
+        select
+          alv.*
+        from
+          au_lov_value alv
+        where
+          lov_value_id = #{lovValueId}
+    </select>
+
+    <!--  查询值集列表  -->
+    <select id="selectAll" resultType="com.ling.other.modules.lov.vo.LovVO">
+        select lov_id,
+               lov_code,
+               lov_name,
+               description,
+               create_time,
+               update_time
+        from au_lov
+    </select>
+
+    <!--  根据主键查询详情  -->
+    <select id="selectByPrimaryKey" resultType="com.ling.other.modules.lov.vo.LovVO">
+        select lov_id,
+               lov_code,
+               lov_name,
+               description,
+               create_time,
+               update_time
+        from au_lov
+        where lov_id = #{lovId}
+    </select>
+
+    <select id="select" resultType="com.ling.other.modules.lov.vo.LovVO">
+        select lov_id,
+               lov_code,
+               lov_name,
+               description,
+               create_time,
+               update_time
+        from au_lov
+        where 1
+        <if test="lovCode != null and lovCode != ''">
+            AND lov_code LIKE concat('%',#{lovCode},'%')
+        </if>
+        <if test="lovName != null and lovName != ''">
+            AND lov_name LIKE concat('%',#{lovName},'%')
+        </if>
+    </select>
+
+    <delete id="deleteById">
+        delete
+        from
+        au_lov_value
+        where
+        lov_value_id = #{lovValueId}
+    </delete>
+</mapper>

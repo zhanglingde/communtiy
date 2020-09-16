@@ -1,4 +1,4 @@
-package com.ling.other.service;
+package com.ling.other.modules.easyexcel.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

@@ -29,3 +29,4 @@ mybatis:
 logging:
   level:
     com.ling.other.mapper: debug
+#debug: true

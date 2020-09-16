@@ -1,11 +1,9 @@
 package com.ling.other.service.impl;
 
-import com.ling.other.mapper.EasyExcelMapper;
-import com.ling.other.service.EasyExcelService;
+import com.ling.other.modules.easyexcel.service.EasyExcelService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Id;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 

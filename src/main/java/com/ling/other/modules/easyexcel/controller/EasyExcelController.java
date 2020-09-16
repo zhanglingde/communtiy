@@ -1,7 +1,7 @@
-package com.ling.other.controller;
+package com.ling.other.modules.easyexcel.controller;
 
 import com.ling.other.common.utils.CommonResult;
-import com.ling.other.service.EasyExcelService;
+import com.ling.other.modules.easyexcel.service.EasyExcelService;
 import io.swagger.annotations.ApiOperation;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,7 @@ import org.springframework.web.util.WebUtils;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 /**
  * EasyExcel的使用

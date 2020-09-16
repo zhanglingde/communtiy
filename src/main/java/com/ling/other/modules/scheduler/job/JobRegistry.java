@@ -15,6 +15,11 @@ public class JobRegistry {
 
     private static Map<String, Object> jobMap = new ConcurrentHashMap<>();
 
+    /**
+     * 将
+     * @param jobCode JobHandler注解上标注的定时任务的jobCode
+     * @param handler 自定义的需要定时任务执行的bean，实现IJobHandler接口
+     */
     public static void addJobHandler(String jobCode, Object handler) {
         jobMap.put(jobCode, handler);
     }

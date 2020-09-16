@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ling.other.mapper.LovValueMapper">
+
+
+    <select id="selectByLovId" resultType="com.ling.other.modules.lov.vo.LovValueVO">
+        select lov_value_id,
+               lov_id,
+               lov_code,
+               value,
+               meaning,
+               description,
+               order_seq,
+               create_time,
+               update_time,
+               remark
+        from au_lov_value
+        where lov_id = #{lovId}
+    </select>
+</mapper>

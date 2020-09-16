@@ -39,7 +39,6 @@ public class SupplierUserServiceImpl implements SupplierUserService {
 
     @Override
     public List<SupplierUser> list() {
-
         List<SupplierUser> supplierUsers = supplierUserMapper.selectAll();
         supplierUsers.forEach(list -> System.out.println(list));
         return supplierUsers;

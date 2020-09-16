@@ -1,4 +1,4 @@
-package com.ling.config;
+package com.ling.other.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +17,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Configuration
-//@EnableSwagger2
+@Configuration
+@EnableSwagger2
 public class SwaggerConfiguration {
 
     @Bean
@@ -43,7 +43,7 @@ public class SwaggerConfiguration {
                 .enable(enable)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.ling.community.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.ling.other.modules"))
                 .paths(PathSelectors.ant(paths))
                 .build()
                 .groupName(groupName)
