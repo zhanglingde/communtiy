@@ -1,11 +1,12 @@
-package com.ling.other.controller;
+package com.ling.other.modules.user.controller;
 
 
 import com.ling.other.common.exception.RrException;
 import com.ling.other.common.utils.CommonResult;
-import com.ling.other.dto.SupplierUserDTO;
-import com.ling.other.entity.SupplierUser;
-import com.ling.other.service.SupplierUserService;
+import com.ling.other.modules.lov.annotation.ProcessLovValue;
+import com.ling.other.modules.user.dto.SupplierUserDTO;
+import com.ling.other.modules.user.entity.SupplierUser;
+import com.ling.other.modules.user.service.SupplierUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,9 @@ public class SupplierUserController {
 
     @ApiOperation(value = "供应商列表", notes = "供应商列表")
     @GetMapping("/list")
-    public List<SupplierUser> list(){
-        List<SupplierUser> list = supplierUserService.list();
-        return list;
+    @ProcessLovValue(targetField = "data")
+    public CommonResult<List<SupplierUser>> list(){
+        return CommonResult.success(supplierUserService.list());
     }
 
     @GetMapping("/hello")

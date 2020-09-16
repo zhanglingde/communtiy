@@ -1,7 +1,6 @@
-package com.ling.other.service;
+package com.ling.other.modules.user.service;
 
-import com.ling.other.dto.SupplierUserDTO;
-import com.ling.other.entity.SupplierUser;
+import com.ling.other.modules.user.entity.SupplierUser;
 import java.util.List;
 
 /**

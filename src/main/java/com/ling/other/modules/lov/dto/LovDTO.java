@@ -24,11 +24,19 @@ public class LovDTO {
     @ApiModelProperty("值集代码")
     private String lovCode;
 
+    @ApiModelProperty("Lov类型")
+    private String lovTypeCode;
+
     @ApiModelProperty("值集名称")
     private String lovName;
 
-    @ApiModelProperty("值字段")
+    @ApiModelProperty("值集描述")
     private String description;
+
+    @ApiModelProperty("值字段")
+    private String valueField;
+    @ApiModelProperty("显示字段")
+    private String displayField;
 
     @ApiModelProperty("独立值集")
     private List<LovValueDTO> lovValueDTOList;

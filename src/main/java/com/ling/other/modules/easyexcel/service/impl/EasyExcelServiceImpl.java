@@ -2,15 +2,14 @@ package com.ling.other.modules.easyexcel.service.impl;
 
 import com.alibaba.excel.EasyExcel;
 import com.ling.other.modules.easyexcel.dto.ExcelExportLineDTO;
-import com.ling.other.dto.User;
-import com.ling.other.listener.UserDataListener;
+import com.ling.other.modules.easyexcel.listener.UserDataListener;
+import com.ling.other.modules.user.dto.User;
 import com.ling.other.mapper.EasyExcelMapper;
 import com.ling.other.modules.easyexcel.service.EasyExcelService;
-import com.ling.other.vo.PoLineVO;
+import com.ling.other.modules.easyexcel.vo.PoLineVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -69,7 +68,7 @@ public class EasyExcelServiceImpl implements EasyExcelService {
     public void importExcelByExcelUtil(MultipartFile file) {
          try {
              Class cls = PoLineVO.class;
-             Class c = Class.forName("com.ling.other.vo.PoLineVO");
+             Class c = Class.forName("com.ling.other.modules.easyexcel.vo.PoLineVO");
              Constructor constructor = c.getConstructor();
              Constructor con = cls.getConstructor();
          } catch (Exception e) {
@@ -82,7 +81,7 @@ public class EasyExcelServiceImpl implements EasyExcelService {
     @Override
     public void test()  {
         try {
-            Class c = Class.forName("com.ling.other.vo.PoLineVO");
+            Class c = Class.forName("com.ling.other.modules.easyexcel.vo.PoLineVO");
             Constructor constructor = c.getConstructor();
 
         } catch (ClassNotFoundException e) {

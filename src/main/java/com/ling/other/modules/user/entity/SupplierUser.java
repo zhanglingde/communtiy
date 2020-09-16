@@ -1,10 +1,12 @@
-package com.ling.other.entity;
+package com.ling.other.modules.user.entity;
 
+import com.ling.other.modules.lov.annotation.LovValue;
 import lombok.Data;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -63,7 +65,11 @@ public class SupplierUser implements Serializable {
     /**
     * 启动标识，1启用，0禁用
     */
+    @LovValue("FLAG")
     private Integer enabledFlag;
+
+    @Transient
+    private String enabledFlagMeaning;
 
 
 

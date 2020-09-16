@@ -19,7 +19,7 @@
     </insert>
 
 
-    <select id="selectAll" resultType="com.ling.other.dto.User">
+    <select id="selectAll" resultType="com.ling.other.modules.user.dto.User">
         select
         <include refid="baseSql"></include>
         from user

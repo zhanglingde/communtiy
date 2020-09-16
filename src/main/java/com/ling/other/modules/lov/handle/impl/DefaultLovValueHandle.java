@@ -1,6 +1,7 @@
 package com.ling.other.modules.lov.handle.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.ling.other.common.constants.BaConstants;
 import com.ling.other.common.utils.PageUtils;
 import com.ling.other.modules.lov.adapter.LovAdapter;
 import com.ling.other.modules.lov.annotation.LovValue;
@@ -43,7 +44,7 @@ public class DefaultLovValueHandle implements LovValueHandle {
 
     /**
      * @param targetFields data
-     * @param result       返回值对象
+     * @param result       接口的返回值对象CommonResult
      * @return
      * @throws NoSuchFieldException
      * @throws IllegalAccessException
@@ -55,6 +56,8 @@ public class DefaultLovValueHandle implements LovValueHandle {
             logger.debug("lovValue is null, skip translate");
             return null;
         }
+        logger.debug("lov translate begin");
+        // 有其他解析需求的话可以在这里扩展
         if (result instanceof Collection) {
             // 如果传入对象为集合，则直接处理其中的Elements
             this.processCollection(targetFields, (Collection<?>) result);
@@ -62,15 +65,17 @@ public class DefaultLovValueHandle implements LovValueHandle {
             // 处理分页数据
             this.processPage(targetFields, (PageUtils<?>) result);
         } else {
+            // 未命中任何解析方式,进行默认解析
             this.processDefault(targetFields, result);
         }
+        logger.debug("lov transaction end!");
 
         return result;
     }
 
     private void processPage(String[] targetFields, PageUtils<?> page) throws NoSuchFieldException, IllegalAccessException {
         Collection<?> collection = page.getList();
-        if (collection == null){
+        if (collection == null) {
             return;
         }
         // 得到集合的第一个对象
@@ -94,7 +99,7 @@ public class DefaultLovValueHandle implements LovValueHandle {
      * 按集合来处理传入对象
      *
      * @param targetFields 待翻译的目标字段名
-     * @param collection   传入对象
+     * @param collection   对象的集合
      * @throws IllegalAccessException
      * @throws NoSuchFieldException
      */
@@ -112,6 +117,7 @@ public class DefaultLovValueHandle implements LovValueHandle {
             logger.debug("target collection is empty, skip...");
             return;
         }
+        // Object为集合第一个对象
         Object demo = first.get();
         this.prepareValues(demo.getClass(), collection);
         for (Object object : collection) {
@@ -127,7 +133,7 @@ public class DefaultLovValueHandle implements LovValueHandle {
      * 默认处理传入对象
      *
      * @param targetFields 待翻译的目标字段名
-     * @param result       传入对象
+     * @param result
      */
     private void processDefault(String[] targetFields, Object result) throws NoSuchFieldException, IllegalAccessException {
         if (logger.isDebugEnabled()) {
@@ -166,7 +172,8 @@ public class DefaultLovValueHandle implements LovValueHandle {
                         value = field.get(result);
                         this.process(new String[]{targetField.substring(indexOfSplitor + 1)}, value);
                     } else {
-                        if("data".equals(targetField)){
+                        if ("data".equals(targetField)) {
+                            // 处理头行关系中的头，即最外面的data指向的对象
                             logger.debug("recursive process result.{}", targetField);
                             // 获得封装的data对象
                             field = this.getField(clazz, targetField);
@@ -177,7 +184,7 @@ public class DefaultLovValueHandle implements LovValueHandle {
                             this.process(null, value);
                         }
                     }
-                    // 处理行集合
+                    // 处理头行关系中行集合对象中的映射
                     if (!"data".equals(targetField)) {
                         Class<?> aClass = value.getClass();
                         field = this.getField(aClass, targetField);
@@ -282,12 +289,12 @@ public class DefaultLovValueHandle implements LovValueHandle {
     }
 
     /**
-     * 解析目标对象中的{}注解,将值集值缓存到ThreadLocal中
+     * 解析目标对象中的{@link LovValue}注解,将值集值缓存到ThreadLocal中
      *
-     * @param clazz
-     * @param result
+     * @param clazz  待解析对象的class
+     * @param originData
      */
-    private void prepareValues(Class<?> clazz, Object result) {
+    private void prepareValues(Class<?> clazz, Object originData) throws NoSuchFieldException, IllegalAccessException {
         logger.debug("process lov values...");
         // 各种变量的声明
         Field[] fields = FieldUtils.getAllFields(clazz);
@@ -307,6 +314,7 @@ public class DefaultLovValueHandle implements LovValueHandle {
             }
             String lovCode = lovValue.lovCode();
             Assert.isTrue(StringUtils.isNotEmpty(lovCode), String.format("para not be null", "lov code"));
+            logger.debug("target field id [{}] and target lov code is [{}]", field.getName(), lovCode);
             // 根据值集Code获取值集
             lov = localLovMap.get(lovCode);
             if (lov == null) {
@@ -321,19 +329,91 @@ public class DefaultLovValueHandle implements LovValueHandle {
                 localLovMap.put(lovCode, lov);
             }
             // 检查值集类型
-
-            logger.debug("lov [{}] is IDP...", lovCode);
-            // 独立值集后续处理
-            List<LovValueDTO> values = this.lovAdapter.queryLovValue(lovCode);
-            // 无效的值集,跳过
-            if (CollectionUtils.isEmpty(values)) {
-                logger.warn("can not get lov values by code [{}] from local cache and lov adapter", lovCode);
+            if (!(BaConstants.LovTypes.IDP.equals(lov.getLovTypeCode()) || BaConstants.LovTypes.SQL.equals(lov.getLovTypeCode()))) {
+                // 非独立值集和SQL值集不处理后续，跳过
+                logger.debug("lov [{}] is not IDP or SQL,skip prepare...", lovCode);
                 continue;
             }
-            Map<String, String> valueMeaningMap = new HashMap<>(values.size());
-            values.forEach(value -> valueMeaningMap.put(value.getValue(), value.getMeaning()));
-            logger.debug("get lov values [{}] from lov adapter: [{}] and it will be cached in local thread", lovCode, valueMeaningMap);
-            localValueMap.put(lovCode, valueMeaningMap);
+            // 校验值集类型
+            // 线程缓存中已有该值集，跳过
+            if (localValueMap.get(lovCode) != null) {
+                logger.debug("get values [{}] in local cache: [{}]", lovCode, localValueMap.get(lovCode));
+                continue;
+            }
+            logger.debug("can not get values [{}] from local cache,query lov adapter...",lovCode);
+            if(BaConstants.LovTypes.IDP.equals(lov.getLovTypeCode())){
+                // 独立值集后续处理
+                logger.debug("lov [{}] is IDP...", lovCode);
+                List<LovValueDTO> values = this.lovAdapter.queryLovValue(lovCode);
+                // 无效的值集,跳过
+                if (CollectionUtils.isEmpty(values)) {
+                    logger.warn("can not get lov values by code [{}] from local cache and lov adapter", lovCode);
+                    continue;
+                }
+                Map<String, String> valueMeaningMap = new HashMap<>(values.size());
+                values.forEach(value -> valueMeaningMap.put(value.getValue(), value.getMeaning()));
+                logger.debug("get lov values [{}] from lov adapter: [{}] and it will be cached in local thread", lovCode, valueMeaningMap);
+                localValueMap.put(lovCode, valueMeaningMap);
+            }else if(BaConstants.LovTypes.SQL.equals(lov.getLovTypeCode())){
+                // SQL值集后续处理
+                logger.debug("lov [{}] is SQL...", lovCode);
+                if(originData == null){
+                    logger.debug("can not process SQL values [{}] when input data is null",lovCode);
+                    continue;
+                }
+                //获取ID串
+                List<Object> identities;
+                if(originData instanceof Collection){
+                    logger.debug("input data is Collection...");
+                    Collection<?> originDatas = (Collection<?>) originData;
+                    if(originDatas.isEmpty()){
+                        logger.debug("can not process SQL values [{}] when input data collection is empty", lovCode);
+                        continue;
+                    }
+                    identities = new ArrayList<>(originDatas.size());
+                    valueFieldName = lov.getValueField();
+                    if(StringUtils.isEmpty(valueFieldName)){
+                        logger.debug("can not process SQL values [{}] when input data's valueField name is null", lovCode);
+                        continue;
+                    }
+                    exampleOriginData = originDatas.stream().filter(Objects::nonNull).findFirst().orElse(null);
+                    if (exampleOriginData == null) {
+                        logger.debug("can not process SQL values [{}] when all data is null in input collection",lovCode);
+                        continue;
+                    }
+                    originDataClazz = exampleOriginData.getClass();
+                    valueField = originDataClazz.getDeclaredField(lov.getValueField());
+                    if (valueField == null) {
+                        logger.debug("can not process values [{}] when input data's valueField is null",lovCode);
+                        continue;
+                    }
+                    valueField.setAccessible(true);
+                    for (Object item : originDatas) {
+                        identities.add(valueField.get(item));
+
+                    }
+                }else{
+                    logger.debug("input data is not Collection...");
+                    valueFieldName = lov.getValueField();
+                    if(StringUtils.isEmpty(valueFieldName)){
+                        logger.debug("can not process SQL values [{}] when input data's valueFieldName is null", lovCode);
+                        continue;
+                    }
+                    identities = new ArrayList<>(1);
+                    valueField = originData.getClass().getDeclaredField(valueFieldName);
+                    if (valueField == null) {
+                        logger.debug("can not process values [{}] when input data's valueField is null",lovCode);
+                        continue;
+                    }
+                    valueField.setAccessible(true);
+                    identities.add(valueField.get(originData));
+                }
+
+                // TODO 远程调用查询SQL值集
+
+
+            }
+
         }
     }
 

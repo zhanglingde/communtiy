@@ -1,9 +1,9 @@
-package com.ling.other.listener;
+package com.ling.other.modules.easyexcel.listener;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson.JSON;
-import com.ling.other.dto.User;
+import com.ling.other.modules.user.dto.User;
 import com.ling.other.mapper.EasyExcelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

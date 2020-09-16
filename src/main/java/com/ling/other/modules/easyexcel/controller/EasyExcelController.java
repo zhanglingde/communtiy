@@ -29,10 +29,6 @@ public class EasyExcelController {
     @Resource(name = "easyExcelServiceImpl")
     private EasyExcelService easyExcelService;
 
-    @Qualifier("test")
-    @Autowired
-    private EasyExcelService testImpl;
-
 
     @ApiOperation("导入Excel")
     @PostMapping("/import")

@@ -1,6 +1,6 @@
 package com.ling.other.mapper;
 
-import com.ling.other.dto.User;
+import com.ling.other.modules.user.dto.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

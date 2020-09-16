@@ -1,9 +1,9 @@
-package com.ling.other.service.impl;
+package com.ling.other.modules.user.service.impl;
 
 import com.ling.other.common.exception.RrException;
-import com.ling.other.entity.SupplierUser;
+import com.ling.other.modules.user.entity.SupplierUser;
 import com.ling.other.mapper.SupplierUserMapper;
-import com.ling.other.service.SupplierUserService;
+import com.ling.other.modules.user.service.SupplierUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

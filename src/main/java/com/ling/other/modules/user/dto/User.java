@@ -1,4 +1,4 @@
-package com.ling.other.dto;
+package com.ling.other.modules.user.dto;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;

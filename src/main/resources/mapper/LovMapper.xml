@@ -32,6 +32,7 @@
         select
             lov_id,
             lov_code,
+            lov_type_code,
             lov_name
         from au_lov
         where lov_code = #{lovCode}
