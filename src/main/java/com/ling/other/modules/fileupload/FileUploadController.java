@@ -19,18 +19,19 @@ import java.util.UUID;
 @RestController
 public class FileUploadController {
 
-    SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd/");
 
 
     @PostMapping("/upload")
     public Map<String, Object> fileupload(MultipartFile file, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         String originalFilename = file.getOriginalFilename();
-        if (!originalFilename.endsWith(".pdf")) {
+        /*if (!originalFilename.endsWith(".pdf")) {
             result.put("status", "error");
             result.put("msg", "文件类型不对");
             return result;
-        }
+        }*/
+
         String format = sdf.format(new Date());
         // 获取的是临时路径，项目重启就会消息
         String realPath = request.getServletContext().getRealPath("/") + format;
@@ -44,6 +45,7 @@ public class FileUploadController {
             file.transferTo(new File(folder, newName));
             String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + format + newName;
             result.put("status", "success");
+            result.put("name",originalFilename);
             result.put("url", url);
         } catch (IOException e) {
             e.printStackTrace();

@@ -2,17 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>SpringBoot+Vue文件上传并预览</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 </head>
 <body>
 
 <div id="app">
     <el-upload
-            action="/upload2"
+            action="/upload"
+            :on-success="onSuccess"
             :on-preview="handlePreview"
             accept=".pdf"
             :limit="10">
+
+        <!--   上传文件框只能选择pdf文件-->
         <el-button size="small" type="primary">点击上传</el-button>
         <div slot="tip" class="el-upload__tip">只能上传pdf文件，且不超过100MB</div>
     </el-upload>
@@ -26,7 +29,14 @@
 new Vue({
     el: '#app',
     methods:{
-        handlePreview(file){
+        onSuccess(response, file, fileList) {
+            console.log(response);
+            console.log(file);
+            console.log(fileList);
+        },
+        handlePreview(file) {
+            console.log(file)
+            console.log(file.response.url);
             window.open(file.response.url);
         }
     }
