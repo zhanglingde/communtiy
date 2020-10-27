@@ -131,6 +131,13 @@
             <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
 
+        <!--  zookeeper      -->
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.5.5</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.aliyun.openservices/ons-client -->
         <dependency>
             <groupId>com.aliyun.openservices</groupId>
@@ -146,10 +153,12 @@
         </dependency>
 
 
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
