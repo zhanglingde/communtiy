@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8088
 
 # 配置文件的分离  不同的项目环境读取不同的配置文件
 github:
@@ -30,6 +30,8 @@ spring:
   servlet:
     multipart:
       max-file-size: 100MB   # 上传文件最大值
+
+
 # mybatis配置
 mybatis:
   # 指定全局配置文件的位置
@@ -40,8 +42,8 @@ mybatis:
     map-underscore-to-camel-case: true    # 开启驼峰映射
 
 # 日志信息
-logging:
-  level:
-    com.ling.other.mapper: debug
+#logging:
+#  level:
+#    com.ling.other.mapper: debug
 
 #debug: true
