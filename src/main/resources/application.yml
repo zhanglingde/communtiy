@@ -42,8 +42,8 @@ mybatis:
     map-underscore-to-camel-case: true    # 开启驼峰映射
 
 # 日志信息
-#logging:
-#  level:
-#    com.ling.other.mapper: debug
+logging:
+  level:
+    com.ling.other.mapper: debug
 
 #debug: true
