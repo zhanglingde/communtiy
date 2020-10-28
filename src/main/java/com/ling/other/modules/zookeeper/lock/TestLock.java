@@ -33,7 +33,7 @@ public class TestLock {
     public void lock() {
 
         for (int i = 0; i < 10; i++) {
-            new Thread(){
+            new Thread() {
                 @Override
                 public void run() {
                     WatchCallBack watchCallBack = new WatchCallBack();
@@ -48,11 +48,11 @@ public class TestLock {
 
                     // 当把休眠1s注释掉，因为执行的太快，后续还没有监控到当前命令就执行完了，后续就获取不到锁了（因为没有监控到当前的改变）
 
-                    // try {
-                    //     Thread.sleep(1000);
-                    // } catch (InterruptedException e) {
-                    //     e.printStackTrace();
-                    // }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     //释放锁
                     watchCallBack.unLock();
 
@@ -61,7 +61,7 @@ public class TestLock {
             }.start();
         }
 
-        while(true){
+        while (true) {
 
         }
     }
