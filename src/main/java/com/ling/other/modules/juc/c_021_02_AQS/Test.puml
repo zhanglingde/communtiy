@@ -1,0 +1,6 @@
+@startuml
+ReentrantLock -> SyncNonfairSync: lock()
+SyncNonfairSync -> AQS: acquire(1)
+
+
+@enduml
