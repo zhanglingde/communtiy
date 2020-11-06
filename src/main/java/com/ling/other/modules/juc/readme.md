@@ -3,6 +3,10 @@
 - `c_009`：synchronized可重入
 - `c_010`：子类调用父用，锁的都是this也是可重入的
 - `c_011`：程序在执行过程中，如果出现异常，默认情况锁会被释放,如果不想被释放，可以捕获异常
+- `c_023_02`：HashTable,HashMap,ConcurrentHashMap效率对比
+- `juc.c_024`：Vector到Queue
+    多线程的不用List，先想到Queue，用Set也可以，set有Concurrent的
+    
 # c_020 ReentrantLock
 5. 公平锁
 
