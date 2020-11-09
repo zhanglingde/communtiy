@@ -2,5 +2,4 @@
 .mvn
 target
 community.iml
-mvnw
-mvnw.cmd
+
