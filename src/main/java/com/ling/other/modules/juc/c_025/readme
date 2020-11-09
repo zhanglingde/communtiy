@@ -1,0 +1,1 @@
+List和Queue区别：Queue提供了对线程有好的接口offer，put等

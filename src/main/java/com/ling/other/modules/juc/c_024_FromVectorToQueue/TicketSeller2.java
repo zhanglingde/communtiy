@@ -29,7 +29,7 @@ public class TicketSeller2 {
 			new Thread(()->{
 				while(tickets.size() > 0) {
 
-					// 这段代码没有加锁，所以很多线程都判断size大于0，但是只剩一张票了
+					// size方法加了锁，但是这段代码没有加锁，所以很多线程都判断size大于0，但是只剩一张票了
 					try {
 						TimeUnit.MILLISECONDS.sleep(10);
 					} catch (InterruptedException e) {
