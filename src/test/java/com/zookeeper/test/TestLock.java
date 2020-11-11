@@ -4,7 +4,6 @@ import com.ling.other.modules.zookeeper.config.ZKUtils;
 import org.apache.zookeeper.ZooKeeper;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author: 马士兵教育
@@ -29,7 +28,7 @@ public class TestLock {
         }
     }
 
-    @Test
+    //@Test
     public void lock(){
 
         for (int i = 0; i < 10; i++) {
