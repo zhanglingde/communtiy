@@ -22,6 +22,7 @@ public class T08_TestPhaser {
 
     public static void main(String[] args) {
 
+        // 每个阶段的数量
         phaser.bulkRegister(5);
 
         for(int i=0; i<5; i++) {
@@ -30,6 +31,7 @@ public class T08_TestPhaser {
 
                 Person p = new Person("person " + nameIndex);
                 p.arrive();
+                // 没有到bulkRegister的数量5就会阻塞住
                 phaser.arriveAndAwaitAdvance();
 
                 p.eat();
@@ -47,6 +49,7 @@ public class T08_TestPhaser {
         @Override
         protected boolean onAdvance(int phase, int registeredParties) {
 
+            // 分三个阶段
             switch (phase) {
                 case 0:
                     System.out.println("所有人到齐了！");

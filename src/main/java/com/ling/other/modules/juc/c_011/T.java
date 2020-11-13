@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class T {
 	int count = 0;
+
 	synchronized void m() {
 		System.out.println(Thread.currentThread().getName() + " start");
 		while(true) {

@@ -8,8 +8,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
- * 使用reentrantlock可以完成同样的功能
- * 需要注意的是，必须要必须要必须要手动释放锁（重要的事情说三遍）
  * 使用syn锁定的话如果遇到异常，jvm会自动释放锁，但是lock必须手动释放锁，因此经常在finally中进行锁的释放
  */
 public class T02_ReentrantLock2 {

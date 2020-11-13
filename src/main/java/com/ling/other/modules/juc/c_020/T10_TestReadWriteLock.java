@@ -46,21 +46,19 @@ public class T10_TestReadWriteLock {
     }
 
 
-
-
-
     public static void main(String[] args) {
+        // 使用互斥锁，排它锁需要20s执行完
         //Runnable readR = ()-> read(lock);
-        Runnable readR = ()-> read(readLock);
-
         //Runnable writeR = ()->write(lock, new Random().nextInt());
+
+        // 使用读锁，多线程可以同时读，效率提高很多
+        Runnable readR = ()-> read(readLock);
         Runnable writeR = ()->write(writeLock, new Random().nextInt());
 
         // 18个读线程
         for(int i=0; i<18; i++) new Thread(readR).start();
         // 2个写线程
         for(int i=0; i<2; i++) new Thread(writeR).start();
-
 
     }
 }

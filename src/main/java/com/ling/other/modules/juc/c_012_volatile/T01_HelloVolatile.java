@@ -20,28 +20,39 @@ package com.ling.other.modules.juc.c_012_volatile;
 
 import java.util.concurrent.TimeUnit;
 
+
+/**
+ * t1线程读取到running为true，主线程睡1s后修改running为false，t1线程仍是true，进行自旋
+ */
 public class T01_HelloVolatile {
     /*volatile*/ boolean running = true; //对比一下有无volatile的情况下，整个程序运行结果的区别
+    int flag = 0;
 
     void m() {
         System.out.println("m start");
-        //while (true){
-        //    try {
-        //        TimeUnit.SECONDS.sleep(5);
-        //    } catch (InterruptedException e) {
-        //        e.printStackTrace();
-        //    }
-        //    System.out.println("t1:" + running);
-        //}
-        while (running) {
-            //try {
-            //    TimeUnit.SECONDS.sleep(1);
-            //} catch (InterruptedException e) {
-            //    e.printStackTrace();
-            //}
+        while (true) {
+            // 主线程改了running后，t1读取到的running值也改了
+
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             //System.out.println("t1:" + running);
+            System.out.println("t1:" + flag);
         }
-        System.out.println("m end!");
+        // 循环中没有代码时，running被主线程修改了，t1不知道，但是当循环中有代码时，running被修改了，t1线程读取到了修改后的值
+        //while (running) {
+        //    //int i = 1;
+        //    //try {
+        //    //    TimeUnit.SECONDS.sleep(1);
+        //    //} catch (InterruptedException e) {
+        //    //    e.printStackTrace();
+        //    //}
+        //    //System.out.println("t1:" + running);
+        //}
+
+        //System.out.println("m end!");
     }
 
     public static void main(String[] args) {
@@ -50,20 +61,21 @@ public class T01_HelloVolatile {
         new Thread(t::m, "t1").start();
 
         try {
-            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.SECONDS.sleep(5);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         t.running = false;
-        //while (true) {
-        //    try {
-        //        TimeUnit.SECONDS.sleep(1);
-        //    } catch (InterruptedException e) {
-        //        e.printStackTrace();
-        //    }
-        //    System.out.println("main:" + t.running);
-        //}
+        while (true) {
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            t.flag++;
+            //System.out.println("main:" + t.running);
+        }
     }
 
 }

@@ -1,14 +1,15 @@
-/**
- * volatile 引用类型（包括数组）只能保证引用本身的可见性，不能保证内部字段的可见性
- */
 package com.ling.other.modules.juc.c_012_volatile;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * volatile 引用类型（包括数组）只能保证引用本身的可见性，不能保证内部字段的可见性
+ */
 public class T02_VolatileReference1 {
 
     boolean running = true;
 
+    // 虽然用volatile修饰了T，只能保证引用可见性，但是当主线程修改了T对象内的字段，线程1并不知道
     volatile static T02_VolatileReference1 T = new T02_VolatileReference1();
 
 
@@ -21,6 +22,7 @@ public class T02_VolatileReference1 {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}*/
+            //System.out.println("t1:"+running);
         }
         System.out.println("m end!");
     }

@@ -3,6 +3,10 @@ package com.ling.other.modules.juc.c_020;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.LockSupport;
 
+/**
+ * LockSupport.park()可能让线程阻塞，不需要加锁，而wait()需要加锁；
+ * LockSupport.unpark()可以唤醒某个指定的线程，notify()不能唤醒等待队列中的指定线程
+ */
 public class T13_TestLockSupport {
     public static void main(String[] args) {
         Thread t = new Thread(()->{
@@ -12,6 +16,7 @@ public class T13_TestLockSupport {
                     // 当前线程停止，阻塞
                     LockSupport.park();
                 }
+
                 try {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
@@ -22,7 +27,7 @@ public class T13_TestLockSupport {
 
         t.start();
 
-        // 唤醒某个线程t，unpark可以先行调用，主线程先调用unpark,线程t调用park不会阻塞
+        // 唤醒某个线程t，unpark可以先于park调用，主线程先调用unpark,线程t调用park不会阻塞
         LockSupport.unpark(t);
 
         /*try {
