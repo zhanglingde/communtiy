@@ -290,23 +290,23 @@
                 </configuration>
             </plugin>
             <!--  flyway插件配置          -->
-<!--            <plugin>-->
-<!--                <groupId>org.flywaydb</groupId>-->
-<!--                <artifactId>flyway-maven-plugin</artifactId>-->
-<!--                <version>5.2.4</version>-->
-<!--                <configuration>-->
-<!--                    <url>jdbc:h2:D:/ProgramFiles/H2/community</url>-->
-<!--                    <user>sa</user>-->
-<!--                    <password>123</password>-->
-<!--                </configuration>-->
-<!--                <dependencies>-->
-<!--                    <dependency>-->
-<!--                        <groupId>com.h2database</groupId>-->
-<!--                        <artifactId>h2</artifactId>-->
-<!--                        <version>1.4.199</version>-->
-<!--                    </dependency>-->
-<!--                </dependencies>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>5.2.4</version>
+                <configuration>
+                    <url>jdbc:mysql://121.37.185.192:3306/test</url>
+                    <user>root</user>
+                    <password>zhangling03</password>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>1.4.199</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <!--  JMH运行报错所需插件          -->
 <!--            <plugin>-->
 <!--                <groupId>org.codehaus.mojo</groupId>-->

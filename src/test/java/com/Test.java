@@ -1,5 +1,7 @@
 package com;
 
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.LockSupport;
 
 /**
@@ -11,6 +13,10 @@ public class Test {
     static Thread a = null,b = null,c = null;
 
     public static void main(String[] args) {
+
+    }
+
+    void test(){
         char[] aI = "AAA".toCharArray();
         char[] bI = "BBB".toCharArray();
         char[] cI = "CCC".toCharArray();
@@ -43,6 +49,5 @@ public class Test {
         a.start();
         b.start();
         c.start();
-
     }
 }

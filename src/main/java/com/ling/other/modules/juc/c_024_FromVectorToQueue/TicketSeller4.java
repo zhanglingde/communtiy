@@ -5,7 +5,8 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
- * 使用ConcurrentQueue提高并发性
+ * 多线程使用ConcurrentQueue提高并发性，不使用List
+ * 多线程不重复的元素可以使用ConcurrentSet
  */
 public class TicketSeller4 {
 	static Queue<String> tickets = new ConcurrentLinkedQueue<>();

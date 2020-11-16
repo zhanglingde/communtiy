@@ -9,6 +9,9 @@ package com.ling.other.modules.juc.c_022_RefTypeAndThreadLocal;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 1s后线程2修改了tl值，线程1 2s后取得的值还是原来的
+ */
 public class ThreadLocal2 {
 	//volatile static Person p = new Person();
 	static ThreadLocal<Person> tl = new ThreadLocal<>();

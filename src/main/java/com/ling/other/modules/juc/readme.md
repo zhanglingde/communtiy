@@ -27,6 +27,23 @@
 2. cas ,sync, longadder
 
 
+#### AQS
+
+1. ReentrantLock在lock方法打断点查看
+
+
+- [ ] 作业：CountDownLatch源码，state是表示初始化设置的值
+
+#### ThreadLocal
+
+`c_022`：
+
+#### 容器
+
+`c_023`：HashTable、HashMap、ConcurrentHashMap、SynchronizedHashMap效率对比
+`c_024`：Vector到Queue
+
+
 
 - `c_023_02`：HashTable,HashMap,ConcurrentHashMap效率对比
     1. Vector,Hashtable：自带锁，基本不用

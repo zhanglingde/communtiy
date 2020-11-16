@@ -3,13 +3,18 @@ package com.ling.other.modules.juc.c_023_02_FromHashtableToCHM;
 import java.util.Hashtable;
 import java.util.UUID;
 
+/**
+ * 100个线程同时向容器中放1000000个UUID，每个线程放10000个UUID，测试写和读的效率
+ */
 public class T01_TestHashtable {
 
     static Hashtable<UUID, UUID> m = new Hashtable<>();
 
+    // count = 1000000
     static int count = Constants.COUNT;
     static UUID[] keys = new UUID[count];
     static UUID[] values = new UUID[count];
+    // thread_count = 100
     static final int THREAD_COUNT = Constants.THREAD_COUNT;
 
     static {

@@ -15,6 +15,9 @@ package com.ling.other.modules.juc.c_024_FromVectorToQueue;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 线程不安全，不能保证原子性
+ */
 public class TicketSeller2 {
 	static Vector<String> tickets = new Vector<>();
 	
@@ -30,13 +33,12 @@ public class TicketSeller2 {
 				while(tickets.size() > 0) {
 
 					// size方法加了锁，但是这段代码没有加锁，所以很多线程都判断size大于0，但是只剩一张票了
-					try {
-						TimeUnit.MILLISECONDS.sleep(10);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					
-					
+					//try {
+					//	TimeUnit.MILLISECONDS.sleep(10);
+					//} catch (InterruptedException e) {
+					//	e.printStackTrace();
+					//}
+
 					System.out.println("销售了--" + tickets.remove(0));
 				}
 			}).start();

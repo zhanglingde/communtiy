@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * size和进行remove必须是一整个的原子操作
+ * 线程安全：size和进行remove必须是一整个的原子操作
  */
 public class TicketSeller3 {
 	static List<String> tickets = new LinkedList<>();
