@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * DelayQueue：按设置的时间取出来执行（是使用PriorityQueue实现的），按时间进行优先级的排序
- * 按时间执行的调度任务
+ * 使用场景：按时间执行的调度任务
  */
 public class T07_DelayQueue {
 

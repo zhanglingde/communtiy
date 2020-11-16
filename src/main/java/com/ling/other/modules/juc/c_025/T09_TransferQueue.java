@@ -2,6 +2,9 @@ package com.ling.other.modules.juc.c_025;
 
 import java.util.concurrent.LinkedTransferQueue;
 
+/**
+ * transfer()方法：线程添加数据到队列后，就在那等着，阻塞住，直到该元素被取走，在释放阻塞
+ */
 public class T09_TransferQueue {
 	public static void main(String[] args) throws InterruptedException {
 		LinkedTransferQueue<String> strs = new LinkedTransferQueue<>();
