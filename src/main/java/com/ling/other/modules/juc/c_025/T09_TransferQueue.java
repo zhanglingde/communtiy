@@ -8,7 +8,8 @@ import java.util.concurrent.LinkedTransferQueue;
 public class T09_TransferQueue {
 	public static void main(String[] args) throws InterruptedException {
 		LinkedTransferQueue<String> strs = new LinkedTransferQueue<>();
-		
+
+		// 消费者线程
 		new Thread(() -> {
 			try {
 				System.out.println(strs.take());

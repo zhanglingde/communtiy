@@ -12,7 +12,8 @@ import java.util.concurrent.TimeUnit;
  * 假设你能够提供一个服务
  * 这个服务查询各大电商网站同一类产品的价格并汇总展示
  *
- * CompletableFuture：管理多个Future的结果；如果只用Future比较麻烦，需要多个get
+ * CompletableFuture：多个任务的管理类，管理多个Future的结果；如果只用Future比较麻烦，需要多个get
+ * 底层使用的是ForkJoinPool
  */
 public class T06_01_CompletableFuture {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
@@ -29,11 +30,12 @@ public class T06_01_CompletableFuture {
 
         start = System.currentTimeMillis();
 
+        // 三个任务，分别去TM，TB，JD查找某个商品的价格（异步）
         CompletableFuture<Double> futureTM = CompletableFuture.supplyAsync(()->priceOfTM());
         CompletableFuture<Double> futureTB = CompletableFuture.supplyAsync(()->priceOfTB());
         CompletableFuture<Double> futureJD = CompletableFuture.supplyAsync(()->priceOfJD());
 
-        // 全部任务都完成后才执行
+        // 全部任务都完成后才执行，把三个任务的查询结果汇总后返回
         CompletableFuture.allOf(futureTM, futureTB, futureJD).join();
 
         CompletableFuture.supplyAsync(()->priceOfTM())

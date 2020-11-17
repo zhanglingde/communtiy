@@ -17,7 +17,7 @@ public class T14_MyRejectedHandler {
 
         @Override
         public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
-            //log("r rejected")
+            //log("r rejected")  做日志
             //save r kafka mysql redis
             //try 3 times
             if(executor.getQueue().size() < 10000) {

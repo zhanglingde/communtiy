@@ -19,7 +19,7 @@ public class T03_Callable {
         // 把任务交给线程池运行
         Future<String> future = service.submit(c); //异步
 
-        System.out.println(future.get());//阻塞
+        System.out.println(future.get());//阻塞，获取到结果后，返回放开阻塞
 
         service.shutdown();
     }
