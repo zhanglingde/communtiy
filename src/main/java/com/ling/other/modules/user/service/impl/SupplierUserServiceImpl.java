@@ -1,6 +1,7 @@
 package com.ling.other.modules.user.service.impl;
 
 import com.ling.other.common.exception.RrException;
+import com.ling.other.modules.user.dto.User;
 import com.ling.other.modules.user.entity.SupplierUser;
 import com.ling.other.mapper.SupplierUserMapper;
 import com.ling.other.modules.user.service.SupplierUserService;
@@ -24,23 +25,10 @@ public class SupplierUserServiceImpl implements SupplierUserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void create(SupplierUser supplierUser) {
+    public void createSupplierUser(SupplierUser supplierUser) {
         supplierUserMapper.insertSelective(supplierUser);
     }
 
-    @Override
-    public void test() {
-        System.out.println("hello");
-        int i = 1;
-        if(i == 1){
-            throw new RrException("异常测试");
-        }
-    }
 
-    @Override
-    public List<SupplierUser> list() {
-        List<SupplierUser> supplierUsers = supplierUserMapper.selectAll();
-        supplierUsers.forEach(list -> System.out.println(list));
-        return supplierUsers;
-    }
+
 }

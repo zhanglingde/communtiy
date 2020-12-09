@@ -32,7 +32,7 @@ public class SupplierUserController {
     @PostMapping("/create")
     public SupplierUser create(@RequestBody SupplierUser supplierUser) {
 
-        supplierUserService.create(supplierUser);
+        supplierUserService.createSupplierUser(supplierUser);
         return supplierUser;
 
     }
@@ -41,13 +41,13 @@ public class SupplierUserController {
     @GetMapping("/list")
     @ProcessLovValue(targetField = "data")
     public CommonResult<List<SupplierUser>> list(){
-        return CommonResult.success(supplierUserService.list());
+        return CommonResult.success();
     }
 
     @GetMapping("/hello")
     public CommonResult hello(@RequestBody SupplierUserDTO supplierUserDTO){
 
-        supplierUserService.test();
+        //supplierUserService.test();
         return CommonResult.success();
     }
 

@@ -1,5 +1,6 @@
 package com.ling.other.mapper;
 
+import com.ling.other.modules.user.dto.User;
 import com.ling.other.modules.user.entity.SupplierUser;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
@@ -13,6 +14,7 @@ import tk.mybatis.mapper.common.Mapper;
 @Repository
 public interface SupplierUserMapper extends Mapper<SupplierUser> {
 
+    int insertUser(User user);
 
 
 }

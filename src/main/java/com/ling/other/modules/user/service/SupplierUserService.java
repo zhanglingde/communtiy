@@ -16,9 +16,7 @@ public interface SupplierUserService {
      * 新建
      * @param supplierUser
      */
-    void create(SupplierUser supplierUser);
+    void createSupplierUser(SupplierUser supplierUser);
 
-    void test();
 
-    List<SupplierUser> list();
 }
