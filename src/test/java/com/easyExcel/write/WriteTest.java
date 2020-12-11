@@ -28,9 +28,28 @@ public class WriteTest {
 
     List<Department> mergeDepartment(){
         List<Department> departments = new ArrayList<>();
-        departments.add(Department.builder().departmentId(1).departmentName("技术部").build());
-        departments.add(Department.builder().departmentId(2).departmentName("运营部").build());
-        departments.add(Department.builder().departmentId(3).departmentName("财务部").build());
+
+        // 技术部
+        List<Employee> employees = new ArrayList<>();
+        employees.add(Employee.builder().employeeId(1).employeeName("张三").birthday(new Date()).departmentId(1).departmentName("技术部").build());
+        employees.add(Employee.builder().employeeId(2).employeeName("李四").birthday(new Date()).departmentId(1).departmentName("技术部").build());
+        Department jishu = Department.builder().departmentId(1).departmentName("技术部").build();
+        jishu.setEmployees(employees);
+        departments.add(jishu);
+
+        // 运营部
+        employees.clear();
+        employees.add(Employee.builder().employeeId(3).employeeName("mark").birthday(new Date()).departmentId(2).departmentName("运营部").build());
+        Department yunying = Department.builder().departmentId(2).departmentName("运营部").build();
+        yunying.setEmployees(employees);
+        departments.add(yunying);
+
+        employees.clear();
+        employees.add(Employee.builder().employeeId(4).employeeName("jack").birthday(new Date()).departmentId(3).departmentName("财务部").build());
+        employees.add(Employee.builder().employeeId(5).employeeName("tom").birthday(new Date()).departmentId(3).departmentName("财务部").build());
+        Department caiwu = Department.builder().departmentId(3).departmentName("财务部").build();
+        caiwu.setEmployees(employees);
+        departments.add(caiwu);
         return departments;
     }
     static List<Employee> mergeEmployees(){
@@ -91,8 +110,10 @@ public class WriteTest {
             excelWriter = EasyExcel.write(fileName, Employee.class).build();
             WriteSheet writeSheet = EasyExcel.writerSheet("模板").build();
             for (Department department : departments) {
-                // 查询部门下的员工
-                excelWriter.write(employees, writeSheet);
+                // 模拟数据库查询部门下的员工
+                List<Employee> temp = department.getEmployees();
+                // 写入Excel
+                excelWriter.write(temp, writeSheet);
             }
             for (int i = 0; i < 5; i++) {
                 // 写入到5个sheet中
