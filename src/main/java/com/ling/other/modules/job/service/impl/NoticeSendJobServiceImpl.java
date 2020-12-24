@@ -16,7 +16,7 @@ public class NoticeSendJobServiceImpl implements NoticeSendJobService {
 
     private static final Logger logger = LoggerFactory.getLogger(NoticeSendJobServiceImpl.class);
 
-    @Autowired
+    // @Autowired
     //private NoticePushService noticePushService;
 
     @Override

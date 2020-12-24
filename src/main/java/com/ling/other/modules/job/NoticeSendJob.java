@@ -23,6 +23,7 @@ public class NoticeSendJob extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         log.info("----------------------->  消息通知开始");
+        System.out.println("消息通知开始----");
         JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
         Object id = jobDataMap.get(JobConstant.JOBPARAM_NAME);
         noticeSendJobService.sendNotice((String) id);

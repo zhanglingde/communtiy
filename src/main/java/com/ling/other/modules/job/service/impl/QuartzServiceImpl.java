@@ -63,6 +63,7 @@ public class QuartzServiceImpl implements QuartzService {
                     .startNow().build();
 
             scheduler.scheduleJob(jobDetail, cronTrigger);
+            log.debug("添加定时任务成功");
 
         } catch (Exception e) {
             throw new RuntimeException(e);
