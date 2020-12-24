@@ -26,33 +26,36 @@ public class WriteTest {
         return employees;
     }
 
-    List<Department> mergeDepartment(){
+    List<Department> mergeDepartment() {
         List<Department> departments = new ArrayList<>();
 
         // 技术部
-        List<Employee> employees = new ArrayList<>();
-        employees.add(Employee.builder().employeeId(1).employeeName("张三").birthday(new Date()).departmentId(1).departmentName("技术部").build());
-        employees.add(Employee.builder().employeeId(2).employeeName("李四").birthday(new Date()).departmentId(1).departmentName("技术部").build());
+        List<Employee> list1 = new ArrayList<>();
+        list1.add(Employee.builder().employeeId(1).employeeName("张三").birthday(new Date()).departmentId(1).departmentName("技术部").build());
+        list1.add(Employee.builder().employeeId(2).employeeName("李四").birthday(new Date()).departmentId(1).departmentName("技术部").build());
         Department jishu = Department.builder().departmentId(1).departmentName("技术部").build();
-        jishu.setEmployees(employees);
+        jishu.setEmployees(list1);
         departments.add(jishu);
 
         // 运营部
-        employees.clear();
-        employees.add(Employee.builder().employeeId(3).employeeName("mark").birthday(new Date()).departmentId(2).departmentName("运营部").build());
+        List<Employee> list2 = new ArrayList<>();
+        list2.add(Employee.builder().employeeId(3).employeeName("mark").birthday(new Date()).departmentId(2).departmentName("运营部").build());
         Department yunying = Department.builder().departmentId(2).departmentName("运营部").build();
-        yunying.setEmployees(employees);
+        yunying.setEmployees(list2);
         departments.add(yunying);
 
-        employees.clear();
-        employees.add(Employee.builder().employeeId(4).employeeName("jack").birthday(new Date()).departmentId(3).departmentName("财务部").build());
-        employees.add(Employee.builder().employeeId(5).employeeName("tom").birthday(new Date()).departmentId(3).departmentName("财务部").build());
+        // 财务部
+        List<Employee> list3 = new ArrayList<>();
+        list3.add(Employee.builder().employeeId(4).employeeName("jack").birthday(new Date()).departmentId(3).departmentName("财务部").build());
+        list3.add(Employee.builder().employeeId(5).employeeName("tom").birthday(new Date()).departmentId(3).departmentName("财务部").build());
+
         Department caiwu = Department.builder().departmentId(3).departmentName("财务部").build();
-        caiwu.setEmployees(employees);
+        caiwu.setEmployees(list3);
         departments.add(caiwu);
         return departments;
     }
-    static List<Employee> mergeEmployees(){
+
+    static List<Employee> mergeEmployees() {
         List<Employee> employees = new ArrayList<>();
         employees.add(Employee.builder().employeeId(1).employeeName("张三").birthday(new Date()).departmentId(1).departmentName("技术部").build());
         employees.add(Employee.builder().employeeId(2).employeeName("李四").birthday(new Date()).departmentId(1).departmentName("技术部").build());
@@ -84,22 +87,24 @@ public class WriteTest {
 
             for (int i = 0; i < 5; i++) {
                 // 写入到5个sheet中
-                WriteSheet writeSheet = EasyExcel.writerSheet("模板"+i).build();
+                WriteSheet writeSheet = EasyExcel.writerSheet("模板" + i).build();
                 excelWriter.write(list, writeSheet);
             }
         } finally {
             // finish方法会帮忙关闭流
-            if(excelWriter != null){
+            if (excelWriter != null) {
                 excelWriter.finish();
             }
         }
     }
 
     /**
-     * 合并单元格写,使用了策略模式，可以自己实现合并策略，实现合并单元格的方式
+     * 合并单元格写
+     *
+     * 使用了策略模式，可以自己实现合并策略，实现合并单元格的方式
      */
     @Test
-    public void mergeWrite(){
+    public void mergeWrite() {
         List<Employee> employees = mergeEmployees();
         List<Department> departments = mergeDepartment();
 
@@ -107,21 +112,30 @@ public class WriteTest {
         String fileName = WriteTest.class.getResource("/").getPath() + "订单" + System.currentTimeMillis() + ".xlsx";
         ExcelWriter excelWriter = null;
         try {
-            excelWriter = EasyExcel.write(fileName, Employee.class).build();
+            // 合并开始的行
+            int i = 1;
+            // 要合并的列的索引
+            int[] arr = {3, 4};
+
+            ExcelMergeStrategy strategy = new ExcelMergeStrategy(i, arr);
+            excelWriter = EasyExcel.write(fileName, Employee.class).registerWriteHandler(strategy).build();
+
             WriteSheet writeSheet = EasyExcel.writerSheet("模板").build();
             for (Department department : departments) {
                 // 模拟数据库查询部门下的员工
                 List<Employee> temp = department.getEmployees();
+
+                // 每一合并单元格开始合并前修改开始合并的行数为当前数据所在的行
+                strategy.setMergeRowIndex(i);
+
                 // 写入Excel
                 excelWriter.write(temp, writeSheet);
-            }
-            for (int i = 0; i < 5; i++) {
-                // 写入到5个sheet中
 
+                i = i + temp.size();
             }
         } finally {
             // finish方法会帮忙关闭流
-            if(excelWriter != null){
+            if (excelWriter != null) {
                 excelWriter.finish();
             }
         }

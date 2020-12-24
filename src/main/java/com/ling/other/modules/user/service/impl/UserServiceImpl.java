@@ -7,6 +7,7 @@ import com.ling.other.modules.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 /**
  * @author zhangling
@@ -21,7 +22,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void createUser(User user) {
-
+        TransactionSynchronizationManager.getCurrentTransactionIsolationLevel();
+        TransactionSynchronizationManager.isActualTransactionActive();
+        TransactionSynchronizationManager.getCurrentTransactionName();
         for(int i=1;i<10;i++){
             create(user);
         }

@@ -14,6 +14,9 @@ import org.apache.poi.ss.util.CellRangeAddress;
 
 import java.util.List;
 
+/**
+ * 合并单元格的策略
+ */
 @Data
 public class ExcelMergeStrategy implements CellWriteHandler {
 	/**

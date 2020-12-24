@@ -19,8 +19,11 @@ public class T12_ForkJoinPool {
 		
 		System.out.println("---" + Arrays.stream(nums).sum()); //stream api
 	}
-	
 
+
+	/**
+	 * 没有返回值的任务
+	 */
 	static class AddTask extends RecursiveAction {
 
 		int start, end;
@@ -54,7 +57,9 @@ public class T12_ForkJoinPool {
 
 	}
 
-	
+	/**
+	 * 有返回值的任务
+	 */
 	static class AddTaskRet extends RecursiveTask<Long> {
 		
 		private static final long serialVersionUID = 1L;
@@ -87,19 +92,20 @@ public class T12_ForkJoinPool {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		/*ForkJoinPool fjp = new ForkJoinPool();
-		AddTask task = new AddTask(0, nums.length);
-		fjp.execute(task);*/
-
-		T12_ForkJoinPool temp = new T12_ForkJoinPool();
-
 		ForkJoinPool fjp = new ForkJoinPool();
-		AddTaskRet task = new AddTaskRet(0, nums.length);
+		AddTask task = new AddTask(0, nums.length);
 		fjp.execute(task);
-		long result = task.join();
-		System.out.println(result);
+
+		// 有返回值的任务
+		// T12_ForkJoinPool temp = new T12_ForkJoinPool();
+		//
+		// ForkJoinPool fjp = new ForkJoinPool();
+		// AddTaskRet task = new AddTaskRet(0, nums.length);
+		// fjp.execute(task);
+		// long result = task.join();
+		// System.out.println(result);
 		
-		//System.in.read();
+		System.in.read();
 		
 	}
 }

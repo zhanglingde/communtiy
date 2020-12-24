@@ -13,6 +13,7 @@ import java.util.Date;
  */
 @Data
 @Builder
+@ColumnWidth(15)
 public class Employee {
 
     /**
@@ -23,6 +24,7 @@ public class Employee {
     /**
      * 员工姓名
      */
+    // @ColumnWidth
     @ExcelProperty("员工姓名")
     private String employeeName;
     /**
@@ -32,10 +34,10 @@ public class Employee {
     @ExcelProperty("员工生日")
     private Date birthday;
 
-    @ExcelProperty("部门Id")
+    @ExcelProperty({"部门信息","部门Id"})
     private Integer departmentId;
 
-    @ExcelProperty("部门名称")
+    @ExcelProperty({"部门信息","部门名称"})
     private String departmentName;
 
 }
