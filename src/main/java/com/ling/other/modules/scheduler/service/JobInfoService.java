@@ -1,6 +1,7 @@
 package com.ling.other.modules.scheduler.service;
 
 import com.ling.other.modules.scheduler.databoject.JobInfoDO;
+import com.ling.other.modules.scheduler.dto.JobInfoDTO;
 
 import java.util.List;
 
@@ -27,4 +28,11 @@ public interface JobInfoService {
      * 初始化任务
      */
     void initJob();
+
+    /**
+     * 根据日期创建任务
+     * @param jobInfoDTO
+     * @return
+     */
+    JobInfoDO createJobForDate(JobInfoDTO jobInfoDTO);
 }

@@ -1,4 +1,4 @@
-package com.ling.other.entity;
+package com.ling.other.modules.scheduler.databoject;
 
 import java.util.Date;
 import java.io.Serializable;

@@ -1,10 +1,8 @@
 package com.ling.other.mapper;
 
-import com.ling.other.entity.ExecutorDO;
+import com.ling.other.modules.scheduler.databoject.ExecutorDO;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
-
-import java.util.Map;
 
 /**
  * @author zhangling

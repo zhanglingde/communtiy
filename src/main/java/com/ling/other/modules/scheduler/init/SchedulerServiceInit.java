@@ -21,3 +21,5 @@ public class SchedulerServiceInit implements CommandLineRunner {
         jobInfoService.initJob();
     }
 }
+
+

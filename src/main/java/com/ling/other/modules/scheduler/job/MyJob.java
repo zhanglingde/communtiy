@@ -18,6 +18,7 @@ import java.util.Set;
 
 /**
  * job其他操作
+ * 定时任务执行的时候，添加日志等操作
  *
  * @author zhangling
  * @since 2020/9/3 13:28

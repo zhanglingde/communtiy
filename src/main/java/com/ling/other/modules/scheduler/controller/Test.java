@@ -9,6 +9,7 @@ import org.quartz.JobExecutionException;
  * @since 2020/9/11 9:17
  */
 public class Test implements Job {
+
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         System.out.println("单次测试");

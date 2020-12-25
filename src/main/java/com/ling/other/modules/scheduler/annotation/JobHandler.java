@@ -1,4 +1,4 @@
-package com.ling.other.common.annotation;
+package com.ling.other.modules.scheduler.annotation;
 
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package com.ling.other.common.schedule.config;
+package com.ling.other.modules.schedule_java.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

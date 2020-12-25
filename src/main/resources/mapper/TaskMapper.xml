@@ -48,9 +48,9 @@
         where job_id = #{jobId}
     </update>
 
-    <select id="getSysJobListByStatus" resultType="com.ling.other.entity.SysJobPO">
+    <select id="getSysJobListByStatus" resultType="com.ling.other.modules.schedule_java.config.SysJobPO">
         select
-        job_id,
+            job_id,
         <include refid="baseSql"></include>
         from au_task
         where job_status = #{status}

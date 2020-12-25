@@ -2,7 +2,7 @@ package com.ling.other.modules.scheduler.service.impl;
 
 import com.aliyun.openservices.shade.org.apache.commons.lang3.StringUtils;
 import com.ling.other.common.exception.RrException;
-import com.ling.other.entity.ExecutorDO;
+import com.ling.other.modules.scheduler.databoject.ExecutorDO;
 import com.ling.other.modules.scheduler.databoject.JobInfoDO;
 import com.ling.other.mapper.ExecutorMapper;
 import com.ling.other.modules.scheduler.job.MyJob;
@@ -39,7 +39,6 @@ public class IJobServiceImpl implements IJobService {
         if (executor == null) {
             throw new RrException("找不到执行器:"+jobInfo.getExecutorId());
         }
-
         try {
             //JobDetail jobDetail = JobBuilder.newJob(MyJob.class).withDescription(jobInfo.getDescription()).withIdentity(String.valueOf(jobInfo.getJobId()), 1)).usingJobData(this.getMap(jobInfo)).build();
             JobDetail jobDetail = JobBuilder.newJob(MyJob.class)

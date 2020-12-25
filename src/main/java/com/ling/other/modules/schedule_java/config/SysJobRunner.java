@@ -1,9 +1,7 @@
-package com.ling.other.common.schedule.config;
+package com.ling.other.modules.schedule_java.config;
 
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.ling.other.common.constants.BaseConstants;
-import com.ling.other.entity.SysJobPO;
 import com.ling.other.mapper.TaskMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

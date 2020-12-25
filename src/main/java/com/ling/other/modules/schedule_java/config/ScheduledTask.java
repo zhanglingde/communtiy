@@ -1,4 +1,4 @@
-package com.ling.other.common.schedule.config;
+package com.ling.other.modules.schedule_java.config;
 
 import java.util.concurrent.ScheduledFuture;
 

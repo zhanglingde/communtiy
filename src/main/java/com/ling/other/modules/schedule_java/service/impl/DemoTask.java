@@ -1,4 +1,4 @@
-package com.ling.other.common.schedule.config;
+package com.ling.other.modules.schedule_java.service.impl;
 
 import org.springframework.stereotype.Component;
 
@@ -10,6 +10,7 @@ public class DemoTask {
     }
 
     public void taskNoParams() {
+
         System.out.println("执行无参示例任务");
     }
 

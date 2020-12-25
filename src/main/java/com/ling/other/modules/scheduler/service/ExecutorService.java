@@ -1,6 +1,6 @@
 package com.ling.other.modules.scheduler.service;
 
-import com.ling.other.entity.ExecutorDO;
+import com.ling.other.modules.scheduler.databoject.ExecutorDO;
 
 /**
  * @author zhangling
@@ -14,4 +14,12 @@ public interface ExecutorService {
      * @return
      */
     ExecutorDO createExecutor(ExecutorDO executor);
+
+    /**
+     * 客户端刷新执行器
+     * @param executorCode
+     * @param serverName
+     * @return
+     */
+    String refreshExecutor(String executorCode);
 }

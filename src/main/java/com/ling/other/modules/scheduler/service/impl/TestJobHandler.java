@@ -1,6 +1,6 @@
 package com.ling.other.modules.scheduler.service.impl;
 
-import com.ling.other.common.annotation.JobHandler;
+import com.ling.other.modules.scheduler.annotation.JobHandler;
 import com.ling.other.modules.scheduler.myenum.ReturnT;
 import com.ling.other.modules.scheduler.service.IJobHandler;
 import com.ling.other.modules.scheduler.utils.SchedulerTool;

@@ -1,10 +1,16 @@
-package com.ling.other.common.schedule.config;
+package com.ling.other.modules.schedule_java.config;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SysJobPO {
     /**
      * 任务ID
@@ -38,10 +44,10 @@ public class SysJobPO {
      * 创建时间
      */
     private Date createTime;
-
     /**
      * 更新时间
      */
+    private Date updateTime;
 
     public Integer getJobId() {
         return jobId;

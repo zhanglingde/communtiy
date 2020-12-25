@@ -1,14 +1,16 @@
-package com.ling.other.service.impl;
+package com.ling.other.modules.schedule_java.service.impl;
 
-import com.alibaba.excel.annotation.ExcelProperty;
 import com.ling.other.common.constants.BaseConstants;
 import com.ling.other.common.exception.RrException;
-import com.ling.other.common.schedule.config.CronTaskRegistrar;
-import com.ling.other.common.schedule.config.SchedulingRunnable;
-import com.ling.other.entity.SysJobPO;
+
+import com.ling.other.common.utils.DateUtils;
 import com.ling.other.entity.Task;
 import com.ling.other.mapper.TaskMapper;
-import com.ling.other.service.ScheduleService;
+import com.ling.other.modules.schedule_java.config.CronTaskRegistrar;
+import com.ling.other.modules.schedule_java.config.SchedulingRunnable;
+import com.ling.other.modules.schedule_java.config.SysJobPO;
+import com.ling.other.modules.schedule_java.dto.JobDTO;
+import com.ling.other.modules.schedule_java.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +31,32 @@ public class ScheduleServiceImpl implements ScheduleService {
     private CronTaskRegistrar cronTaskRegistrar;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void create(SysJobPO sysJob) {
+        boolean success = taskMapper.addSysJob(sysJob);
+        if (!success){
+            throw new RrException("新增定时任务失败");
+        } else {
+            if (sysJob.getJobStatus().equals(1)) {
+                SchedulingRunnable task = new SchedulingRunnable(sysJob.getBeanName(), sysJob.getMethodName(), sysJob.getMethodParams());
+                cronTaskRegistrar.addCronTask(task, sysJob.getCronExpression());
+            }
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void createForDate(JobDTO jobDTO) {
+
+        SysJobPO sysJob = SysJobPO.builder()
+                .beanName(jobDTO.getBeanName())
+                .methodName(jobDTO.getMethodName())
+                .methodParams(jobDTO.getMethodParams())
+                .cronExpression(DateUtils.getCron(jobDTO.getExecuteDate()))
+                .jobStatus(jobDTO.getJobStatus())
+                .remark(jobDTO.getRemark())
+                .build();
+
         boolean success = taskMapper.addSysJob(sysJob);
         if (!success){
             throw new RrException("新增定时任务失败");
@@ -107,4 +134,6 @@ public class ScheduleServiceImpl implements ScheduleService {
                     .build());
         }
     }
+
+
 }

@@ -2,6 +2,7 @@ package com.ling.other.modules.scheduler.controller;
 
 import com.ling.other.common.utils.CommonResult;
 import com.ling.other.modules.scheduler.databoject.JobInfoDO;
+import com.ling.other.modules.scheduler.dto.JobInfoDTO;
 import com.ling.other.modules.scheduler.service.JobInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +23,7 @@ import static org.quartz.TriggerBuilder.newTrigger;
  * @since 2020/9/3 9:52
  */
 
-@Api(tags = "定时任务")
+@Api(tags = "定时任务zero")
 @RestController
 @RequestMapping({"/job-info"})
 public class JobInfoController {
@@ -36,13 +37,40 @@ public class JobInfoController {
         List<JobInfoDO> list = jobInfoService.list();
         return CommonResult.success(list);
     }
-
+    //
+    //{
+    //    "createTime":"",
+    //    "cycleFlag":1,
+    //    "description":"测试任务",
+    //    "endDate":"",
+    //    "executorCode":"TEST_EXECUTOR",
+    //    "executorStrategy":"sdf",
+    //    "failStrategy":"sdf",
+    //    "glueType":"",
+    //    "jobCode":"TEST_JOB",
+    //    "jobCron":"5 0 0 * * ? ",
+    //    "jobHandler":"",
+    //    "jobId":0,
+    //    "jobParam":"",
+    //    "startDate":"",
+    //    "strategyParam":"",
+    //    "updateTime":""
+    //}
     @ApiOperation("任务创建")
     @PostMapping
     public CommonResult<JobInfoDO> createJob(@RequestBody JobInfoDO jobInfo) {
         JobInfoDO job = jobInfoService.createJob(jobInfo);
         return CommonResult.success(job);
     }
+
+    @ApiOperation("任务创建_根据日期")
+    @PostMapping("/date")
+    public CommonResult<JobInfoDO> createJobForDate(@RequestBody JobInfoDTO jobInfoDTO) {
+        JobInfoDO job = jobInfoService.createJobForDate(jobInfoDTO);
+        return CommonResult.success(job);
+    }
+
+
 
 
     /**

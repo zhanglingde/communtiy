@@ -1,7 +1,7 @@
 package com.ling.other.mapper;
 
-import com.ling.other.entity.SysJobPO;
 import com.ling.other.entity.Task;
+import com.ling.other.modules.schedule_java.config.SysJobPO;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 

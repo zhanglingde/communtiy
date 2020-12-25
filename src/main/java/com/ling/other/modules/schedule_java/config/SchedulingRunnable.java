@@ -1,4 +1,4 @@
-package com.ling.other.common.schedule.config;
+package com.ling.other.modules.schedule_java.config;
 
 import com.ling.other.common.utils.SpringContextUtils;
 import org.slf4j.Logger;
@@ -42,6 +42,7 @@ public class SchedulingRunnable implements Runnable {
 
             Method method = null;
             if (!StringUtils.isEmpty(params)) {
+                // 反射获取有参方法
                 method = target.getClass().getDeclaredMethod(methodName, String.class);
             } else {
                 method = target.getClass().getDeclaredMethod(methodName);

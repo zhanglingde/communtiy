@@ -1,15 +1,14 @@
 package com.ling.other.modules.scheduler.controller;
 
 import com.ling.other.common.utils.CommonResult;
-import com.ling.other.entity.ExecutorDO;
+import com.ling.other.modules.scheduler.databoject.ExecutorDO;
 import com.ling.other.modules.scheduler.service.ExecutorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Results;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 执行器
@@ -24,10 +23,33 @@ public class ExecutorController {
     @Autowired
     private ExecutorService executorService;
 
+
+    /**
+     * {
+     * 	"addressList": "",
+     * 	"createTime": "",
+     * 	"executorCode": "TEST_EXECUTOR",
+     * 	"executorName": "测试执行器",
+     * 	"executorType": 0,
+     * 	"orderSeq": 0,
+     * 	"status": "开启",
+     * 	"updateTime": ""
+     * }
+     * @param executor
+     * @return
+     */
+
     @ApiOperation("创建执行器")
     @PostMapping
     public CommonResult<ExecutorDO> createExecutor(@RequestBody ExecutorDO executor) {
         ExecutorDO executorDO =  this.executorService.createExecutor(executor);
         return CommonResult.success();
+    }
+
+
+    @ApiOperation("客户端刷新执行器")
+    @PostMapping({"/refresh"})
+    public CommonResult<String> refreshExecutor( @RequestParam String executorCode, @RequestParam String serverName) {
+        return CommonResult.success(this.executorService.refreshExecutor(executorCode, serverName));
     }
 }

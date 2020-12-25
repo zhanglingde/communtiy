@@ -1,7 +1,8 @@
-package com.ling.other.service;
+package com.ling.other.modules.schedule_java.service;
 
-import com.ling.other.entity.SysJobPO;
 import com.ling.other.entity.Task;
+import com.ling.other.modules.schedule_java.config.SysJobPO;
+import com.ling.other.modules.schedule_java.dto.JobDTO;
 
 import java.util.List;
 
@@ -39,4 +40,10 @@ public interface ScheduleService {
      * @param jobId
      */
     void start(Integer jobId);
+
+    /**
+     * 根据前端传的日期设置定时任务
+     * @param jobDTO
+     */
+    void createForDate(JobDTO jobDTO);
 }
