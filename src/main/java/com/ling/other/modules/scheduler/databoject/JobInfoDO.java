@@ -42,6 +42,11 @@ public class JobInfoDO implements Serializable {
     * 任务描述
     */
     private String description;
+
+    /**
+     * 任务状态：1正常，0暂停
+     */
+    private Integer jobStatus;
     /**
     * 执行器任务参数
     */

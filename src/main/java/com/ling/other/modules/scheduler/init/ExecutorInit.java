@@ -1,13 +1,11 @@
 package com.ling.other.modules.scheduler.init;
 
 import com.aliyun.openservices.shade.org.apache.commons.lang3.StringUtils;
-import com.aliyun.openservices.shade.org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.ling.other.common.constants.BaseConstants;
 import com.ling.other.common.utils.SpringContextUtils;
 import com.ling.other.modules.scheduler.annotation.JobHandler;
 import com.ling.other.modules.scheduler.config.SchedulerConfig;
-import com.ling.other.modules.scheduler.job.JobRegistry;
+import com.ling.other.modules.scheduler.registry.JobRegistry;
 import com.ling.other.modules.scheduler.service.IJobHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

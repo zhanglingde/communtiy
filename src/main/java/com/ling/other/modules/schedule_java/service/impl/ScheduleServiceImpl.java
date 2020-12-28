@@ -12,9 +12,12 @@ import com.ling.other.modules.schedule_java.config.SysJobPO;
 import com.ling.other.modules.schedule_java.dto.JobDTO;
 import com.ling.other.modules.schedule_java.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -133,6 +136,12 @@ public class ScheduleServiceImpl implements ScheduleService {
                     .jobStatus(BaseConstants.TaskStatus.NORMAL)
                     .build());
         }
+    }
+
+    //@Scheduled(cron = "0/5 * * * * ?")
+    @Transactional(rollbackFor = Exception.class)
+    public void purchaseOrderClosed() {
+        System.out.println("cron表达式的定时任务");
     }
 
 

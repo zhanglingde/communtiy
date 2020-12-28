@@ -25,30 +25,41 @@ package com.ling.other.common.exception;
  */
 public class RrException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
-	
+
+	private final transient Object[] parameters;
+
     private String msg;
     private int code = 500;
     
     public RrException(String msg) {
 		super(msg);
 		this.msg = msg;
+		this.parameters = new Object[]{};
+	}
+
+	public RrException(Throwable cause, Object... parameters) {
+		super(cause);
+		this.parameters = parameters;
 	}
 	
 	public RrException(String msg, Throwable e) {
 		super(msg, e);
 		this.msg = msg;
+		this.parameters = new Object[]{};
 	}
 	
 	public RrException(String msg, int code) {
 		super(msg);
 		this.msg = msg;
 		this.code = code;
+		this.parameters = new Object[]{};
 	}
 	
 	public RrException(String msg, int code, Throwable e) {
 		super(msg, e);
 		this.msg = msg;
 		this.code = code;
+		this.parameters = new Object[]{};
 	}
 
 	public String getMsg() {

@@ -8,10 +8,11 @@ import com.ling.other.modules.scheduler.utils.SchedulerTool;
 import java.util.Map;
 
 /**
+ * JobHandler的值为定时任务的JobCode
  * @author zhangling
  * @since 2020/9/3 15:21
  */
-@JobHandler("SCEC.BP_PACKAGE_FAILURE")
+@JobHandler("TEST_JOB")
 public class TestJobHandler implements IJobHandler {
 
 

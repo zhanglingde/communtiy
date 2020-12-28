@@ -6,6 +6,8 @@ import com.ling.other.modules.scheduler.service.ExecutorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Results;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/executors")
 @Api(tags = "执行器")
 public class ExecutorController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExecutorController.class);
 
     @Autowired
     private ExecutorService executorService;
@@ -50,6 +54,13 @@ public class ExecutorController {
     @ApiOperation("客户端刷新执行器")
     @PostMapping({"/refresh"})
     public CommonResult<String> refreshExecutor( @RequestParam String executorCode, @RequestParam String serverName) {
-        return CommonResult.success(this.executorService.refreshExecutor(executorCode, serverName));
+        return CommonResult.success(this.executorService.refreshExecutor(executorCode));
+    }
+    @GetMapping({"/test"})
+    public CommonResult test(){
+
+        logger.debug("debug日志");
+        logger.info("info日志");
+        return CommonResult.success();
     }
 }

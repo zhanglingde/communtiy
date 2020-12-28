@@ -3,6 +3,7 @@ package com.ling.other.modules.scheduler.controller;
 import com.ling.other.common.utils.CommonResult;
 import com.ling.other.modules.scheduler.databoject.JobInfoDO;
 import com.ling.other.modules.scheduler.dto.JobInfoDTO;
+import com.ling.other.modules.scheduler.service.IJobService;
 import com.ling.other.modules.scheduler.service.JobInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +31,9 @@ public class JobInfoController {
 
     @Autowired
     private JobInfoService jobInfoService;
+
+    @Autowired
+    private IJobService iJobService;
 
     @ApiOperation("任务列表")
     @GetMapping
@@ -63,11 +67,27 @@ public class JobInfoController {
         return CommonResult.success(job);
     }
 
+    // 参数
+    //{
+    //    "cycleFlag": 1,
+    //    "description": "测试job",
+    //    "executorCode": "TEST_EXECUTOR",
+    //    "executorId": 2,
+    //    "jobCode": "TEST_JOB",
+    //    "jobCronDate": "2020-12-28 10:20:10"
+    //}
     @ApiOperation("任务创建_根据日期")
     @PostMapping("/date")
     public CommonResult<JobInfoDO> createJobForDate(@RequestBody JobInfoDTO jobInfoDTO) {
         JobInfoDO job = jobInfoService.createJobForDate(jobInfoDTO);
         return CommonResult.success(job);
+    }
+
+    @ApiOperation("获取定时任务状态")
+    @GetMapping("/getStatus")
+    public CommonResult<String> getStatus(Long jobId){
+        String jobStatus = iJobService.getJobStatus(jobId);
+        return CommonResult.success(jobStatus);
     }
 
 

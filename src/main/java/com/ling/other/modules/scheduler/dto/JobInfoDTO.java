@@ -1,10 +1,12 @@
 package com.ling.other.modules.scheduler.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,11 +40,16 @@ public class JobInfoDTO {
     @ApiModelProperty("任务执行cron")
     private String jobCron;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @ApiModelProperty("任务执行cron日期")
     private Date jobCronDate;
 
     @ApiModelProperty("任务描述")
     private String description;
+
+    @ApiModelProperty("任务状态：1正常，0暂停")
+    private Integer jobStatus;
 
     @ApiModelProperty("执行器任务参数")
     private String jobParam;

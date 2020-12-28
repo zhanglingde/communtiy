@@ -11,11 +11,30 @@ import org.springframework.stereotype.Component;
 public class SchedulerConfig {
 
     static final String PREFIX = "hzero.scheduler";
+    /**
+     * 执行器编码
+     */
     private String executorCode;
+
+    /**
+     * 是否开启自动注册
+     */
     private boolean autoRegister = true;
+
     private boolean uploadLog = true;
+    /**
+     * 自动注册失败重试时间间隔  单位秒
+     */
     private Integer retry = 60;
+
+    /**
+     * 自动注册重试次数
+     */
     private Integer retryTime = 5;
+
+    /**
+     * 任务停止重试时间     单位秒
+     */
     private Integer stopRetryTime = 5;
     private Integer maxPoolSize = 30;
     private Integer corePoolSize = 5;

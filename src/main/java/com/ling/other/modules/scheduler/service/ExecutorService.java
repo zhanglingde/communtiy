@@ -18,7 +18,6 @@ public interface ExecutorService {
     /**
      * 客户端刷新执行器
      * @param executorCode
-     * @param serverName
      * @return
      */
     String refreshExecutor(String executorCode);

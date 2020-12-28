@@ -7,6 +7,8 @@ import com.ling.other.modules.user.service.SupplierUserService;
 import com.ling.other.modules.user.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -19,9 +21,11 @@ import java.util.List;
  * @since 2020/12/9 10:45
  */
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = CommunityApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = CommunityApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserTest.class);
 
     @Autowired
     SupplierUserService supplierUserService;
@@ -46,10 +50,12 @@ public class UserTest {
 
     @Test
     public void createUser(){
-        userService.createUser(User.builder()
-                .username("zhansan")
-                .gender("m")
-                .age(18)
-                .build());
+        logger.info("测试开始");
+        //userService.createUser(User.builder()
+        //        .username("zhansan")
+        //        .gender("m")
+        //        .age(18)
+        //        .build());
+        logger.debug("测试结束");
     }
 }

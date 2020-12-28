@@ -39,7 +39,7 @@ public class MyJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        System.out.println("定时任务测试");
+        logger.info("定时任务开始执行");
 
         String triggerName = context.getTrigger().getKey().getName();
         Long jobId = Long.valueOf(context.getJobDetail().getKey().getName());
@@ -61,6 +61,7 @@ public class MyJob implements Job {
         if (jobDataMap.containsKey("retryNumber")) {
             this.retryNumber = Integer.parseInt(String.valueOf(jobDataMap.get("retryNumber")));
         }
+        logger.info("定时任务JobCode: {} 添加日志", jobCode);
         // 添加执行日志
         Date now = new Date();
         JobLogDO jobLog = JobLogDO.builder().jobId(jobId)

@@ -97,8 +97,8 @@ public class JobInfoServiceImpl implements JobInfoService {
     @Async("commonAsyncTaskExecutor")
     @Override
     public void initJob() {
-        // 查询数据库表中的定时任务
-        List<JobInfoDO> jobInfoDOList = jobInfoMapper.selectAll();
+        // 查询数据库表中 启用的定时任务
+        List<JobInfoDO> jobInfoDOList = jobInfoMapper.select(JobInfoDO.builder().jobStatus(1).build());
         jobInfoDOList.forEach(jobInfo -> {
             // 获取内存中的任务Job的状态
             String status = jobService.getJobStatus(jobInfo.getJobId());

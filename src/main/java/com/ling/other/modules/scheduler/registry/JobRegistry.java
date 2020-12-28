@@ -1,4 +1,4 @@
-package com.ling.other.modules.scheduler.job;
+package com.ling.other.modules.scheduler.registry;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * job存储类：存储所有的定时任务JobCode和业务代码的Bean
  *
- * @author zhanglign
+ * @author zhangling
  */
 public class JobRegistry {
 

@@ -1,10 +1,13 @@
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) CHARACTER NOT NULL,
-  `gender` char(1) CHARACTER DEFAULT NULL,
-  `age` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+create table user(
+    id int(11) not null auto_increment  primary key comment '主键id',
+    username varchar(60) comment '用户名',
+    gender char(1) default null comment '性别',
+    age int(11) comment '年龄'
+) comment '用户表';
+
+insert into user(username, gender, age)
+    values('张三','M',18);
 
 CREATE TABLE `au_supplier_user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',

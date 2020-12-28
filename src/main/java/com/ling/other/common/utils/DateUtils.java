@@ -74,7 +74,7 @@ public class DateUtils {
     /**
      * cron date 转化
      */
-    private static final String CRON_DATE_FORMAT = "ss mm HH dd MM ?";
+    private static final String CRON_DATE_FORMAT = "ss mm HH dd MM ? yyyy";
 
 
     /**
