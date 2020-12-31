@@ -1,5 +1,6 @@
 package com.ling.other;
 
+import com.ling.other.modules.webSocket.service.MyThread;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,6 +19,16 @@ public class CommunityApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CommunityApplication.class, args);
+        for (int i = 0; i <= 10; i++) {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            MyThread myThread = new MyThread();
+            Thread thread = new Thread(myThread);
+            thread.start();
+        }
     }
 
 }

@@ -48,9 +48,13 @@ public class ExecutorInit implements CommandLineRunner {
         ThreadFactory threadFactory = (new ThreadFactoryBuilder()).setNameFormat("scheduler-register-runner-%d").build();
         // 定义执行定时任务的线程池
         ExecutorService executor = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue(), threadFactory);
+        // 执行线程
         executor.execute(new ExecutorInit.Registry());
     }
 
+    /**
+     * 注册执行器线程
+     */
     class Registry implements Runnable{
 
         Registry() {
