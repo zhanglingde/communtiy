@@ -19,16 +19,17 @@ public class CommunityApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CommunityApplication.class, args);
-        for (int i = 0; i <= 10; i++) {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            MyThread myThread = new MyThread();
-            Thread thread = new Thread(myThread);
-            thread.start();
-        }
+        //
+        //for (int i = 0; i <= 10; i++) {
+        //    try {
+        //        Thread.sleep(3000);
+        //    } catch (InterruptedException e) {
+        //        e.printStackTrace();
+        //    }
+        //    MyThread myThread = new MyThread();
+        //    Thread thread = new Thread(myThread);
+        //    thread.start();
+        //}
     }
 
 }

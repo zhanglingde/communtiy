@@ -1,7 +1,10 @@
 package com.ling.other.modules.webSocket.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import javax.websocket.*;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -15,9 +18,12 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @Component
 public class MyWebSocket {
 
+    private static final Logger logger = LoggerFactory.getLogger(MyWebSocket.class);
+
     //存放websocket 的线程安全的无序的集合
     private static CopyOnWriteArraySet<MyWebSocket> websocket = new CopyOnWriteArraySet<MyWebSocket>();
 
+    private Integer companyId;
     private Session session;
 
     public static CopyOnWriteArraySet<MyWebSocket> getWebsocket() {
@@ -36,19 +42,31 @@ public class MyWebSocket {
         this.session = session;
     }
 
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
+
     /**
      * 连接建立成功调用的方法
      */
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
+        String companyId = session.getQueryString().split("=")[1];
+        this.companyId = Integer.valueOf(companyId);
+
         websocket.add(this);     //加入set中
         // addOnlineCount();           //在线数加1
-        System.out.println("进入onOpen方法");
+
+        logger.info("进入onOpen方法");
         try {
             sendMessage("连接已建立成功.");
         } catch (Exception e) {
-            System.out.println("IO异常");
+            logger.error("IO异常");
         }
     }
 
@@ -62,7 +80,7 @@ public class MyWebSocket {
     public void onClose(Session session) {
         //关闭连接后将此socket删除
         websocket.remove(this);
-        System.out.println("进入onClose方法");
+        logger.info("关闭socket连接");
     }
 
     /**
@@ -77,7 +95,7 @@ public class MyWebSocket {
      * 给客户端推送信息
      */
     public void sendMessage(String message) throws IOException {
-        System.out.println("进入sendMessage方法");
+        logger.info("进入sendMessage方法");
         this.session.getBasicRemote().sendText(message);
     }
 
@@ -86,7 +104,7 @@ public class MyWebSocket {
      */
     @OnError
     public void onError(Session session, Throwable error) {
-        System.out.println("进入error方法");
+        logger.info("进入error方法");
         error.printStackTrace();
     }
 
