@@ -12,20 +12,24 @@
                            #{description})
     </insert>
 
-    <!-- 批量插入值集值   -->
-    <insert id="batchInsertLovValue">
-        insert into au_lov_value(lov_id,
-        lov_code,
-        value,
-        meaning,
-        description)
-        values
-        <foreach collection="list" item="item" open="" separator="," close="">
-            (#{item.lovId},#{item.lovCode},#{item.value},#{item.meaning},#{item.description})
-        </foreach>
-
-    </insert>
-
+    <!-- 查询值集列表   -->
+    <select id="list" resultType="com.ling.other.modules.lov.vo.LovVO">
+        select lov_id,
+            lov_code,
+            lov_name,
+            description,
+            create_time,
+            update_time
+        from au_lov
+        where 1
+        <if test="lovSearch.lovCode != null and lovSearch.lovCode != ''">
+            AND lov_code LIKE concat('%',#{lovSearch.lovCode},'%')
+        </if>
+        <if test="lovSearch.lovName != null and lovSearch.lovName != ''">
+            AND lov_name LIKE concat('%',#{lovSearch.lovName},'%')
+        </if>
+        order by create_time desc
+    </select>
 
     <!-- 根据值集代码查询值集头信息   -->
     <select id="queryLovInfo" resultType="com.ling.other.modules.lov.dto.LovDTO">
@@ -38,63 +42,21 @@
         where lov_code = #{lovCode}
     </select>
 
-    <!-- 根据值集代码查询值集值信息   -->
-    <select id="queryLovValue" resultType="com.ling.other.modules.lov.dto.LovValueDTO">
-        select
-            lov_value_id,
-            lov_id,
-            lov_code,
-            value,
-            meaning,
-            description,
-            remark
-        from au_lov_value
-        where lov_code = #{lovCode}
-    </select>
-
-    <select id="queryLovValueDTO" resultType="com.ling.other.modules.lov.dto.LovValueDTO">
-        select
-            lov_value_id,
-            lov_id,
-            lov_code,
-            `value`,
-            meaning,
-            description
-        from au_lov_value
-        where lov_code = #{lovCode} and `value` = #{value}
-    </select>
-
-    <update id="updateSelective" >
-        update au_lov_value
-        <set>
-            <if test="lovValueDTO.lovId != null">
-                lov_id = #{lovValueDTO.lovId,jdbcType=INTEGER},
+    <!--  根据主键编辑 header -->
+    <update id="updateByPrimaryKey">
+        update au_lov
+        <trim prefix="set" suffixOverrides=",">
+            <if test="lovName != null and lovName != ''">
+                lov_name = #{lovName},
             </if>
-            <if test="lovValueDTO.lovCode != null">
-                lov_code = #{lovValueDTO.lovCode,jdbcType=VARCHAR},
+            <if test="description != null and description != ''">
+                description = #{description},
             </if>
-            <if test="lovValueDTO.value != null">
-                `value` = #{lovValueDTO.value,jdbcType=VARCHAR},
-            </if>
-            <if test="lovValueDTO.meaning != null">
-                meaning = #{lovValueDTO.meaning,jdbcType=VARCHAR},
-            </if>
-            <if test="lovValueDTO.description != null">
-                description = #{lovValueDTO.description,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where
-        lov_value_id = #{lovValueDTO.lovValueId,jdbcType=INTEGER}
+        </trim>
+        where lov_id = #{lovId}
     </update>
 
-    <select id="queryLovValueById" resultType="com.ling.other.modules.lov.dto.LovValueDTO">
-        select
-          alv.*
-        from
-          au_lov_value alv
-        where
-          lov_value_id = #{lovValueId}
-    </select>
+
 
     <!--  查询值集列表  -->
     <select id="selectAll" resultType="com.ling.other.modules.lov.vo.LovVO">
@@ -119,23 +81,7 @@
         where lov_id = #{lovId}
     </select>
 
-    <select id="select" resultType="com.ling.other.modules.lov.vo.LovVO">
-        select lov_id,
-               lov_code,
-               lov_name,
-               description,
-               create_time,
-               update_time
-        from au_lov
-        where 1
-        <if test="lovCode != null and lovCode != ''">
-            AND lov_code LIKE concat('%',#{lovCode},'%')
-        </if>
-        <if test="lovName != null and lovName != ''">
-            AND lov_name LIKE concat('%',#{lovName},'%')
-        </if>
-    </select>
-
+    <!--删除值集header-->
     <delete id="deleteById">
         delete
         from

@@ -3,6 +3,7 @@ package com.ling.other.modules.lov.adapter.impl;
 import com.ling.other.common.utils.JsonUtils;
 import com.ling.other.common.utils.RedisUtils;
 import com.ling.other.mapper.LovMapper;
+import com.ling.other.mapper.LovValueMapper;
 import com.ling.other.modules.lov.adapter.LovAdapter;
 import com.ling.other.modules.lov.dto.LovDTO;
 import com.ling.other.modules.lov.dto.LovValueDTO;
@@ -16,6 +17,9 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author zhangling
@@ -28,6 +32,9 @@ public class DefaultLovAdapter implements LovAdapter {
 
     @Autowired
     private LovMapper lovMapper;
+
+    @Autowired
+    private LovValueMapper lovValueMapper;
 
     @Autowired
     private RedisUtils redisUtils;
@@ -58,32 +65,28 @@ public class DefaultLovAdapter implements LovAdapter {
 
         String valueKey = "lov:value:"+lovCode;
         // todoa : 使用Set存储不重复集合
-        List<String> valueJsons = redisUtils.listGet(valueKey,0,-1);
+        //List<String> valueJsons = redisUtils.listGet(valueKey,0,-1);
+        Set<Object> valueJsons = redisUtils.setMembers(valueKey);
         if(CollectionUtils.isEmpty(valueJsons)){
-            result = lovMapper.queryLovValue(lovCode);
+            logger.info("查询数据库");
+            result = lovValueMapper.queryByLovCode(lovCode);
             logger.debug("将值集值缓存redis:{}",result);
             for (LovValueDTO lovValueDTO : result) {
                 valueJsons.add(JsonUtils.toJson(lovValueDTO));
             }
-            redisUtils.listSetArrayList(valueKey, (ArrayList<?>) valueJsons,604800);
+            //redisUtils.listSetArrayList(valueKey, (ArrayList<?>) valueJsons,604800);
+            result = result.stream().filter(Objects::nonNull).map((item) -> {
+                redisUtils.setAdd(valueKey, new String[]{JsonUtils.toJson(item)});
+                return item;
+            }).collect(Collectors.toList());
         }else{
-            for (String valueJson : valueJsons) {
-                result.add(JsonUtils.fromJson(valueJson, LovValueDTO.class));
+            for (Object valueJson : valueJsons) {
+                result.add(JsonUtils.fromJson((String) valueJson, LovValueDTO.class));
             }
         }
+        // 排序
+        //result = result.stream().sorted((l,l2)->(l.getOrderSeq()-l2.getOrderSeq())).collect(Collectors.toList());
         return result;
     }
-
-    @Override
-    public LovValueDTO queryLovValueDTO(String lovType, String value) {
-        LovValueDTO result = null;
-
-        // data valid
-        Assert.notNull(lovType, "error.data_invalid");
-        Assert.notNull(value, "error.data_invalid");
-        result = lovMapper.queryLovValueDTO(lovType,value);
-        return result;
-    }
-
 
 }

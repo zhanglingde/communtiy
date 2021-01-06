@@ -5,6 +5,7 @@ import com.ling.other.modules.lov.dto.LovDTO;
 import com.ling.other.modules.lov.dto.LovSearchDTO;
 import com.ling.other.modules.lov.dto.LovValueDTO;
 import com.ling.other.modules.lov.vo.LovVO;
+import com.ling.other.modules.lov.vo.LovValueVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -20,41 +21,11 @@ import java.util.List;
 public interface LovMapper {
 
     /**
-     * 根据值集代码查询值集头信息
-     * @param lovCode
+     * 查询列表
+     * @param lovSearchDTO
      * @return
      */
-    LovDTO queryLovInfo(String lovCode);
-
-
-    /**
-     * 根据值集代码查询值集值
-     * @param lovCode
-     * @return
-     */
-    List<LovValueDTO> queryLovValue(String lovCode);
-
-    /**
-     * 创建值集
-     * @param lovDTO
-     * @return
-     */
-    int createLov(LovDTO lovDTO);
-
-    /**
-     * 批量插入值集值信息
-     * @param lovValueDTOList
-     * @return
-     */
-    int batchInsertLovValue(@Param("list") List<LovValueDTO> lovValueDTOList);
-
-    LovValueDTO queryLovValueDTO(@Param("lovCode") String lovCode, @Param("value") String value);
-
-    int updateSelective(@Param("lovValueDTO") LovValueDTO lovValueDTO);
-
-    LovValueDTO queryLovValueById(@Param("lovValueId") Integer lovValueId);
-
-    int deleteById(@Param("lovValueId") Integer lovValueId);
+    List<LovVO> list(@Param("lovSearch") LovSearchDTO lovSearchDTO);
 
     /**
      * 查询值集列表
@@ -63,16 +34,35 @@ public interface LovMapper {
     List<LovVO> selectAll();
 
     /**
-     * 根据主键查询详情
+     * 添加值集头
+     * @param lovDTO
+     * @return
+     */
+    int createLov(LovDTO lovDTO);
+
+    /**
+     * 根据主键查询值集头
      * @param lovId
      * @return
      */
     LovVO selectByPrimaryKey(Integer lovId);
 
     /**
-     * 按添加搜索
-     * @param lovSearchDTO
+     * 根据主键编辑
+     * @param lovDTO
+     */
+    void updateByPrimaryKey(LovDTO lovDTO);
+
+    /**
+     * 根据 lovCode 查询
+     * @param lovCode
      * @return
      */
-    List<LovVO> select(LovSearchDTO lovSearchDTO);
+    LovDTO queryLovInfo(String lovCode);
+
+    /**
+     * 删除值集header
+     * @param lovValueId
+     */
+    void deleteById(Integer lovValueId);
 }

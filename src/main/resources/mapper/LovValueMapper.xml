@@ -6,12 +6,66 @@
 <mapper namespace="com.ling.other.mapper.LovValueMapper">
 
 
+    <!--  新增lov value   -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="lovValueId">
+        insert into au_lov_value(lov_id,
+                                 lov_code,
+                                 value,
+                                 meaning,
+                                 enabled_flag,
+                                 description,
+                                 order_seq)
+            values(#{lovId},
+                   #{lovCode},
+                   #{value},
+                   #{meaning},
+                   #{enabledFlag},
+                   #{description},
+                   #{orderSeq})
+
+    </insert>
+
+
+    <update id="updateByPrimaryKey">
+        update au_lov_value
+        <trim prefix="set" suffixOverrides=",">
+            <if test="meaning != null and meaning != ''">
+                meaning = #{meaning},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="orderSeq != null ">
+                order_seq = #{orderSeq},
+            </if>
+            <if test="enabledFlag != null">
+                enabled_flag = #{enabledFlag},
+            </if>
+        </trim>
+        where lov_value_id = #{lovValueId}
+    </update>
+
+
+    <select id="selectByPrimary" resultType="com.ling.other.modules.lov.dto.LovValueDTO">
+        select lov_value_id,
+               lov_id,
+               lov_code,
+               value,
+               meaning,
+               description,
+               order_seq
+        from au_lov_value
+        where lov_value_id = #{lovValueId}
+    </select>
+
+
     <select id="selectByLovId" resultType="com.ling.other.modules.lov.vo.LovValueVO">
         select lov_value_id,
                lov_id,
                lov_code,
                value,
                meaning,
+               enabled_flag,
                description,
                order_seq,
                create_time,
@@ -19,5 +73,41 @@
                remark
         from au_lov_value
         where lov_id = #{lovId}
+    </select>
+
+    <select id="queryByLovCode" resultType="com.ling.other.modules.lov.dto.LovValueDTO">
+        select
+            lov_value_id,
+            lov_id,
+            lov_code,
+            value,
+            meaning,
+            order_seq,
+            description,
+            remark
+        from au_lov_value
+        where lov_code = #{lovCode} and enabled_flag = 1
+        order by order_seq asc
+    </select>
+
+    <!-- 根据状态参数查询   -->
+    <select id="selectByCondition" resultType="com.ling.other.modules.lov.vo.LovValueVO">
+        select lov_value_id,
+        lov_id,
+        lov_code,
+        value,
+        meaning,
+        order_seq,
+        description,
+        remark
+        from au_lov_value
+        where
+        1
+        <if test="lovId != null">
+            AND lov_id = #{lovId}
+        </if>
+        <if test="value != null and value != ''">
+            AND value = #{value}
+        </if>
     </select>
 </mapper>

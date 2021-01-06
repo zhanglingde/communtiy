@@ -20,8 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.data.redis.core.*;
 
-import javax.annotation.Resource;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -248,5 +249,26 @@ public class RedisUtils {
     public List<String> hmget(String mapKey, Collection params){
         return hashOperations.multiGet(mapKey,params);
     }
+
+
+    /**
+     * Set 将一个或多个元素添加到给定集合里面，已经存在于集合中的元素会自动被忽略, 命令返回新添加到集合的元素数量
+     * @param key
+     * @param var   Set的值，可以是一个元素，也可以是多个元素的数组
+     * @return 1 插入成功，0插入失败
+     */
+    public Long setAdd(String key,String... var){
+       return setOperations.add(key,var);
+    }
+
+    /**
+     * Set 查询Set
+     * @param key
+     * @return 返回集合中的所有元素
+     */
+    public Set<Object> setMembers(String key){
+        return setOperations.members(key);
+    }
+
 
 }

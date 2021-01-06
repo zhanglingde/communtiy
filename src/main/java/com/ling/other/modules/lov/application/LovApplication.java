@@ -3,6 +3,8 @@ package com.ling.other.modules.lov.application;
 
 
 
+import com.ling.other.common.constants.CommonParams;
+import com.ling.other.common.utils.PageUtils;
 import com.ling.other.modules.lov.dto.LovDTO;
 import com.ling.other.modules.lov.dto.LovSearchDTO;
 import com.ling.other.modules.lov.dto.LovValueDTO;
@@ -28,31 +30,6 @@ public interface LovApplication {
     void createLov(LovDTO lovDTO);
 
     /**
-     * 查询lov value
-     * @param lovCode 值集代码
-     * @return
-     */
-    List<LovValueVO> queryLovValue(String lovCode);
-
-    /**
-     * 创建value
-     * @param lovValueDTOList
-     */
-    void createValue(List<LovValueDTO> lovValueDTOList);
-
-    /**
-     * 修改值
-     * @param lovValueDTO
-     */
-    void updateValue(LovValueDTO lovValueDTO);
-
-    /**
-     * 删除值集value
-     * @param lovValueId
-     */
-    void deleteValue(Integer lovValueId);
-
-    /**
      * 值集列表
      * @return
      */
@@ -65,10 +42,9 @@ public interface LovApplication {
      */
     LovVO details(Integer lovId);
 
-
     /**
-     * 编辑值集
-     * @param lovVO
+     * 编辑值集header
+     * @param lovDTO
      */
-    void updateLov(LovVO lovVO);
+    void updateLov(LovDTO lovDTO);
 }

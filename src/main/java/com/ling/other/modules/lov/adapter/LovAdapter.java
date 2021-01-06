@@ -30,8 +30,5 @@ public interface LovAdapter {
      */
     List<LovValueDTO> queryLovValue(String lovCode);
 
-    /**
-     * 查询LOV值
-     */
-    LovValueDTO queryLovValueDTO(String lovType,String value);
+
 }

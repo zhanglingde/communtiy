@@ -1,7 +1,9 @@
 package com.ling.other.modules.lov.application.impl;
 
 
+import com.ling.other.common.constants.CommonParams;
 import com.ling.other.common.exception.RrException;
+import com.ling.other.common.utils.PageUtils;
 import com.ling.other.common.utils.RedisUtils;
 import com.ling.other.mapper.LovMapper;
 import com.ling.other.mapper.LovValueMapper;
@@ -39,8 +41,6 @@ public class LovApplicationImpl implements LovApplication {
     @Autowired
     private RedisUtils redisUtils;
 
-
-
     @Autowired
     private LovAdapter lovAdapter;
 
@@ -53,13 +53,13 @@ public class LovApplicationImpl implements LovApplication {
         // 创建值集头
         lovMapper.createLov(lovDTO);
 
-        if (!CollectionUtils.isEmpty(lovDTO.getLovValueDTOList())) {
-            lovDTO.getLovValueDTOList().forEach(lovValue -> {
-                lovValue.setLovId(lovDTO.getLovId());
-                lovValue.setLovCode(lovDTO.getLovCode());
-            });
-            lovMapper.batchInsertLovValue(lovDTO.getLovValueDTOList());
-        }
+        //if (!CollectionUtils.isEmpty(lovDTO.getLovValueDTOList())) {
+        //    lovDTO.getLovValueDTOList().forEach(lovValue -> {
+        //        lovValue.setLovId(lovDTO.getLovId());
+        //        lovValue.setLovCode(lovDTO.getLovCode());
+        //    });
+        //    lovMapper.batchInsertLovValue(lovDTO.getLovValueDTOList());
+        //}
 
     }
 
@@ -74,52 +74,12 @@ public class LovApplicationImpl implements LovApplication {
         }
     }
 
-    @Override
-    public List<LovValueVO> queryLovValue(String lovCode) {
 
-        //List<LovValueDTO> lovValueDTOList = lovMapper.queryLovValue(lovCode);
-        List<LovValueDTO> lovValueDTOList = lovAdapter.queryLovValue(lovCode);
-
-        List<LovValueVO> list = LovConvert.INSTANCE.convertLovValueVO(lovValueDTOList);
-        return list;
-    }
-
-    @Override
-    public void createValue(List<LovValueDTO> lovValueDTOList) {
-        lovMapper.batchInsertLovValue(lovValueDTOList);
-    }
-
-    @Override
-    public void updateValue(LovValueDTO lovValueDTO) {
-        LovValueDTO dbValue = lovMapper.queryLovValueById(lovValueDTO.getLovValueId());
-        if (lovValueDTO == null) {
-            return;
-        }
-
-        String valueKey = "lov:value:" + dbValue.getLovCode();
-        redisUtils.delete(valueKey);
-
-
-        lovMapper.updateSelective(lovValueDTO);
-    }
-
-    @Override
-    public void deleteValue(Integer lovValueId) {
-        LovValueDTO lovValueDTO = lovMapper.queryLovValueById(lovValueId);
-        if (lovValueDTO == null) {
-            return;
-        }
-
-        String valueKey = "lov:value:" + lovValueDTO.getLovCode();
-        redisUtils.delete(valueKey);
-
-
-        lovMapper.deleteById(lovValueId);
-    }
 
     @Override
     public List<LovVO> list(LovSearchDTO lovSearchDTO) {
-        return lovMapper.select(lovSearchDTO);
+        List<LovVO> list = lovMapper.list(lovSearchDTO);
+        return list;
     }
 
     @Override
@@ -130,8 +90,10 @@ public class LovApplicationImpl implements LovApplication {
         return lovVO;
     }
 
-    @Override
-    public void updateLov(LovVO lovVO) {
 
+
+    @Override
+    public void updateLov(LovDTO lovDTO) {
+        lovMapper.updateByPrimaryKey(lovDTO);
     }
 }

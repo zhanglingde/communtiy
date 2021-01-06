@@ -9,11 +9,11 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * Redis配置
- * @author zhangling
- * @since 2020/9/16 13:46
+ * @author zhangling 2020/9/16 13:46
  */
 @Configuration
 public class RedisConfig {
+
     @Autowired
     private RedisConnectionFactory factory;
 

@@ -21,6 +21,8 @@ public class JsonUtils {
      * JSON数据，转成Object
      */
     public  static  <T> T fromJson(String json, Class<T> clazz){
+
         return JSON.parseObject(json, clazz);
     }
+
 }
