@@ -1,5 +1,6 @@
 package com.ling.other.modules.user.service.impl;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.ling.other.common.exception.RrException;
 import com.ling.other.modules.user.dto.User;
 import com.ling.other.modules.user.entity.SupplierUser;
@@ -29,6 +30,12 @@ public class SupplierUserServiceImpl implements SupplierUserService {
         supplierUserMapper.insertSelective(supplierUser);
     }
 
-
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void createUser(User user) {
+        supplierUserMapper.insertUser(user);
+        System.out.println("创建用户");
+        //int i = 5/0;
+    }
 
 }

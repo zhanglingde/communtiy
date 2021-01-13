@@ -88,13 +88,14 @@ public class LovValueApplicationImpl implements LovValueApplication {
     }
 
     @Override
-    public void updateLovValue(LovValueDTO lovValueDTO) {
+    public LovValueDTO updateLovValue(LovValueDTO lovValueDTO) {
         LovValueDTO temp = lovValueMapper.selectByPrimary(lovValueDTO.getLovValueId());
         if (temp == null) {
-            return;
+            throw new RrException("值集不存在");
         }
         String valueKey = "lov:value:" + temp.getLovCode();
         redisUtils.delete(valueKey);
         lovValueMapper.updateByPrimaryKey(lovValueDTO);
+        return lovValueDTO;
     }
 }

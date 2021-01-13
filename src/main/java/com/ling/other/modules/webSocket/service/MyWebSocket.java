@@ -88,6 +88,7 @@ public class MyWebSocket {
      */
     @OnMessage
     public void onMessage(String message) {
+
         System.out.println("进入onMessage方法; message = " + message);
     }
 

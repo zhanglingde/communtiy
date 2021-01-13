@@ -1,5 +1,6 @@
 package com.ling.other.modules.user.service;
 
+import com.ling.other.modules.user.dto.User;
 import com.ling.other.modules.user.entity.SupplierUser;
 import java.util.List;
 
@@ -18,5 +19,10 @@ public interface SupplierUserService {
      */
     void createSupplierUser(SupplierUser supplierUser);
 
+    /**
+     * 新增 user
+     * @param user
+     */
+    void createUser(User user);
 
 }

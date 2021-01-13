@@ -39,4 +39,10 @@ public class LovValueDTO {
 
     @ApiModelProperty("备注")
     private String remark;
+
+    @ApiModelProperty("排序")
+    public Integer orderSeq;
+
+    @ApiModelProperty("启用标识：0禁用，1启用")
+    private Integer enabledFlag;
 }

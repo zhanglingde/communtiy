@@ -1,5 +1,6 @@
-package com;
+package com.client;
 
+import com.ConversionRateVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

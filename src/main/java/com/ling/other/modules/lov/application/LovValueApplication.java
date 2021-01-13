@@ -30,7 +30,7 @@ public interface LovValueApplication {
      * 编辑值集
      * @param lovValueDTO
      */
-    void updateLovValue(LovValueDTO lovValueDTO);
+    LovValueDTO updateLovValue(LovValueDTO lovValueDTO);
 
     /**
      * 删除值集value

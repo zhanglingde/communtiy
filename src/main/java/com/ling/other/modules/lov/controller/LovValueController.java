@@ -43,10 +43,10 @@ public class LovValueController {
 
     @ApiOperation(value = "编辑值集value", notes = "编辑值集value")
     @PostMapping("/update/value")
-    public CommonResult updateLovValue(@RequestBody LovValueDTO lovValueDTO){
+    public CommonResult<LovValueDTO> updateLovValue(@RequestBody LovValueDTO lovValueDTO){
 
-        lovValueApplication.updateLovValue(lovValueDTO);
-        return CommonResult.success(null,"操作成功");
+        LovValueDTO value = lovValueApplication.updateLovValue(lovValueDTO);
+        return CommonResult.success(value);
     }
 
     @ApiOperation(value = "删除值集value", notes = "删除值集value")

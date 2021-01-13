@@ -51,11 +51,11 @@ public class UserTest {
     @Test
     public void createUser(){
         logger.info("测试开始");
-        //userService.createUser(User.builder()
-        //        .username("zhansan")
-        //        .gender("m")
-        //        .age(18)
-        //        .build());
+        userService.createUser(User.builder()
+                .username("zhansan")
+                .gender("m")
+                .age(18)
+                .build());
         logger.debug("测试结束");
     }
 }

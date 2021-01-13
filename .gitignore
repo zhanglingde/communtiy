@@ -2,6 +2,7 @@
 .mvn
 target
 community.iml
+jrebel-classpath-15744.jar
 
 
 jvm/out

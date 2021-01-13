@@ -16,8 +16,7 @@ import java.lang.reflect.Method;
 /**
  *
  * 自定义注解{@link AutoIdempotent}的拦截器
- * @author zhangling
- * @since 2020/9/25 14:32
+ * @author zhangling 2020/9/25 14:32
  */
 @Component
 public class IdempotentInterceptor implements HandlerInterceptor {

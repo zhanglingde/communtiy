@@ -5,6 +5,7 @@ import com.ling.other.common.exception.RrException;
 import com.ling.other.common.utils.CommonResult;
 import com.ling.other.modules.lov.annotation.ProcessLovValue;
 import com.ling.other.modules.user.dto.SupplierUserDTO;
+import com.ling.other.modules.user.dto.User;
 import com.ling.other.modules.user.entity.SupplierUser;
 import com.ling.other.modules.user.service.SupplierUserService;
 import io.swagger.annotations.Api;
@@ -31,11 +32,19 @@ public class SupplierUserController {
     @ApiOperation(value = "供应商注册", notes = "供应商注册")
     @PostMapping("/create")
     public SupplierUser create(@RequestBody SupplierUser supplierUser) {
-
         supplierUserService.createSupplierUser(supplierUser);
         return supplierUser;
 
     }
+
+    @ApiOperation(value = "User新增", notes = "User新增")
+    @PostMapping("/createuser")
+    public User createUser(@RequestBody User user) {
+        supplierUserService.createUser(user);
+        return user;
+    }
+
+
 
     @ApiOperation(value = "供应商列表", notes = "供应商列表")
     @GetMapping("/list")
@@ -46,10 +55,11 @@ public class SupplierUserController {
 
     @GetMapping("/hello")
     public CommonResult hello(@RequestBody SupplierUserDTO supplierUserDTO){
-
         //supplierUserService.test();
         return CommonResult.success();
     }
+
+
 
     @GetMapping("/world")
     public CommonResult world(@RequestParam(value = "id",required = true) Integer id){

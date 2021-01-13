@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 /**
- * @author zhangling
- * @since 2020/9/25 14:12
+ * @author zhangling 2020/9/25 14:12
  */
 @Component
 public class TokenService {
@@ -24,6 +23,13 @@ public class TokenService {
         return uuid;
     }
 
+    /**
+     * 校验接口的传的token有没有效，
+     * 一个token只能用一次，使用完后从redis中删除，
+     * 保证一个接口在同一个业务逻辑中只能调用一次，保证接口的幂等性
+     * @param request
+     * @return
+     */
     public boolean checkToken(HttpServletRequest request){
         String token = request.getHeader("token");
         if(StringUtils.isEmpty(token)){
@@ -35,6 +41,7 @@ public class TokenService {
         if(!redisService.exists(token)){
             throw new RrException("重复的操作");
         }
+        // token存在从redis中移除token
         boolean remove = redisService.remove(token);
         if(!remove){
             throw new RrException("重复的操作");

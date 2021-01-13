@@ -8,8 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author zhangling
- * @since 2020/9/25 13:58
+ * @author zhangling 2020/9/25 13:58
  */
 @Component
 public class RedisService {
@@ -31,6 +30,7 @@ public class RedisService {
     }
 
     public boolean exists(String key){
+
         return redisTemplate.hasKey(key);
     }
 

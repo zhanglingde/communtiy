@@ -3,13 +3,12 @@ package com;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
-import com.alibaba.fastjson.JSONObject;
+import com.client.TaxRateVO;
 import com.google.gson.Gson;
 import com.ling.other.common.utils.JsonUtils;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 /**
  * @author zhangling
