@@ -1,4 +1,4 @@
-package com.ling.other.modules.easyexcel.vo;
+package com.ling.other.modules.excel.easyexcel.vo;
 
 import com.ling.other.common.annotation.ExcelColumn;
 import io.swagger.annotations.ApiModel;

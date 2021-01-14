@@ -24,4 +24,14 @@
         <include refid="baseSql"></include>
         from user
     </select>
+
+    <select id="list" resultType="com.ling.other.modules.excel.easyexcel.vo.UserVO">
+        select id,
+            username,
+            gender,
+            age,
+            birth
+        from user
+
+    </select>
 </mapper>

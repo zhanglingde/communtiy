@@ -117,6 +117,7 @@ public class WriteTest {
             // 要合并的列的索引
             int[] arr = {3, 4};
 
+            // 使用合并策略
             ExcelMergeStrategy strategy = new ExcelMergeStrategy(i, arr);
             excelWriter = EasyExcel.write(fileName, Employee.class).registerWriteHandler(strategy).build();
 
@@ -125,7 +126,7 @@ public class WriteTest {
                 // 模拟数据库查询部门下的员工
                 List<Employee> temp = department.getEmployees();
 
-                // 每一合并单元格开始合并前修改开始合并的行数为当前数据所在的行
+                // 修改合并策略：每一合并单元格开始合并前修改开始合并的行数为当前数据所在的行
                 strategy.setMergeRowIndex(i);
 
                 // 写入Excel

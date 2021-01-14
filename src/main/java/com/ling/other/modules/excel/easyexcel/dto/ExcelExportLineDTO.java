@@ -1,4 +1,4 @@
-package com.ling.other.modules.easyexcel.dto;
+package com.ling.other.modules.excel.easyexcel.dto;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;

@@ -1,47 +1,32 @@
-package com.ling.other.modules.easyexcel.service.impl;
+package com.ling.other.modules.excel.excelutil.service.impl;
 
 import com.alibaba.excel.EasyExcel;
-import com.ling.other.modules.easyexcel.dto.ExcelExportLineDTO;
-import com.ling.other.modules.easyexcel.listener.UserDataListener;
-import com.ling.other.modules.user.dto.User;
 import com.ling.other.mapper.EasyExcelMapper;
-import com.ling.other.modules.easyexcel.service.EasyExcelService;
-import com.ling.other.modules.easyexcel.vo.PoLineVO;
+import com.ling.other.modules.excel.easyexcel.vo.PoLineVO;
+import com.ling.other.modules.excel.excelutil.service.ExcelUtilService;
+import com.ling.other.modules.user.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author zhangling
- * @since 2020/8/31 12:02
+ * @author zhangling 2021/1/14 11:16
  */
 @Service
-public class EasyExcelServiceImpl implements EasyExcelService {
+public class ExcelUtilServiceImpl implements ExcelUtilService {
 
     @Autowired
-    private EasyExcelMapper easyExcelMapper;
-
-    @Override
-    public void importExcel(MultipartFile file) {
-        List<ExcelExportLineDTO> list = new ArrayList<>();
-
-        try {
-            EasyExcel.read(file.getInputStream(), User.class, new UserDataListener(easyExcelMapper)).sheet().doRead();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    EasyExcelMapper easyExcelMapper;
 
     @Override
     public void download(HttpServletResponse response) throws IOException {
-
         List<User> list = easyExcelMapper.selectAll();
 
         response.setContentType("application/vnd.ms-excel");
@@ -61,33 +46,19 @@ public class EasyExcelServiceImpl implements EasyExcelService {
         response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
         EasyExcel.write(response.getOutputStream(), User.class).sheet("用户表").doWrite(list);
 
-
     }
 
     @Override
     public void importExcelByExcelUtil(MultipartFile file) {
-         try {
-             Class cls = PoLineVO.class;
-             Class c = Class.forName("com.ling.other.modules.easyexcel.vo.PoLineVO");
-             Constructor constructor = c.getConstructor();
-             Constructor con = cls.getConstructor();
-         } catch (Exception e) {
-             e.printStackTrace();
-         }
-        //List<PoLineVO> lineVOList = ExcelUtil.readExcel("", PoLineVO.class, file);
-        //lineVOList.forEach(System.out::println);
-    }
-
-    @Override
-    public void test()  {
         try {
-            Class c = Class.forName("com.ling.other.modules.easyexcel.vo.PoLineVO");
+            Class cls = PoLineVO.class;
+            Class c = Class.forName("com.ling.other.modules.excel.easyexcel.vo.PoLineVO");
             Constructor constructor = c.getConstructor();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+            Constructor con = cls.getConstructor();
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        //List<PoLineVO> lineVOList = ExcelUtil.readExcel("", PoLineVO.class, file);
+        //lineVOList.forEach(System.out::println);
     }
 }

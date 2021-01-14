@@ -1,4 +1,4 @@
-package com.ling.other.modules.easyexcel.listener;
+package com.ling.other.modules.excel.easyexcel.listener;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
@@ -20,7 +20,7 @@ public class UserDataListener extends AnalysisEventListener<User> {
 
     private static final Logger logger = LoggerFactory.getLogger(UserDataListener.class);
 
-    private static final int BATCH_COUNT = 5;
+    private static final int BATCH_COUNT = 3000;
     List<User> list = new ArrayList<>();
 
     private EasyExcelMapper easyExcelMapper;

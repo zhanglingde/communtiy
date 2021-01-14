@@ -1,38 +1,24 @@
-package com.ling.other.modules.easyexcel.service;
+package com.ling.other.modules.excel.excelutil.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 /**
- * EasyExcel
- * @author zhangling
- * @since 2020/8/31 12:02
+ * @author zhangling 2021/1/14 11:13
  */
-public interface EasyExcelService {
-
-
-    /**
-     * 导入Excle
-     *
-     * @param file
-     */
-    void importExcel(MultipartFile file);
+public interface ExcelUtilService {
 
     /**
-     * 下载Excel
+     * ExcelUtil 导出Excel
      * @param response
      */
     void download(HttpServletResponse response) throws IOException;
-
 
     /**
      * 使用ExcelUtil导入
      * @param file
      */
     void importExcelByExcelUtil(MultipartFile file);
-
-    void test() throws ClassNotFoundException;
 }

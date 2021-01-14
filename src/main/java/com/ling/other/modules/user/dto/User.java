@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -32,6 +33,8 @@ public class User {
 
     @ExcelProperty("年龄")
     private Integer age;
+
+    private Date birth;
 
 
     //@Override

@@ -1,5 +1,6 @@
 package com.ling.other.mapper;
 
+import com.ling.other.modules.excel.easyexcel.vo.UserVO;
 import com.ling.other.modules.user.dto.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -21,4 +22,10 @@ public interface EasyExcelMapper {
     int batchInsert(@Param("list") List<User> userList);
 
     List<User> selectAll();
+
+    /**
+     * 查询用户User列表
+     * @return
+     */
+    List<UserVO> list();
 }
