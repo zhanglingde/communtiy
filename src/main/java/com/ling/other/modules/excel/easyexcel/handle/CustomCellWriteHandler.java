@@ -11,22 +11,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+/**
+ * 自定义拦截器，实现对单元格样式的设置
+ */
 public class CustomCellWriteHandler implements CellWriteHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomCellWriteHandler.class);
-
-//    @Override
-//    public void beforeCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Row row,
-//                                 Head head, Integer columnIndex, Integer relativeRowIndex, Boolean isHead) {
-//
-//    }
-
-
-//    @Override
-//    public void afterCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Cell cell,
-//                                Head head, Integer relativeRowIndex, Boolean isHead) {
-//
-//    }
 
 
     @Override
@@ -36,11 +26,13 @@ public class CustomCellWriteHandler implements CellWriteHandler {
 
     @Override
     public void afterCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Cell cell, Head head, Integer relativeRowIndex, Boolean isHead) {
-// 这里可以对cell进行任何操作
+        // 这里可以对cell进行任何操作
         LOGGER.info("第{}行，第{}列写入完成。", cell.getRowIndex(), cell.getColumnIndex());
 //        if (!isHead && cell.getStringCellValue().contains("个")) {
         if (!isHead && cell.getColumnIndex() == 1 && cell.getStringCellValue().contains("个")) {
+
             Workbook workbook = writeSheetHolder.getSheet().getWorkbook();
+            // 设置单元格样式和字体
             CellStyle cellStyle = workbook.createCellStyle();
             Font cellFont = workbook.createFont();
             cellFont.setBold(true);

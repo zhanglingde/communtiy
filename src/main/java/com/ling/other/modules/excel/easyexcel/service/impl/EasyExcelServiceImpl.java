@@ -14,6 +14,7 @@ import com.ling.other.modules.user.dto.User;
 import com.ling.other.mapper.EasyExcelMapper;
 import com.ling.other.modules.excel.easyexcel.service.EasyExcelService;
 import com.ling.other.modules.excel.easyexcel.vo.PoLineVO;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -105,14 +106,15 @@ public class EasyExcelServiceImpl implements EasyExcelService {
             WriteCellStyle headWriteCellStyle = new WriteCellStyle();
             // 背景色
             headWriteCellStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
+            //设置字体大小
             WriteFont headWriteFont = new WriteFont();
             headWriteFont.setFontHeightInPoints((short) 12);
             headWriteCellStyle.setWriteFont(headWriteFont);
             // 内容的策略
             WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
             // 这里需要指定 FillPatternType 为FillPatternType.SOLID_FOREGROUND 不然无法显示背景颜色.头默认了 FillPatternType所以可以不指定
-//        contentWriteCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
-//        contentWriteCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
+            //contentWriteCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
+            //contentWriteCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
             // 背景绿色
 //        contentWriteCellStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
             // 字体策略
