@@ -90,7 +90,7 @@ public class EasyExcelServiceImpl implements EasyExcelService {
         ExcelWriter excelWriter = null;
         try {
             // 响应设置
-            response.setContentType("application/vnd.ms-excel");
+            response.setContentType("application/octet-stream");
             response.setCharacterEncoding("utf-8");
             response.setHeader("Access-Control-Expose-Headers", " Content-Disposition");
             // 设置文件名

@@ -5,6 +5,8 @@ import com.ling.other.modules.excel.easyexcel.service.EasyExcelService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +25,7 @@ import java.io.IOException;
  * @author zhangling
  * @since 2020/8/31 12:01
  */
-@RestController
+@Controller
 @RequestMapping("/easyExcel")
 @Api(tags = "EasyExcel")
 public class EasyExcelController {
@@ -43,7 +45,7 @@ public class EasyExcelController {
     }
 
     @ApiOperation(value = "导出Excel")
-    @GetMapping("/user/export/strategy")
+    @GetMapping(value = "/user/export/strategy",produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public CommonResult easyExcelExportUserStrategy(HttpServletResponse response){
         easyExcelService.exportUserByStrategy(response);
         return CommonResult.success();
