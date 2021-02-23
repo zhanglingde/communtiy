@@ -34,8 +34,8 @@ public class LovController {
 
     @ApiOperation(value = "值集列表", notes = "值集列表")
     @GetMapping("/list")
-    public CommonResult<List<LovVO>> list(LovSearchDTO lovSearchDTO){
-        return CommonResult.success(lovApplication.list(lovSearchDTO));
+    public List<LovVO> list(LovSearchDTO lovSearchDTO){
+        return lovApplication.list(lovSearchDTO);
     }
 
     @ApiOperation(value = "值集详情", notes = "值集详情")

@@ -4,6 +4,7 @@ package com.ling.other.modules.user.controller;
 import com.ling.other.common.exception.RrException;
 import com.ling.other.common.utils.CommonResult;
 import com.ling.other.modules.lov.annotation.ProcessLovValue;
+import com.ling.other.modules.lov.vo.LovVO;
 import com.ling.other.modules.user.dto.SupplierUserDTO;
 import com.ling.other.modules.user.dto.User;
 import com.ling.other.modules.user.entity.SupplierUser;
@@ -62,12 +63,14 @@ public class SupplierUserController {
 
 
     @GetMapping("/world")
-    public CommonResult world(@RequestParam(value = "id",required = true) Integer id){
+    public LovVO world(){
         int i = 1;
-        if(i == 1){
-            throw new RrException("自定义");
-        }
-        return CommonResult.success();
+        LovVO lovVO = new LovVO();
+        lovVO.setLovCode("RestTemplate");
+        lovVO.setDescription("请求测试");
+        lovVO.setLovId(1);
+        lovVO.setLovName("RestTemplate请求");
 
+        return lovVO;
     }
 }

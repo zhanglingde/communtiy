@@ -275,6 +275,19 @@ public class DateUtils {
         return month;
     }
 
+    /**
+     * 获取 天
+     * @param date
+     * @return
+     */
+    public static int getDayByMonth(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        return day;
+    }
+
 
     /**
      * 获取指定年月的 第一天

@@ -9,8 +9,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 /**
- * OkHttp测试
- * @author zhangling 2021/1/12 11:25
+ * OkHttp测试 zhangling 2021/1/12 11:25
  */
 public class OkHttpTest {
 
@@ -91,13 +90,13 @@ public class OkHttpTest {
                 .post(body)
                 .build();
 
-        try (Response response = client.newCall(request).execute()){
-            // 执行后获得返回值
-            String bodyString = response.body().string();
-            LovValueDTO lovValueDTO = JsonUtils.fromJson(bodyString, LovValueDTO.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //try (Response response = client.newCall(request).execute()){
+        //    // 执行后获得返回值
+        //    String bodyString = response.body().string();
+        //    LovValueDTO lovValueDTO = JsonUtils.fromJson(bodyString, LovValueDTO.class);
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
     }
 
     public void a(){

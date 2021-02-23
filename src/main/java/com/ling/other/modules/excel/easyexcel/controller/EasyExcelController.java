@@ -25,7 +25,7 @@ import java.io.IOException;
  * @author zhangling
  * @since 2020/8/31 12:01
  */
-@Controller
+@RestController
 @RequestMapping("/easyExcel")
 @Api(tags = "EasyExcel")
 public class EasyExcelController {
@@ -34,21 +34,16 @@ public class EasyExcelController {
     private EasyExcelService easyExcelService;
 
 
-
-
-
     @ApiOperation(value = "导出Excel")
     @GetMapping("/user/export")
-    public CommonResult easyExcelExportUser(HttpServletResponse response){
+    public void easyExcelExportUser(HttpServletResponse response){
         easyExcelService.exportUser(response);
-        return CommonResult.success();
     }
 
     @ApiOperation(value = "导出Excel")
-    @GetMapping(value = "/user/export/strategy",produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public CommonResult easyExcelExportUserStrategy(HttpServletResponse response){
+    @GetMapping(value = "/user/export/strategy")
+    public void easyExcelExportUserStrategy(HttpServletResponse response){
         easyExcelService.exportUserByStrategy(response);
-        return CommonResult.success();
     }
 
 

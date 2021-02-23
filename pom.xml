@@ -52,12 +52,12 @@
             <version>1.2.59</version>
         </dependency>
         <!-- H2数据库 -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.199</version>
-            <scope>test</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.h2database</groupId>-->
+<!--            <artifactId>h2</artifactId>-->
+<!--            <version>1.4.199</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
         <!-- 整合mybatis -->
 
         <!-- mysql驱动  -->
@@ -130,7 +130,14 @@
             <artifactId>easyexcel</artifactId>
             <version>2.2.6</version>
         </dependency>
-        <!-- mapstruct -->
+
+        <!-- pdf -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13</version>
+        </dependency>
+
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
@@ -273,10 +280,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.h2database</groupId>-->
+<!--            <artifactId>h2</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

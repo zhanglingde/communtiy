@@ -1,4 +1,6 @@
+import com.ling.other.common.utils.DateUtils;
 import com.ling.other.modules.user.dto.User;
+import org.joda.time.DateTime;
 import org.junit.Test;
 
 import java.util.*;
@@ -26,6 +28,12 @@ public class MapTest {
             list.get(i);
             System.out.println(list.get(i));
         }
+
+        Date date = new Date();
+        System.out.println(DateUtils.getYearByDate(date));
+        System.out.println(DateUtils.getMonthByDate(date));
+        System.out.println(DateUtils.getDayByMonth(date));
+
 
     }
 }

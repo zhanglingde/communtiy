@@ -14,6 +14,6 @@ public class HuToolHttpTest {
         String currency = "CNY";
         String url = "https://v6.exchangerate-api.com/v6/d87c79086f9a5dec75a4dd10/latest/" + currency;
 
-        HttpUtil.get(url);
+        //HttpUtil.get(url);
     }
 }

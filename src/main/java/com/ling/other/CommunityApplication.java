@@ -1,6 +1,5 @@
 package com.ling.other;
 
-import com.ling.other.modules.webSocket.service.MyThread;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
