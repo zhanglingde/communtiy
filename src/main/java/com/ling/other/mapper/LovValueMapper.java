@@ -3,6 +3,7 @@ package com.ling.other.mapper;
 import com.ling.other.modules.lov.dto.LovValueDTO;
 import com.ling.other.modules.lov.vo.LovValueVO;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.cursor.Cursor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -57,6 +58,12 @@ public interface LovValueMapper {
      * @return
      */
     List<LovValueVO> selectByCondition(LovValueDTO temp);
+
+    /**
+     * 测试流式查询
+     * @return
+     */
+    Cursor<LovValueDTO> selectAll();
 
 
 }

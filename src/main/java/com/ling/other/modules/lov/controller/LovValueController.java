@@ -2,15 +2,24 @@ package com.ling.other.modules.lov.controller;
 
 
 import com.ling.other.common.utils.CommonResult;
+import com.ling.other.mapper.LovValueMapper;
 import com.ling.other.modules.lov.application.LovValueApplication;
 import com.ling.other.modules.lov.dto.LovValueDTO;
 import com.ling.other.modules.lov.vo.LovValueVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.ibatis.cursor.Cursor;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -24,6 +33,16 @@ public class LovValueController {
 
     @Autowired
     LovValueApplication lovValueApplication;
+
+    @Autowired
+    LovValueMapper lovValueMapper;
+
+    @Autowired
+    SqlSessionFactory sqlSessionFactory;
+
+    @Autowired
+    PlatformTransactionManager transactionManager;
+
 
     @ApiOperation(value = "查询值集value", notes = "查询值集value")
     @GetMapping("/query")
@@ -43,7 +62,7 @@ public class LovValueController {
 
     @ApiOperation(value = "编辑值集value", notes = "编辑值集value")
     @PostMapping("/update/value")
-    public CommonResult<LovValueDTO> updateLovValue(@RequestBody LovValueDTO lovValueDTO){
+    public CommonResult<LovValueDTO> updateLovValue(@RequestBody LovValueDTO lovValueDTO) {
 
         LovValueDTO value = lovValueApplication.updateLovValue(lovValueDTO);
         return CommonResult.success(value);
@@ -55,6 +74,15 @@ public class LovValueController {
 
         lovValueApplication.deleteValue(lovValueIds);
         return CommonResult.success(null, "删除成功");
+    }
+
+    @ApiOperation("测试mybatis流式查询")
+    @GetMapping("/test")
+    @Transactional
+    public void test() {
+
+        Cursor<LovValueDTO> cursor = lovValueMapper.selectAll();
+        cursor.forEach(lovValueDTO -> { System.out.println(lovValueDTO); });
 
     }
 

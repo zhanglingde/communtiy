@@ -110,4 +110,9 @@
             AND value = #{value}
         </if>
     </select>
+
+    <select id="selectAll" resultType="com.ling.other.modules.lov.dto.LovValueDTO">
+        select *
+        from au_lov_value
+    </select>
 </mapper>
