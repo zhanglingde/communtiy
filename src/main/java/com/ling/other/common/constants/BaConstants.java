@@ -1,8 +1,8 @@
 package com.ling.other.common.constants;
 
 /**
- * @author zhangling
- * @since 2020/9/16 15:22
+ * 类常量
+ * @author zhangling 2020/9/16 15:22
  */
 public class BaConstants {
     /**

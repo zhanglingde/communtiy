@@ -35,7 +35,7 @@ public class JobTest {
     public void addJob() {
         Date now = null;
         try {
-            now = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2020-12-24 22:18:10");
+            now = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2020-12-24 22:34:10");
 
         } catch (ParseException e) {
             e.printStackTrace();
