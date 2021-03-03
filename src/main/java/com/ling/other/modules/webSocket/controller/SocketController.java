@@ -20,14 +20,10 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @Api(value = "Socket通信",tags = "Socket通信")
 public class SocketController {
 
-
     CopyOnWriteArraySet<MyWebSocket> websocket = MyWebSocket.getWebsocket();
 
     @Autowired
     MyWebSocket myWebSocket;
-
-
-
 
     @ApiOperation("发送消息给客户端")
     @GetMapping("/sendMessage")

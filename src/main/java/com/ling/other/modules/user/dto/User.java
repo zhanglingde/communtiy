@@ -5,17 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 import java.util.Objects;
 
 /**
- * @author zhangling
- * @since 2020/8/31 13:28
+ * @author zhangling 2020/8/31 13:28
  */
 @Data
 @AllArgsConstructor
 @Builder
+@Accessors(chain = true)
 @ToString
 public class User {
 

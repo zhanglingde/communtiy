@@ -16,5 +16,12 @@ public interface SupplierUserMapper extends Mapper<SupplierUser> {
 
     int insertUser(User user);
 
+    /**
+     * 查询user
+     * @param id
+     * @return
+     */
+    User selectUser(int id);
+
 
 }

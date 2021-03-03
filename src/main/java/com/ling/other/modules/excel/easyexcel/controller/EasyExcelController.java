@@ -5,6 +5,8 @@ import com.ling.other.modules.excel.easyexcel.service.EasyExcelService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,21 +34,16 @@ public class EasyExcelController {
     private EasyExcelService easyExcelService;
 
 
-
-
-
     @ApiOperation(value = "导出Excel")
     @GetMapping("/user/export")
-    public CommonResult easyExcelExportUser(HttpServletResponse response){
+    public void easyExcelExportUser(HttpServletResponse response){
         easyExcelService.exportUser(response);
-        return CommonResult.success();
     }
 
     @ApiOperation(value = "导出Excel")
-    @GetMapping("/user/export/strategy")
-    public CommonResult easyExcelExportUserStrategy(HttpServletResponse response){
+    @GetMapping(value = "/user/export/strategy")
+    public void easyExcelExportUserStrategy(HttpServletResponse response){
         easyExcelService.exportUserByStrategy(response);
-        return CommonResult.success();
     }
 
 

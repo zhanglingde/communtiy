@@ -11,4 +11,10 @@
         values(#{username},#{gender},#{age})
 
     </insert>
+
+    <select id="selectUser" resultType="com.ling.other.modules.user.dto.User">
+        select *
+        from user
+        where id = #{id}
+    </select>
 </mapper>

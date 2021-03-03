@@ -76,10 +76,10 @@ public class SetTest {
         String key = "k2";
         Set<Object> objects = redisUtils.setMembers(key);
         List<LovValueDTO> list = new ArrayList<>();
-        for (Object object : objects) {
-            list.add(JsonUtils.fromJson((String) object,LovValueDTO.class));
-        }
-        list.forEach(System.out::println);
+        //for (Object object : objects) {
+        //    list.add(JsonUtils.fromJson((String) object,LovValueDTO.class));
+        //}
+        //list.forEach(System.out::println);
     }
 
 
