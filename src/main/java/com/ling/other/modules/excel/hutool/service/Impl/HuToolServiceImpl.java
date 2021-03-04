@@ -39,23 +39,23 @@ public class HuToolServiceImpl implements HuToolService {
             response.setContentType("application/vnd.ms-excel");
             response.setCharacterEncoding("utf-8");
             response.setHeader("Access-Control-Expose-Headers", " Content-Disposition");
-            response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+            response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xls");
 
             // 设置样式
-            writer.setColumnWidth(0,25);
-            writer.setColumnWidth(1,10);
-            writer.setColumnWidth(2,10);
-            writer.setColumnWidth(3,10);
-            writer.setColumnWidth(4,35);
-            writer.setColumnWidth(5,15);
-            writer.setColumnWidth(6,10);
-            writer.setColumnWidth(7,10);
-            writer.setColumnWidth(8,10);
-            writer.setColumnWidth(9,10);
-            writer.setColumnWidth(10,15);
-            writer.setColumnWidth(11,35);
-            writer.setColumnWidth(12,20);
-            writer.setColumnWidth(13,15);
+            writer.setColumnWidth(0, 25);
+            writer.setColumnWidth(1, 10);
+            writer.setColumnWidth(2, 10);
+            writer.setColumnWidth(3, 10);
+            writer.setColumnWidth(4, 35);
+            writer.setColumnWidth(5, 15);
+            writer.setColumnWidth(6, 10);
+            writer.setColumnWidth(7, 10);
+            writer.setColumnWidth(8, 10);
+            writer.setColumnWidth(9, 10);
+            writer.setColumnWidth(10, 15);
+            writer.setColumnWidth(11, 35);
+            writer.setColumnWidth(12, 20);
+            writer.setColumnWidth(13, 15);
 
             // 设置导出的模板
             writer.addHeaderAlias("packageNum", "订单包裹号");
@@ -75,8 +75,8 @@ public class HuToolServiceImpl implements HuToolService {
             // 合并单元格
             int i = 1;
             for (Map.Entry<String, List<HuToolExportPackageVO>> val : map.entrySet()) {
-                for (int j = 0; j < 3; j++) {
-                    if (val.getValue().size() > 1) {
+                if (val.getValue().size() > 1) {
+                    for (int j = 0; j < 3; j++) {
                         writer.merge(i, i + val.getValue().size() - 1, j, j, null, true);
                     }
                 }
@@ -87,15 +87,12 @@ public class HuToolServiceImpl implements HuToolService {
                 // }
                 i += val.getValue().size();
             }
-            writer.write(list,true);
 
-
-
-
-            writer.flush(response.getOutputStream(),true);
+            writer.write(list, true);
+            writer.flush(response.getOutputStream(), true);
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             if (writer != null) {
                 writer.close();
             }
