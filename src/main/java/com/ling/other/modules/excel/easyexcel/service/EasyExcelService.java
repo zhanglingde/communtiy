@@ -1,5 +1,6 @@
 package com.ling.other.modules.excel.easyexcel.service;
 
+import com.ling.other.modules.excel.hutool.dto.PackageDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -38,4 +39,11 @@ public interface EasyExcelService {
      * @param file
      */
     void importExcel(MultipartFile file);
+
+    /**
+     * 导出合并订单
+     * @param packageDTO
+     * @param response
+     */
+    void exportMergeOrder(PackageDTO packageDTO, HttpServletResponse response);
 }

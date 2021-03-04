@@ -50,4 +50,49 @@
         order by ap.transfer_time desc
 
     </select>
+
+    <select id="selectExportForEasyExcel" resultType="com.ling.other.modules.excel.easyexcel.vo.EasyExcelExportPackageVO">
+        select pc.commodity_no,
+            pc.commodity_name,
+            pc.barcode,
+            pc.cost_price,
+            pc.quantity,
+            pc.line_amount,
+            ap.package_id,
+            ap.package_num,
+            ap.logistics_num,
+            ap.receipt_name,
+            ap.receipt_tel_num,
+            ap.receipt_address,
+            ap.courier_company,
+            ap.create_time,
+            ap.transfer_time,
+            ap.receipt_time,
+            ap.status
+            from au_package_commodity pc
+            right join au_package ap on pc.package_id = ap.package_id
+            where 1
+        <if test="companyId != null">
+            AND ap.company_id = #{companyId}
+        </if>
+        <if test="supplierNum != null and supplierNum != ''">
+            AND ap.supplier_num LIKE concat('%',#{supplierNum},'%')
+        </if>
+        <if test="supplierName != null and supplierName != ''">
+            AND ap.supplier_name LIKE concat('%',#{supplierName},'%')
+        </if>
+        <if test="packageNum != null and packageNum != ''">
+            AND ap.package_num LIKE concat('%',#{packageNum},'%')
+        </if>
+        <if test="logisticsNum != null and logisticsNum != ''">
+            AND ap.logistics_num LIKE concat('%',#{logisticsNum},'%')
+        </if>
+        <if test="status != null and status != ''">
+            AND ap.status = #{status}
+        </if>
+        <!--<if test="createTimeFrom != null and createTimeTo != null">-->
+        <!--    AND ap.create_time between #{createTimeFrom} AND #{createTimeTo}-->
+        <!--</if>-->
+        order by ap.transfer_time desc
+    </select>
 </mapper>

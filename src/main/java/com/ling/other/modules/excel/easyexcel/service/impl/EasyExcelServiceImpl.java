@@ -6,10 +6,14 @@ import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import com.ling.other.mapper.PackageDao;
 import com.ling.other.modules.excel.easyexcel.dto.ExcelExportLineDTO;
 import com.ling.other.modules.excel.easyexcel.handle.CustomCellWriteHandler;
 import com.ling.other.modules.excel.easyexcel.listener.UserDataListener;
+import com.ling.other.modules.excel.easyexcel.strategy.ExcelMergeStrategy;
+import com.ling.other.modules.excel.easyexcel.vo.EasyExcelExportPackageVO;
 import com.ling.other.modules.excel.easyexcel.vo.UserVO;
+import com.ling.other.modules.excel.hutool.dto.PackageDTO;
 import com.ling.other.modules.user.dto.User;
 import com.ling.other.mapper.EasyExcelMapper;
 import com.ling.other.modules.excel.easyexcel.service.EasyExcelService;
@@ -24,11 +28,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author zhangling
@@ -39,6 +46,9 @@ public class EasyExcelServiceImpl implements EasyExcelService {
 
     @Autowired
     private EasyExcelMapper easyExcelMapper;
+
+    @Autowired
+    PackageDao packageDao;
 
 
 
@@ -165,5 +175,44 @@ public class EasyExcelServiceImpl implements EasyExcelService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void exportMergeOrder(PackageDTO packageDTO, HttpServletResponse response) {
+        List<EasyExcelExportPackageVO> list = packageDao.selectExportForEasyExcel(packageDTO);
+        Map<Integer, List<EasyExcelExportPackageVO>> map = list.stream().collect(Collectors.groupingBy(EasyExcelExportPackageVO::getPackageId));
+
+        ExcelWriter excelWriter = null;
+        try {
+            // 设置输出流格式
+            String fileName = URLEncoder.encode("订单包裹列表", "UTF-8");
+            response.setContentType("application/vnd.ms-excel");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Access-Control-Expose-Headers", " Content-Disposition");
+            response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+
+            int i = 1;
+            int[] arr = {0, 1, 8, 9, 10, 11, 12, 13, 14};   // 需要合并的列单元格索引
+            ExcelMergeStrategy strategy = new ExcelMergeStrategy(i, arr); // 合并策略
+            WriteSheet sheet = EasyExcel.writerSheet("订单包裹列表").build();
+            excelWriter = EasyExcel.write(response.getOutputStream(), EasyExcelExportPackageVO.class).registerWriteHandler(strategy).build();
+
+            // 合并单元格
+            for (Map.Entry<Integer, List<EasyExcelExportPackageVO>> entry : map.entrySet()) {
+                strategy.setMergeRowIndex(i);
+                excelWriter.write(entry.getValue(), sheet);
+                i = i + entry.getValue().size();
+            }
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (excelWriter != null) {
+                excelWriter.finish();
+            }
+        }
+
     }
 }

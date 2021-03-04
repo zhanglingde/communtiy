@@ -2,6 +2,7 @@ package com.ling.other.modules.excel.easyexcel.controller;
 
 import com.ling.other.common.utils.CommonResult;
 import com.ling.other.modules.excel.easyexcel.service.EasyExcelService;
+import com.ling.other.modules.excel.hutool.dto.PackageDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
@@ -44,6 +45,12 @@ public class EasyExcelController {
     @GetMapping(value = "/user/export/strategy")
     public void easyExcelExportUserStrategy(HttpServletResponse response){
         easyExcelService.exportUserByStrategy(response);
+    }
+
+    @ApiOperation(value = "导出合并订单Excel")
+    @GetMapping("/export-merge")
+    public void exportMergeOrder(PackageDTO packageDTO,HttpServletResponse response){
+        easyExcelService.exportMergeOrder(packageDTO,response);
     }
 
 
