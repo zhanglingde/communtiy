@@ -19,3 +19,17 @@ spring:
   #        max-wait: -1ms      # 连接池最大阻塞等待时间（使用负值表示没有限制）
   #        max-idle: 10      # 连接池中的最大空闲连接
   #        min-idle: 5       # 连接池中的最小空闲连接
+  mail:
+#    username: 390597591@qq.com
+#    password: whgtyxhmuyzqcbde
+#    host: smtp.qq.com
+    username: 2015061001000219@ecjtu.edu.cn
+    password: Zhangling0309
+    host: smtp.office365.com
+    port: 587
+#    properties:
+#      mail:
+#        smtp:
+#          ssl:
+#            enable: true
+
