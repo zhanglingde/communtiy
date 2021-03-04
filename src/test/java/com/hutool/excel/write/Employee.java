@@ -32,6 +32,13 @@ public class Employee {
     @ExcelProperty("员工生日")
     private Date birthday;
 
+
+
+
+
+    private Integer Id;
+    private String name;
+
     @ExcelProperty("部门Id")
     private Integer departmentId;
 

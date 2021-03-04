@@ -126,7 +126,6 @@ public class WriteTest {
         writer.addHeaderAlias("birthday", "生日");
         writer.addHeaderAlias("departmentId", "部门Id");
         writer.addHeaderAlias("departmentName", "部门名称");
-
         int i = 1;
         for (Map.Entry<Integer, List<Employee>> entry : collect.entrySet()) {
             for (int j = 3; j < 5; j++) {
@@ -136,7 +135,6 @@ public class WriteTest {
             }
             i = i + entry.getValue().size();
         }
-
         writer.write(employees);
         writer.close();
     }
