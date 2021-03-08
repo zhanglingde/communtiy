@@ -7,8 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author zhangling
- * @since 2020/10/27 16:05
+ * @author zhangling 2020/10/27 16:05
  */
 public class TestLock {
 

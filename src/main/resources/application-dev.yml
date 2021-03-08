@@ -22,14 +22,32 @@ spring:
   mail:
 #    username: 390597591@qq.com
 #    password: whgtyxhmuyzqcbde
-#    host: smtp.qq.com
-    username: 2015061001000219@ecjtu.edu.cn
-    password: Zhangling0309
-    host: smtp.office365.com
-    port: 587
-#    properties:
-#      mail:
-#        smtp:
-#          ssl:
-#            enable: true
+    username: 1492174237@qq.com
+    password: tljsycznrcfsjbeh    # 1492174237
+    host: smtp.qq.com
+
+#    username: outlook_3130CEBDE6942188@outlook.com
+#    password: Zhangvo96ling@
+    #    host: outlook.office365.com
+    #    store:
+    #      protocol: pop3
+    #    pop3:
+    #      host: outlook.office365.com
+    #      port: 995
+    #      starttls:
+    #        enable: true
+
+#    username: xpg.hangzhou@xpandago.com
+#    password: Xpanda202014
+#    host: outlook.office365.com
+#    port: 587
+#    transport:
+#      protocol: smtp
+    properties:
+      mail:
+        smtp:
+#          auth: true
+#          starttls:
+          ssl:
+            enable: true
 
