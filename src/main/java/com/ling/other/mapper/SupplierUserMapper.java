@@ -24,4 +24,5 @@ public interface SupplierUserMapper extends Mapper<SupplierUser> {
     User selectUser(int id);
 
 
+    int updateById(Integer id);
 }

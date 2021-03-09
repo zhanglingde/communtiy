@@ -3,6 +3,7 @@ package com.ling.other.modules.user.controller;
 
 import com.ling.other.common.exception.RrException;
 import com.ling.other.common.utils.CommonResult;
+import com.ling.other.mapper.SupplierUserMapper;
 import com.ling.other.modules.lov.annotation.ProcessLovValue;
 import com.ling.other.modules.lov.vo.LovVO;
 import com.ling.other.modules.user.dto.SupplierUserDTO;
@@ -30,6 +31,9 @@ public class SupplierUserController {
     @Autowired
     private SupplierUserService supplierUserService;
 
+    @Autowired
+    SupplierUserMapper userMapper;
+
     @ApiOperation(value = "供应商注册", notes = "供应商注册")
     @PostMapping("/create")
     public SupplierUser create(@RequestBody SupplierUser supplierUser) {
@@ -55,8 +59,8 @@ public class SupplierUserController {
     }
 
     @GetMapping("/hello")
-    public CommonResult hello(@RequestBody SupplierUserDTO supplierUserDTO){
-        //supplierUserService.test();
+    public CommonResult hello(String num){
+        System.out.println("hello"+num);
         return CommonResult.success();
     }
 
@@ -72,5 +76,19 @@ public class SupplierUserController {
         lovVO.setLovName("RestTemplate请求");
 
         return lovVO;
+    }
+
+    @GetMapping("/order")
+    public void pur(){
+        User user = new User();
+        user.setUsername("张三");
+        user.setGender("M");
+        user.setAge(18);
+        userMapper.insertUser(user);
+    }
+
+    @GetMapping("/order/update")
+    public void update(Integer id){
+        userMapper.updateById(id);
     }
 }
