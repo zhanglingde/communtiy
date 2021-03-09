@@ -30,12 +30,9 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void send() {
-
         SimpleMailMessage message = new SimpleMailMessage();
-
         message.setSubject("通知-纯文本邮件");
         message.setText("这是一封测试邮件!");
-
         message.setTo("390597591@qq.com");
         message.setFrom(from);
 
@@ -50,7 +47,6 @@ public class MailServiceImpl implements MailService {
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             helper.setSubject("通知-测试style邮件");
-
             helper.setText("<b style='color:red'>这是一封测试邮件，哈哈！</b>",true);
 
             helper.setFrom(from);
