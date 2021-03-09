@@ -26,8 +26,7 @@ spring:
     password: tljsycznrcfsjbeh    # 1492174237
     host: smtp.qq.com
 
-#    username: outlook_3130CEBDE6942188@outlook.com
-#    password: Zhangvo96ling@
+
     #    host: outlook.office365.com
     #    store:
     #      protocol: pop3
@@ -37,10 +36,7 @@ spring:
     #      starttls:
     #        enable: true
 
-#    username: xpg.hangzhou@xpandago.com
-#    password: Xpanda202014
 #    host: outlook.office365.com
-#    port: 587
 #    transport:
 #      protocol: smtp
     properties:
