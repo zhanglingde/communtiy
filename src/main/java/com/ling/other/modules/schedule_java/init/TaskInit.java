@@ -18,11 +18,13 @@ import java.util.List;
 /**
  * CommandLineRunner接口实现类，
  * 当Spring Boot项目启动完成后，加载数据库里状态为正常的定时任务
+ *
+ * 初始化定时任务
  */
 @Service
-public class SysJobRunner implements CommandLineRunner {
+public class TaskInit implements CommandLineRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(SysJobRunner.class);
+    private static final Logger logger = LoggerFactory.getLogger(TaskInit.class);
 
     @Autowired
     private TaskMapper demoTestDao;

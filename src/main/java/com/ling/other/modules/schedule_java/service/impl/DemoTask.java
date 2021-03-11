@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component("demoTask")
 public class DemoTask {
+
     public void taskWithParams(String params) {
 
         System.out.println("执行有参示例任务：" + params);

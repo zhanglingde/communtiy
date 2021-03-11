@@ -20,30 +20,12 @@ spring:
   #        max-idle: 10      # 连接池中的最大空闲连接
   #        min-idle: 5       # 连接池中的最小空闲连接
   mail:
-#    username: 390597591@qq.com
-#    password: whgtyxhmuyzqcbde
     username: 1492174237@qq.com
     password: tljsycznrcfsjbeh    # 1492174237
     host: smtp.qq.com
-
-
-    #    host: outlook.office365.com
-    #    store:
-    #      protocol: pop3
-    #    pop3:
-    #      host: outlook.office365.com
-    #      port: 995
-    #      starttls:
-    #        enable: true
-
-#    host: outlook.office365.com
-#    transport:
-#      protocol: smtp
     properties:
       mail:
         smtp:
-#          auth: true
-#          starttls:
           ssl:
             enable: true
 

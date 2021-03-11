@@ -72,9 +72,9 @@ public class DateUtils {
     public final static String DATE_TIME_SHORT_PATTERN = "yyMM";
 
     /**
-     * cron date 转化
+     * cron date 转化(6位去掉年，7位加上 yyyy)
      */
-    private static final String CRON_DATE_FORMAT = "ss mm HH dd MM ? yyyy";
+    private static final String CRON_DATE_FORMAT = "ss mm HH dd MM ?";
 
 
     /**
@@ -1011,7 +1011,6 @@ public class DateUtils {
      * @param cron Quartz cron的类型的日期
      * @return Date日期
      */
-
     public static Date getDate(final String cron) {
 
 

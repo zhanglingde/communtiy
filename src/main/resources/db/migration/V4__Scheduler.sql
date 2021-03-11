@@ -80,3 +80,16 @@ CREATE TABLE `au_task`
     PRIMARY KEY (`job_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='定时任务表';
+
+create table au_task(
+    job_id int not null auto_increment comment '任务ID',
+    bean_name varchar(100) not null comment 'bean名称',
+    method_name varchar(100) not null comment '方法名称',
+    method_params varchar(255) default null comment '方法参数',
+    cron_expression varchar(255) not null comment 'cron表达式',
+    job_status tinyint(1) not null comment '状态：1正常，0暂停',
+    remark varchar(255) default null comment '备注',
+    create_time datetime not null default current_timestamp comment '创建时间',
+    update_time datetime not null default current_timestamp on update current_timestamp comment '更新时间'
+
+) comment '定时任务表';
