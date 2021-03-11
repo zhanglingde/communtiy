@@ -12,6 +12,11 @@
 
     </insert>
 
+    <update id="updateById">
+        update user set gender = 'S' where id = #{id}
+
+    </update>
+
     <select id="selectUser" resultType="com.ling.other.modules.user.dto.User">
         select *
         from user
