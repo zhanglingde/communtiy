@@ -6,6 +6,7 @@ import com.ling.other.common.utils.SpringContextUtils;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -13,6 +14,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.CollectionUtils;
 
+import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
@@ -115,6 +117,10 @@ public class OrderExecutor<T> {
                 endIndex = listSize;
                 newList = list.subList(startIndex, endIndex);
             }
+
+
+
+
             //创建线程类处理数据
             MyThread<T> myThread = new MyThread(newList, begin, end) {
                 @Override
@@ -130,6 +136,7 @@ public class OrderExecutor<T> {
                     def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
                     // 根据当前事务传播行为，返回当前事务或是创建一个新的事务
                     TransactionStatus status = transactionManager.getTransaction(def);
+
                     //具体执行逻辑交给回调函数
                     try {
                         callBack.method(list);
@@ -151,7 +158,6 @@ public class OrderExecutor<T> {
                         logger.warn("完成所有任务,当前时间:{},当前end计数:{}", LocalDateTime.now(), end.getCount());
                         if (isError.get()) {
                             // 事务回滚（回滚每个线程的事务）
-                            System.out.println("事务回滚");
                             logger.warn("事务回滚，参数：{}");
                             transactionManager.rollback(status);
                         } else {
