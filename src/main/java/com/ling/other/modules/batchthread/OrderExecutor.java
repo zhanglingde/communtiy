@@ -178,6 +178,12 @@ public class OrderExecutor<T> {
             // 主线程抛出自定义的异常
             throw new RrException(exception);
         }
+
+        int i = 1;
+
+        int j = 2;
+
+        int x = 3;
     }
 
 }
