@@ -25,4 +25,5 @@ public interface SupplierUserService {
      */
     void createUser(User user);
 
+    void test(List<User> list);
 }

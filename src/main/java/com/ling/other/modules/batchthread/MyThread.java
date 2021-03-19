@@ -1,5 +1,7 @@
 package com.ling.other.modules.batchthread;
 
+import com.ling.other.common.exception.RrException;
+
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -26,6 +28,7 @@ public abstract class MyThread<T> implements Runnable{
             method(list);
         } catch (InterruptedException e) {
             e.printStackTrace();
+            //throw new RrException(e);
         } finally {
             //计数器减一
             //end.countDown();

@@ -15,6 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author zhangling
@@ -35,16 +37,13 @@ public class UserTest {
 
     @Test
     public void createSupplierUser(){
-        SupplierUser user = new SupplierUser();
-        user.setUsername("zhangsan");
-        user.setPassword("123456");
-        user.setCompanyId(1);
-        //supplierUserService.createSupplierUser(user);
+        Queue<User> queue = new ConcurrentLinkedQueue<>();
+        for (int i = 0; i < 10; i++) {
+            queue.add(User.builder().id(i).username("用户"+i).build());
+        }
 
-
-        List<Integer> list = new ArrayList<>();
-        for (Integer integer : list) {
-            System.out.println("测试");
+        for (User user : queue) {
+            System.out.println(user);
         }
     }
 

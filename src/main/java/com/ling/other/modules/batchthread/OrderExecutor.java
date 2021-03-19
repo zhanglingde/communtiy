@@ -1,6 +1,7 @@
 package com.ling.other.modules.batchthread;
 
 import com.ling.other.common.exception.RrException;
+import com.ling.other.common.utils.JsonUtils;
 import com.ling.other.common.utils.SpringContextUtils;
 import lombok.Data;
 import org.slf4j.Logger;
@@ -9,8 +10,10 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
@@ -81,6 +84,7 @@ public class OrderExecutor<T> {
 
     /**
      * 回调定义接口
+     *
      * @param <T>
      */
     public interface CallBack<T> {
@@ -111,8 +115,16 @@ public class OrderExecutor<T> {
             MyThread<T> myThread = new MyThread(newList, begin, end) {
                 @Override
                 public void method(List list) {
+
+                    /**
+                     * 可以定义：事务传播，隔离级别，超时等
+                     *
+                     * 这个类是TransactionDefinition 接口的默认实现
+                     */
                     DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+                    // 设置事务的传播行为
                     def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+                    // 根据当前事务传播行为，返回当前事务或是创建一个新的事务
                     TransactionStatus status = transactionManager.getTransaction(def);
                     //具体执行逻辑交给回调函数
                     try {
@@ -124,21 +136,22 @@ public class OrderExecutor<T> {
                     } catch (Exception e) {
                         // 接收异常,处理异常
                         isError.set(true);
-                        //e.printStackTrace();
                         logger.error("多线程事务批量操作抛错,线程名:{},操作失败数量:{},报错信息:{},{}", Thread.currentThread().getName(), list.size(), e.toString(), e);
+                        //throw new RrException(e);
                     }
-                    //计数器减一
-                    end.countDown();
+                    end.countDown();  //阻塞,等待所有线程任务执行完成
                     try {
                         //等待所有线程任务完成，监控是否有异常，有则统一回滚
-                        //log.warn("等待所有任务执行完成,当前时间:{},当前end计数:{}", LocalDateTime.now(), end.getCount());
+                        logger.warn("等待所有任务执行完成,当前时间:{},当前end计数:{}", LocalDateTime.now(), end.getCount());
                         end.await();
-                        //log.warn("完成所有任务,当前时间:{},当前end计数:{}", LocalDateTime.now(), end.getCount());
+                        logger.warn("完成所有任务,当前时间:{},当前end计数:{}", LocalDateTime.now(), end.getCount());
                         if (isError.get()) {
                             // 事务回滚
+                            logger.info("事务回滚，参数：{}", JsonUtils.toJson(list));
                             transactionManager.rollback(status);
                         } else {
                             //事务提交
+                            logger.info("事务提交,参数：{}",JsonUtils.toJson(list));
                             transactionManager.commit(status);
                         }
                     } catch (InterruptedException e) {

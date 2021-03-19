@@ -18,7 +18,6 @@ import java.util.List;
 /**
  * @author zhangling 2021/3/11 11:34
  */
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CommunityApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class Test01 {
@@ -55,6 +54,7 @@ public class Test01 {
             executor.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("抛出异常");
         }
         System.out.println("总耗时："+sw.getTotalTimeMillis());
     }

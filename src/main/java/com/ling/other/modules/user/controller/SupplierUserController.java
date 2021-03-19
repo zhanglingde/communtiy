@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -80,11 +81,13 @@ public class SupplierUserController {
 
     @GetMapping("/order")
     public void pur(){
-        User user = new User();
-        user.setUsername("张三");
-        user.setGender("M");
-        user.setAge(18);
-        userMapper.insertUser(user);
+        List<User> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            list.add(User.builder().username("测试"+i).build());
+        }
+
+        supplierUserService.test(list);
+
     }
 
     @GetMapping("/order/update")
