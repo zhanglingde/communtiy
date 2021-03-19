@@ -54,17 +54,10 @@ public class Test01 {
             executor.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("抛出异常");
+            throw new RrException("线程池运行出错");
         }
         System.out.println("总耗时："+sw.getTotalTimeMillis());
     }
 
-    @Test
-    public void test3() {
-        List<User> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(User.builder().username("ddd"+i).build());
-        }
-        userService.batchCreate(list);
-    }
+
 }

@@ -59,6 +59,10 @@ public class OrderExecutor<T> {
     private AtomicReference<Boolean> isError = new AtomicReference<>(false);
 
     /**
+     * 线程池执行业务代码异常
+     */
+    Exception exception = null;
+    /**
      * 回调函数
      */
     private CallBack callBack;
@@ -136,8 +140,8 @@ public class OrderExecutor<T> {
                     } catch (Exception e) {
                         // 接收异常,处理异常
                         isError.set(true);
+                        exception = e;
                         logger.error("多线程事务批量操作抛错,线程名:{},操作失败数量:{},报错信息:{},{}", Thread.currentThread().getName(), list.size(), e.toString(), e);
-                        //throw new RrException(e);
                     }
                     end.countDown();  //阻塞,等待所有线程任务执行完成
                     try {
@@ -146,8 +150,9 @@ public class OrderExecutor<T> {
                         end.await();
                         logger.warn("完成所有任务,当前时间:{},当前end计数:{}", LocalDateTime.now(), end.getCount());
                         if (isError.get()) {
-                            // 事务回滚
-                            logger.info("事务回滚，参数：{}", JsonUtils.toJson(list));
+                            // 事务回滚（回滚每个线程的事务）
+                            System.out.println("事务回滚");
+                            logger.warn("事务回滚，参数：{}");
                             transactionManager.rollback(status);
                         } else {
                             //事务提交
@@ -166,13 +171,13 @@ public class OrderExecutor<T> {
         begin.countDown();//
         //等待任务全部执行完毕，变为0则任务全部完成
         end.await();
-        //关闭线程池
-        executorService.shutdown();
+        executorService.shutdown();     //关闭线程池
+
         //不抛错也是可以回滚的
-        /*if (isError.get()) {
+        if (isError.get()) {
             // 主线程抛出自定义的异常
-            throw new RuntimeException("主线程抛出模拟异常");
-        }*/
+            throw new RrException(exception);
+        }
     }
 
 }

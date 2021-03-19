@@ -27,8 +27,9 @@ public abstract class MyThread<T> implements Runnable{
             //执行程序
             method(list);
         } catch (InterruptedException e) {
-            e.printStackTrace();
-            //throw new RrException(e);
+            //e.printStackTrace();
+
+            throw new RrException("MyThread抛出异常："+e);
         } finally {
             //计数器减一
             //end.countDown();
