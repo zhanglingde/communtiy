@@ -3,6 +3,7 @@ package com.ling.other.modules.batchthread;
 import com.ling.other.common.exception.RrException;
 import com.ling.other.common.utils.JsonUtils;
 import com.ling.other.common.utils.SpringContextUtils;
+import com.ling.other.modules.user.dto.User;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,9 @@ import org.springframework.util.CollectionUtils;
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -48,7 +51,7 @@ public class OrderExecutor<T> {
      */
     private List<T> list;
 
-    private CountDownLatch begin, end;
+    private CountDownLatch begin, end, remote;
 
     /**
      * 线程池
@@ -68,6 +71,8 @@ public class OrderExecutor<T> {
      * 回调函数
      */
     private CallBack callBack;
+
+    private Queue<T> queue = new ConcurrentLinkedQueue<>();
 
     private Random random = new Random();
 
@@ -94,13 +99,15 @@ public class OrderExecutor<T> {
      * @param <T>
      */
     public interface CallBack<T> {
-        public void method(List<T> list);
+        void method(List<T> list,Queue queue);
     }
 
     public void execute() throws Exception {
         executorService = Executors.newFixedThreadPool(runSize);
         begin = new CountDownLatch(1);
+        remote = new CountDownLatch(1);
         end = new CountDownLatch(runSize);
+
 
         //
         int startIndex = 0;
@@ -119,8 +126,6 @@ public class OrderExecutor<T> {
             }
 
 
-
-
             //创建线程类处理数据
             MyThread<T> myThread = new MyThread(newList, begin, end) {
                 @Override
@@ -137,9 +142,10 @@ public class OrderExecutor<T> {
                     // 根据当前事务传播行为，返回当前事务或是创建一个新的事务
                     TransactionStatus status = transactionManager.getTransaction(def);
 
+                    logger.info("线程：{} 的事务为：{}", Thread.currentThread(), status);
                     //具体执行逻辑交给回调函数
                     try {
-                        callBack.method(list);
+                        callBack.method(list,queue);
                         /*if (random.nextInt(2) == 1) {
                             throw new RuntimeException("模拟异常抛出错误回滚");
                         }*/
@@ -148,21 +154,29 @@ public class OrderExecutor<T> {
                         // 接收异常,处理异常
                         isError.set(true);
                         exception = e;
-                        logger.error("多线程事务批量操作抛错,线程名:{},操作失败数量:{},报错信息:{},{}", Thread.currentThread().getName(), list.size(), e.toString(), e);
+                        //logger.error("多线程事务批量操作抛错,线程名:{},操作失败数量:{},报错信息:{},{}", Thread.currentThread().getName(), list.size(), e.toString(), e);
                     }
                     end.countDown();  //阻塞,等待所有线程任务执行完成
+
                     try {
                         //等待所有线程任务完成，监控是否有异常，有则统一回滚
                         logger.warn("等待所有任务执行完成,当前时间:{},当前end计数:{}", LocalDateTime.now(), end.getCount());
                         end.await();
+                        //logger.info("线程：{} 执行完了", Thread.currentThread());
                         logger.warn("完成所有任务,当前时间:{},当前end计数:{}", LocalDateTime.now(), end.getCount());
                         if (isError.get()) {
                             // 事务回滚（回滚每个线程的事务）
-                            logger.warn("事务回滚，参数：{}");
                             transactionManager.rollback(status);
+                        }
+                        remote.await();
+                        System.out.println("远程任务执行完了");
+                        if (isError.get()) {
+                            // 事务回滚（回滚每个线程的事务）
+                            transactionManager.rollback(status);
+
                         } else {
                             //事务提交
-                            logger.info("事务提交,参数：{}",JsonUtils.toJson(list));
+                            logger.info("事务提交,参数：{}", JsonUtils.toJson(list));
                             transactionManager.commit(status);
                         }
                     } catch (InterruptedException e) {
@@ -175,14 +189,32 @@ public class OrderExecutor<T> {
         }
         //计数器减一，开始执行任务  begin此时为0
         begin.countDown();//
+
         //等待任务全部执行完毕，变为0则任务全部完成
         end.await();
+        System.out.println("所有线程执行完了");
+        try {
+            if (!isError.get()) {
+                System.out.println("远程任务开始执行");
+                for (T t : queue) {
+                    Integer user = (Integer) t;
+                    System.out.println(user);
+                }
+                //int i = 1/0;
+                remote.countDown();
+            }
+
+        } catch (Exception e) {
+            isError.set(true);
+            exception = new RrException("Rpc异常");
+            logger.error("远程任务出错：{}", exception);
+        }
         executorService.shutdown();     //关闭线程池
 
         //不抛错也是可以回滚的
         if (isError.get()) {
             // 主线程抛出自定义的异常
-            throw new RrException(exception);
+            throw exception;
         }
     }
 

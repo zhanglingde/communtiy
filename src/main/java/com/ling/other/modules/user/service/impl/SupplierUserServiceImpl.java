@@ -45,24 +45,24 @@ public class SupplierUserServiceImpl implements SupplierUserService {
     //@Transactional(rollbackFor = Exception.class)
     public void test(List<User> list) {
         System.out.println("方法事务："+TransactionSynchronizationManager.getCurrentTransactionName());
-        OrderExecutor<User> executor = new OrderExecutor<>(2, list);
-        executor.setCallBack(new OrderExecutor.CallBack<User>() {
-            @Override
-            public void method(List<User> list) {
-                // 业务方法
-                for (User user : list) {
-                    supplierUserMapper.insertUser(user);
-                    if (user.getUsername().equals("测试8")) {
-                        throw new RrException("测试异常");
-                    }
-                }
-            }
-        });
-        try {
-            executor.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //OrderExecutor<User> executor = new OrderExecutor<>(2, list);
+        //executor.setCallBack(new OrderExecutor.CallBack<User>() {
+        //    @Override
+        //    public void method(List<User> list) {
+        //        // 业务方法
+        //        for (User user : list) {
+        //            supplierUserMapper.insertUser(user);
+        //            if (user.getUsername().equals("测试8")) {
+        //                throw new RrException("测试异常");
+        //            }
+        //        }
+        //    }
+        //});
+        //try {
+        //    executor.execute();
+        //} catch (Exception e) {
+        //    e.printStackTrace();
+        //}
     }
 
 }

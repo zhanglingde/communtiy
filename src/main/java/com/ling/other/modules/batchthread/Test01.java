@@ -10,10 +10,13 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.util.StopWatch;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author zhangling 2021/3/11 11:34
@@ -28,6 +31,9 @@ public class Test01 {
     @Autowired
     UserService userService;
 
+    //@Autowired
+    private PlatformTransactionManager transactionManager;
+
     @Test
     public void test(){
         // 监控耗时
@@ -35,28 +41,47 @@ public class Test01 {
         sw.start();
         List<User> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            list.add(User.builder().username("测试"+i).build());
+            list.add(User.builder().username("1010"+i).id(i).build());
         }
+        Queue<Integer> queue = new ConcurrentLinkedQueue<>();
         OrderExecutor<User> executor = new OrderExecutor<>(2, list);
         executor.setCallBack(new OrderExecutor.CallBack<User>() {
             @Override
-            public void method(List<User> list) {
+            public void method(List<User> list, Queue queue) {
                 // 业务方法
                 for (User user : list) {
                     supplierUserMapper.insertUser(user);
+                    queue.add(user.getId());
                     if (user.getUsername().equals("测试8")) {
                         throw new RrException("测试异常");
                     }
                 }
             }
         });
+        //Queue<TransactionStatus> execute;
         try {
             executor.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RrException("线程池运行出错");
+            throw new RrException(e.getMessage());
         }
-        System.out.println("总耗时："+sw.getTotalTimeMillis());
+        //if (execute == null) {
+        //    return;
+        //}
+
+        // 远程 业务代码
+        //try {
+        //    System.out.println("总耗时："+sw.getTotalTimeMillis());
+        //
+        //    for (TransactionStatus transactionStatus : execute) {
+        //        transactionManager.commit(transactionStatus);
+        //    }
+        //} catch (Exception e) {
+        //    for (TransactionStatus transactionStatus : execute) {
+        //        transactionManager.rollback(transactionStatus);
+        //    }
+        //    throw new RrException("远程代码异常");
+        //}
     }
 
 
