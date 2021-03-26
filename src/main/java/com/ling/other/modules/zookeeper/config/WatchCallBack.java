@@ -46,6 +46,14 @@ public class WatchCallBack implements Watcher, AsyncCallback.StatCallback, Async
         }
     }
 
+    /**
+     * getData() 的异步接口的回调，调用getData()后不会阻塞当前调用的线程，而是取到数据后调用该回调方法
+     * @param rc
+     * @param path
+     * @param ctx
+     * @param data
+     * @param stat
+     */
     @Override
     public void processResult(int rc, String path, Object ctx, byte[] data, Stat stat) {
         if(data != null){
@@ -57,6 +65,17 @@ public class WatchCallBack implements Watcher, AsyncCallback.StatCallback, Async
         }
     }
 
+    /**
+     * exists方法的回调
+     *
+     * 1. 项目刚启动的时候，调用exists()的异步接口判断节点配置数据是否存在
+     * 2. exists()执行完后回调，若配置节点存在数据调用getData()的异步接口，
+     * 3. 当getData()异步接口执行完获得数据后，调用getData()的回调，更新配置
+     * @param rc
+     * @param path
+     * @param ctx
+     * @param stat
+     */
     @Override
     public void processResult(int rc, String path, Object ctx, Stat stat) {
         if (stat != null) {
@@ -67,7 +86,10 @@ public class WatchCallBack implements Watcher, AsyncCallback.StatCallback, Async
     }
 
     /**
-     * 事件回调方法
+     * Watch回调方法
+     *
+     * 1. 当配置节点数据被更改后，就调用getData()的异步接口
+     * 2. 当getData()异步接口执行完获得数据后，调用getData()的回调，更新配置
      *
      * @param watchedEvent
      */
@@ -76,17 +98,14 @@ public class WatchCallBack implements Watcher, AsyncCallback.StatCallback, Async
         switch (watchedEvent.getType()) {
             case None:
                 break;
-            case NodeCreated:
-                // 节点被创建
+            case NodeCreated:               // 节点被创建
                 zk.getData("/AppConf",this,this,"ctx");
                 break;
-            case NodeDeleted:
-                // 容忍性
+            case NodeDeleted:               // 容忍性：之前节点已经存在，当节点被删除，配置不更改
                 conf.setConf("");
                 cc = new CountDownLatch(1);
                 break;
-            case NodeDataChanged:
-                // 节点数据变更了，再取一遍数据
+            case NodeDataChanged:           // 节点数据变更了，再取一遍数据，然后回调更新配置
                 zk.getData("/AppConf",this,this,"ctx");
                 break;
             case NodeChildrenChanged:

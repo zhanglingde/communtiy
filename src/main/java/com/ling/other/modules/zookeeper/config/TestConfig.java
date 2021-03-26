@@ -47,14 +47,15 @@ public class TestConfig {
         // 1.节点不存在
         // 2.节点存在
 
-        while (true){
+        while (true){               // 一直保持zookeeper连接
+            // 业务代码
             if(myConf.getConf().equals("")){
                 System.out.println("conf lose...");
                 watchCallBack.aWait();
             }
             System.out.println(myConf.getConf());
             try {
-                Thread.sleep(200);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

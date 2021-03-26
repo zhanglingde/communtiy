@@ -2,3 +2,6 @@
 zookeeper中watch有回调方法，一旦zookeeper节点被改变了，调用回调方法，都会检测到
 
 Redis被改变了无法发现，需要一直查询，判断是否被改变了
+
+
+尝试将reactive模型换成阻塞模型

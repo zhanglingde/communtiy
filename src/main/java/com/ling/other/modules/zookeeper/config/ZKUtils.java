@@ -14,7 +14,8 @@ public class ZKUtils {
 
     private static ZooKeeper zk;
 
-     private static String address = "192.168.191.128:2181,192.168.191.129:2181,192.168.191.130:2181,192.168.191.132:2181/testLock";
+    // 以testConf为当前Client连接的根目录,可能多个项目公用一个zookeeper，所以不同的服务在不同的目录下工作
+     private static String address = "192.168.191.128:2181,192.168.191.129:2181,192.168.191.130:2181,192.168.191.132:2181/testConf";
     //private static String address = "192.168.164.132:2181,192.168.164.133:2181,192.168.164.134:2181,192.168.164.135:2181/testLock";
 
     private static DefaultWatch watch = new DefaultWatch();
@@ -25,7 +26,7 @@ public class ZKUtils {
 
         try {
             zk = new ZooKeeper(address, 1000, watch);
-            watch.setCd(init);
+            watch.setLatch(init);
             // zk没有连接成功就阻塞住，直到Watch中连接成功后放开阻塞
             init.await();
 

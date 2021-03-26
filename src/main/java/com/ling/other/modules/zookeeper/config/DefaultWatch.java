@@ -12,14 +12,14 @@ import java.util.concurrent.CountDownLatch;
  */
 public class DefaultWatch implements Watcher {
 
-    CountDownLatch cd;
+    CountDownLatch latch;
 
     public CountDownLatch getCd() {
-        return cd;
+        return latch;
     }
 
-    public void setCd(CountDownLatch cd) {
-        this.cd = cd;
+    public void setLatch(CountDownLatch latch) {
+        this.latch = latch;
     }
 
     @Override
@@ -34,9 +34,8 @@ public class DefaultWatch implements Watcher {
                 break;
             case NoSyncConnected:
                 break;
-            case SyncConnected:
-                // 连接成功后放开阻塞
-                cd.countDown();
+            case SyncConnected:       // 连接成功后放开阻塞
+                latch.countDown();
                 break;
             case AuthFailed:
                 break;
