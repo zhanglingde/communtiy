@@ -5,8 +5,14 @@ import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.easyExcel.interceptor.DropWriteHandler;
+import com.easyExcel.interceptor.DropWriteHandler2;
+import com.ling.other.CommunityApplication;
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -149,6 +155,12 @@ public class WriteTest {
      */
     @Test
     public void dropWriter() {
+        //HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        List<String> classes = new ArrayList<>();
+        classes.add("班级1");
+        classes.add("班级2");
+        classes.add("班级3");
+        //request.getSession().setAttribute("classGradeList", classes);
 
         List<Employee> list = init();
         // 导出路径 /D:/AAAShuju/IntelliJIDEA/communtiy/target/test-classes/订单1607672223048.xlsx
@@ -159,7 +171,7 @@ public class WriteTest {
         // 同一个 WriteSheet 对象就是写入同一个sheet中
         ExcelWriter excelWriter = null;
         try {
-            excelWriter = EasyExcel.write(fileName, Employee.class).registerWriteHandler(new DropWriteHandler()).build();
+            excelWriter = EasyExcel.write(fileName, Employee.class).registerWriteHandler(new DropWriteHandler2()).build();
 
 
             // 写入到5个sheet中
