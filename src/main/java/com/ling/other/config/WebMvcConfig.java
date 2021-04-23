@@ -11,14 +11,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author zhangling
  * @since 2020/9/25 14:42
  */
-@Configuration
+//@Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
     IdempotentInterceptor idempotentInterceptor;
 
     /**
-     * 将自定义拦截器加入配置中
+     * 将自定义拦截器注入
      * @param registry
      */
     @Override

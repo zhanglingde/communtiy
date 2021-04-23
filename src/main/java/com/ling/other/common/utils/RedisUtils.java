@@ -28,9 +28,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * Redis工具类
  *
- * @author liujiawan
- * @email sunlightcs@gmail.com
- * @date 2018年12月6日 2017-07-17 21:12
  */
 @Component
 public class RedisUtils {

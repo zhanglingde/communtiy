@@ -4,6 +4,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.alibaba.excel.write.metadata.WriteSheet;
+import com.easyExcel.interceptor.DropWriteHandler;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -100,7 +101,7 @@ public class WriteTest {
 
     /**
      * 合并单元格写
-     *
+     * <p>
      * 使用了策略模式，可以自己实现合并策略，实现合并单元格的方式
      */
     @Test
@@ -142,5 +143,35 @@ public class WriteTest {
         }
 
     }
+
+    /**
+     * 下拉列表
+     */
+    @Test
+    public void dropWriter() {
+
+        List<Employee> list = init();
+        // 导出路径 /D:/AAAShuju/IntelliJIDEA/communtiy/target/test-classes/订单1607672223048.xlsx
+        String fileName = WriteTest.class.getResource("/").getPath() + "订单" + System.currentTimeMillis() + ".xlsx";
+
+
+        // 写法二：同一个excelWriter对象 写入的就是一个Excel文件里
+        // 同一个 WriteSheet 对象就是写入同一个sheet中
+        ExcelWriter excelWriter = null;
+        try {
+            excelWriter = EasyExcel.write(fileName, Employee.class).registerWriteHandler(new DropWriteHandler()).build();
+
+
+            // 写入到5个sheet中
+            WriteSheet writeSheet = EasyExcel.writerSheet("模板").build();
+            excelWriter.write(list, writeSheet);
+        } finally {
+            // finish方法会帮忙关闭流
+            if (excelWriter != null) {
+                excelWriter.finish();
+            }
+        }
+    }
+
 
 }

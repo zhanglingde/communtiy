@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>
+        首先，欢迎您使用供应商后台系统。下面是您的账号信息：
+    </p>
+    <p>
+        <b>
+            您的账号是：<span th:text="${username}"></span><br>
+            您的密码是：<span th:text="${password}"></span><br>
+            使用地址是：<a href="http://supplier.xpandago.com">http://supplier.xpandago.com</a><br>
+    </p>
+    <p></b>
+        当您在使用本网站时，请注意遵守当地法律法规。使用过程中遇到疑问可以联系管理员。
+    </p>
+    <p><small>
+        此为系统邮件，请勿直接回复！<br>
+        请保管好您的邮箱地址，避免账号被他人盗用。</small>
+    </p>
+    <p style='float:right;'>
+        XpandaGo供应商 团队<br>
+        <span th:text="${year}"/>年<span th:text="${month}"/>月<span th:text="${day}"/>日 <span th:text="${hour}"/>时<span th:text="${minute}"/>分
+    </p>
+</body>
+</html>

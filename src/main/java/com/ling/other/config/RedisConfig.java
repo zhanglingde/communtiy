@@ -17,6 +17,10 @@ public class RedisConfig {
     @Autowired
     private RedisConnectionFactory factory;
 
+    /**
+     * 自己实现Redis序列化
+     * @return
+     */
     @Bean
     public RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();

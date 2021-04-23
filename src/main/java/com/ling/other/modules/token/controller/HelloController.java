@@ -18,7 +18,7 @@ public class HelloController {
     TokenService tokenService;
 
     /**
-     * 使用gettoken在redis中创建一个token
+     * 先调用接口获取令牌
      * @return
      */
     @GetMapping("/gettoken")
@@ -27,8 +27,9 @@ public class HelloController {
     }
 
     /**
-     * {@link AutoIdempotent}注解校验幂等性
-     * 使用创建的token调用一次接口，一个token只能调用一次接口
+     * 注解校验幂等性
+     * 使用获取的令牌调用接口，一个令牌只能调用接口一次
+     *
      * @return
      */
     @GetMapping("/hello")
@@ -38,6 +39,7 @@ public class HelloController {
     }
 
     @GetMapping("/hello2")
+
     public CommonResult<String> hello2(){
         return CommonResult.success("hello2");
     }

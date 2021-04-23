@@ -37,10 +37,12 @@ public class IdempotentInterceptor implements HandlerInterceptor {
         if(!(handler instanceof HandlerMethod)){
             return true;
         }
+        // Controller中定义的方法
         Method method = ((HandlerMethod) handler).getMethod();
-        AutoIdempotent annotation = method.getAnnotation(AutoIdempotent.class);
+        AutoIdempotent annotation = method.getAnnotation(AutoIdempotent.class);  // 方法上有注解
         if (annotation != null) {
             try {
+                // 有注解进行校验token
                 return tokenService.checkToken(request);
             } catch (Exception e) {
                 e.printStackTrace();

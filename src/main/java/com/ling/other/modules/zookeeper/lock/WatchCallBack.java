@@ -112,6 +112,7 @@ public class WatchCallBack implements Watcher, AsyncCallback.StringCallback, Asy
             pathName = name;
             //    序列节点创建成功
             // 判断是否是最小的那个节点，只有最小的那个才可以获得锁，不需要监控watch
+            // 不需要watch，不需要关注锁目录的变化，只需要监控前一个序列节点的事件
             zk.getChildren("/", false, this, "sdf");
         }
     }
